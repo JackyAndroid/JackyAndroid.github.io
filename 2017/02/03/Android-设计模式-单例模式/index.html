@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Jacky">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Android 设计模式-单例模式"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="墨镜猫"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Android 设计模式-单例模式 - 墨镜猫</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="墨镜猫" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  主页
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  归档
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  关于
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Android 设计模式-单例模式
+            
+          </h1>
+          <p class="posted-on">
+          2017-02-03
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <h1 id="Android-设计模式-单例模式"><a href="#Android-设计模式-单例模式" class="headerlink" title="Android 设计模式-单例模式"></a>Android 设计模式-单例模式</h1><h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
+<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
+<li><strong>类会被许多类和线程调用</strong></li>
+</ul>
+<hr>
+<h3 id="设计单例模式"><a href="#设计单例模式" class="headerlink" title="设计单例模式"></a>设计单例模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">private static Singleton mSingleton;</div><div class="line">private Singleton()&#123;</div><div class="line">&#125;</div><div class="line">public static Singleton getInstance()&#123;</div><div class="line">if(mSingleton == null)&#123;</div><div class="line">     mSingleton = new Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    return mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的做法在多线程的时候会出现问题，比如有两个线程同时调用getInstance(),这时会new两个对象出来。</p>
+<h3 id="单例模式改进1"><a href="#单例模式改进1" class="headerlink" title="单例模式改进1"></a>单例模式改进1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">private static Singleton mSingleton;</div><div class="line">private Singleton()&#123;</div><div class="line">&#125;</div><div class="line">public static Singleton getInstance()&#123;</div><div class="line">  synchronized(Singleton.class)&#123;</div><div class="line">    if(mSingleton == null)&#123;</div><div class="line">     mSingleton = new Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    return mSingleton;</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方式还是会有问题，就是高并发情况下多线程去抢夺锁，假如有几百个线程，其中有一个运气比较差，这个线程就会出现一直去getInstance，资源一直返回不回去，UI也不会得到更新。</p>
+<h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">private volatile static Singleton mSingleton;</div><div class="line">private Singleton()&#123;</div><div class="line">&#125;</div><div class="line">public static Singleton getInstance()&#123;</div><div class="line">  if(mSingleton == null)&#123;\\A</div><div class="line">    synchronized(Singleton.class)&#123;\\C</div><div class="line">     if(mSingleton == null)</div><div class="line">      mSingleton = new Singleton();\\B</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    return mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
+<h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+      
+        <div class="nav-next">
+          <a href="/2017/02/03/东半球最好的TV桌面开源项目/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          记录自己的代码和远方
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/JackyAndroid" class="icon icon-github" target="_blank">github</a>
+            
+              <a href="http://weibo.com/5885816355" class="icon icon-weibo" target="_blank">weibo</a>
+            
+              <a href="mailto:jacky.android@foxmail.com" class="icon icon-mail" target="_blank">mail</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>墨镜猫 &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>
