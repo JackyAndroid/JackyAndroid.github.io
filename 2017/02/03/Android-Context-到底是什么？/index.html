@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Jacky">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Android Context 到底是什么？"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="墨镜猫"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Android Context 到底是什么？ - 墨镜猫</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="墨镜猫" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  主页
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  归档
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  关于
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Android Context 到底是什么？
+            
+          </h1>
+          <p class="posted-on">
+          2017-02-03
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <h2 id="什么是Android-Context？"><a href="#什么是Android-Context？" class="headerlink" title="什么是Android Context？"></a>什么是Android Context？</h2><p>一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。</p>
+<p>那么从安卓程序的角度来看，Context是什么？其实一个Activity就是一个Context，一个Service也是一个Context。</p>
+<p>一个应用程序可以认为是一个约会环境，用户在这个环境中会切换到不同的场景，比如先去有情调的饭店吃饭，再去电影院看个电影，然后再去xxx（此处省略一万字…）。</p>
+<p>Activity类的确是基于Context，而Service类也是基于Context。Activity除了基于Context类外，还实现了一些其他重要的接口，从架构设计的角度看，interface仅仅是某些功能，而extends才是类的本质，即Activity的本质是一个Context，其所实现的其他接口只是为了扩充Context的功能而已，扩充后的类称之为一个Activity或Service。</p>
+<h2 id="一个应用程序中应该有多少个Context对象"><a href="#一个应用程序中应该有多少个Context对象" class="headerlink" title="一个应用程序中应该有多少个Context对象"></a>一个应用程序中应该有多少个Context对象</h2><p>我们在应用程序开发中经常会调用Context的一些方法，这些方法看起来似乎会返回一些全局的对象，而不仅仅是某个Activity，可能会有点疑问，一个应用程序到底有多少个Context对象呢？比如，Context.getResources（）返回该应用程序所对应的Resource类对象，无论从哪个Activity中调用，都会返回同一个Resource对象。</p>
+<ul>
+<li>一个Activity就是一个场景（Context），一个Service也是一个场景，所以，应用程序中有多少个Activity或者Service就会有多少个Context对象，也就是有多少个场景。</li>
+<li>getResource（）等方法返回的是同一个全局对象。</li>
+</ul>
+<h2 id="Context-继承关系是怎么样的呢？"><a href="#Context-继承关系是怎么样的呢？" class="headerlink" title="Context 继承关系是怎么样的呢？"></a>Context 继承关系是怎么样的呢？</h2><p><img src="http://hi.csdn.net/attachment/201203/1/0_1330607569Vj4c.gif" alt="Context类及其子类的继承关系"></p>
+<p>Context类本身是一个纯abstract类。为了使用方便又定义了Context包装类-ContextWrapper，穿上了一身装备显得也比较强大，ContextWrapper构造函数中必须包含一个真正的Context引用，同时ContextWrapper中有attachBaseContext（）用于给ContextWrapper对象中指定真正的Context对象。</p>
+<p>ContextThemeWrapper内部包含了与主题相关的接口，这里的主题就是指在AndroidManifest.xml中通过android：theme为Application或者Activity指定的主题。</p>
+<p>只有Activity才需要主题，Service默默的后台工作者不需要穿的那么鲜艳，所以Service直接继承于ContextWrapper。</p>
+<p>ContextImpl类真正实现了Context中所有的函数，真正的八块腹肌，我们所调用的各种Context类的方法其实实现均来自于该类。</p>
+<h2 id="什么时候创建的Context"><a href="#什么时候创建的Context" class="headerlink" title="什么时候创建的Context?"></a>什么时候创建的Context?</h2><p>每一个应用程序在客户端都是从ActivityThread类开始的，创建Context对象也是在该类中完成，具体创建ContextImpl类的地方一共有6处：</p>
+<ul>
+<li>PackageInfo.makeApplication（）</li>
+<li>performLaunchActivity（）</li>
+<li>handleCreateBackupAgent（）</li>
+<li>handleCreateService（）</li>
+<li>handleBindApplication（）</li>
+<li>attach（）</li>
+</ul>
+<p>其中attach（）方法仅在Framework进程启动时调用，应用程序运行时不会调用到该方法。</p>
+<h3 id="Application对应的Context"><a href="#Application对应的Context" class="headerlink" title="Application对应的Context"></a>Application对应的Context</h3><p>程序第一次启动时，会辗转调用到makeApplication（）方法。具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = new ContextImpl();</div><div class="line">appContext.init(this,null,mActivityThread);</div><div class="line">....</div><div class="line">appContext.setOuterContext(app);</div></pre></td></tr></table></figure>
+<h3 id="Activity对应的Context"><a href="#Activity对应的Context" class="headerlink" title="Activity对应的Context"></a>Activity对应的Context</h3><p>启动Activity时，Ams会通过IPC调用到ActivityThread的scheduleLaunchActivity（）方法，该方法包含两种参数。一种是ActivityInfo，这是一个实现了Parcelable接口的数据类，意味着该对象是Ams创建的，并通过IPC传递到ActivityThread；另一种是其他的一些参数。</p>
+<p>scheduleLaunchActivity（）方法中会根据以上两种参数构造一个本地ActivityRecord数据类，ActivityThread内部会为每一个Activity创建一个ActivityRecord对象，并使用这些数据对象来管理Activity。</p>
+<p>然后会调用handleLaunchActivity（），再调用performLaunchActivity（），该方法中创建ContextImpl的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = new ContextImpl();</div><div class="line">appContext.init(r.packageInfo,r.token,this);</div><div class="line">appContext.setOuterContext(activity);</div></pre></td></tr></table></figure>
+<p>在performLaunchActivity（）开始执行时，会为r.packageInfo变量赋值。r.packageInfo对象的PackageInfo对象和Application对应的packageInfo对象是同一个。</p>
+<h3 id="Service对应的Context"><a href="#Service对应的Context" class="headerlink" title="Service对应的Context"></a>Service对应的Context</h3><p>启动Service时，Ams会通过IPC调用到ActivityThread的scheduleCreateService（）方法，该方法也包含两种参数。第一种是ServiceInfo，这是实现了一个Parcelable接口的数据类，该对象由AmS创建，并通过IPC传递到ActivityThread内部；第二种是其他参数。</p>
+<p>在scheduleCreateService（）方法中，会使用以上两种参数构造一个CreateServiceData的数据对象，ActivityThread会为其所包含的每一个Service创建该数据对象，并通过这些对象来管理Service。</p>
+<p>然后在执行handleCreateService（）方法，创建ContextImpl对象代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = new ContextImpl();</div><div class="line">appContext.init(packageInfo,null,this);</div><div class="line">...</div><div class="line">appContext.setOuterContext(service);</div></pre></td></tr></table></figure>
+<p>Service对应的Context对象内部的mPackageInfo与Activity、Application中是完全相同的。</p>
+<h2 id="这几个Context之间的关系"><a href="#这几个Context之间的关系" class="headerlink" title="这几个Context之间的关系"></a>这几个Context之间的关系</h2><p>从以上可以看出，创建Context对象的过程基本上是相同的，不同的仅仅是针对Application、Activity、Service使用了不同的数据对象。</p>
+<p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
+<p>应用程序中包含多个ContextImpl对象，而内部变量mPackageInfo却指向同一个PackageInfo对象，这种设计结构一般意味着ContextImpl是一种轻量级类，而PackageInfo是一个重量级类。事实上确实是这样，ContextImpl中的大多数进行包操作的重量级函数实际上都是转向了mPackageInfo对象相应的方法，也就是事实上调用了同一个PackageInfo对象。</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+      
+        <div class="nav-next">
+          <a href="/2017/02/03/我眼中的Android-Framework/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          记录自己的代码和远方
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/JackyAndroid" class="icon icon-github" target="_blank">github</a>
+            
+              <a href="http://weibo.com/5885816355" class="icon icon-weibo" target="_blank">weibo</a>
+            
+              <a href="mailto:jacky.android@foxmail.com" class="icon icon-mail" target="_blank">mail</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>墨镜猫 &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>
