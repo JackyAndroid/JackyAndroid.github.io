@@ -175,7 +175,6 @@
 <p> UI线程是从ActivityThread运行的，在该类的main()方法中已经使用了Looper.prepareMainLooper()为该线程添加了Looper对象，已经为该线程创建了消息队列，是自带秘书光环的。因此，我们才可以在Activity中去定义Handler对象，因为创建Handler对象时其线程必须已经创建了消息队列，装卸工得配运输带要不然没法干活。而普通的Thread则没有默认创建消息队列，所以不能直接在Thread中直接定义Handler，这个就是我们不懂程序运行原理导致的困惑。</p>
 </li>
 </ol>
-<p><strong><em>转载注明出处，如有问题请留言。</em></strong></p>
 
         </div>
       </article>
