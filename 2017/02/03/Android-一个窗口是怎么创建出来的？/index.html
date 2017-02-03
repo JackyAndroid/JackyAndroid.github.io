@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Jacky">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Android 一个窗口是怎么创建出来的？"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="墨镜猫"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Android 一个窗口是怎么创建出来的？ - 墨镜猫</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="墨镜猫" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  主页
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  归档
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  关于
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Android 一个窗口是怎么创建出来的？
+            
+          </h1>
+          <p class="posted-on">
+          2017-02-03
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
+<p>WmS并不在意该窗口是哪个应用程序的，关心的是活跃窗口，WmS按一定得规则判断哪个窗口处于活动状态，然后把用户消息给W类，W类再把用户消息传递给内部View变量，然后再由View对象完成剩下的消息处理。</p>
+<h2 id="窗户有几种类型？"><a href="#窗户有几种类型？" class="headerlink" title="窗户有几种类型？"></a>窗户有几种类型？</h2><p>Framework定义了三种窗口类型，三种窗口类型的定义在WindowManager类里面。</p>
+<ul>
+<li>应用窗口。应用窗口一般指该窗口对应一个Activity，由于加载Activity是由Ams完成的，所以对于应用程序创建应用类窗口只能在Activity内部完成。</li>
+<li>子窗口。子窗口是指该窗口必须要有一个父窗口，父窗口可以是一个应用类窗口也可以是任何其他的窗口。</li>
+<li>系统窗口。系统窗口不需要对应任何Activity，也不需要有父窗口。应用程序是没有办法创建系统窗口的，只有系统进程可以创建系统窗口。</li>
+</ul>
+<h2 id="那么该怎么创建应用窗口呢？"><a href="#那么该怎么创建应用窗口呢？" class="headerlink" title="那么该怎么创建应用窗口呢？"></a>那么该怎么创建应用窗口呢？</h2><p>1.每个应用类窗口都对应一个Activity对象，所以创建应用类窗口需要创建Activity对象。当AmS要启动某个Activity时就会通知客户端进程，每个客户端进程都对应一个ActivityThread类，所以需要ActivityThread启动Activity。</p>
+<p>启动某个Activity实际是构造一个Activity对象，使用ClassLoader从程序文件中装载指定的Activity对应的Class文件。</p>
+<p>2.创建完成Activity对象后调用Activity的attach（）方法，attach（）的作用就是为刚刚创造好的Activity设置内部变量。</p>
+<p>3.为该Activity创建Window对象。</p>
+<p>4.给Window对象中的mWindowManager变量赋值。</p>
+<p>5.然后就需要给该窗口添加真正的View或者ViewGroup。从performLaunchActivity（）调用callActivityOnCreate（）开始，然后经一系列调用到Activity的onCreate（）方法，在onCreate（）方法中调用setContentView（）方法实际是调用了其对应的Window对象的setContentView（）方法。</p>
+<p>6.接着会调用到PhoneWindow的setContentView，首先调用installDecor（）为Window类添加窗口装饰，其实就是标题栏，程序中设置的layout.xml界面被包含在窗口装饰中，就是窗口内容。窗口装饰也是ViewGroup，窗口装饰和它内部的内容加起来就是我们所说的窗口，或者叫做Window界面。</p>
+<p>7.把创建的窗口通知WmS，让WmS把窗口显示在屏幕上。当Activity准备好后会通知Ams，然后Ams经过一系列调用到Activity的makeVisible（），该方法将真正完成把窗口添加进Wms中。</p>
+<p>8.在makeVisible方法中，首先获得该Activity内部的WindowManager对象，然后调用该对象的addView（）方法。</p>
+<p>9.调用WindowManagerImpl的addView（）方法，流程如下：</p>
+<ul>
+<li>检查添加的窗口是否已经添加过，不能重复添加。</li>
+<li>如果添加的窗口是子窗口类型，找到父窗口并保存在临时变量panelParentView中，该变量作为后面调用ViewRoot的setView（）参数。</li>
+<li>创建一个新的ViewRoot</li>
+<li>调用ViewRoot的setView（）。</li>
+</ul>
+<p>10.完成新建一个ViewRoot对象后，需要把新建的ViewRoot对象添加到mRoots对象中。</p>
+<p>11.调用ViewRoot对象的setView方法。流程如下：</p>
+<ul>
+<li>给ViewRoot的重要变量赋值。</li>
+<li>调用requestLayout（），发出界面重绘请求。</li>
+<li>调用sWindowSession.add（），通知Wms添加窗口。</li>
+</ul>
+<p>创建子窗口或系统窗口过程和上面的类似。</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2017/02/03/Android-Framework是怎么启动的？/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2017/02/03/Android-Context-到底是什么？/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          记录自己的代码和远方
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/JackyAndroid" class="icon icon-github" target="_blank">github</a>
+            
+              <a href="http://weibo.com/5885816355" class="icon icon-weibo" target="_blank">weibo</a>
+            
+              <a href="mailto:jacky.android@foxmail.com" class="icon icon-mail" target="_blank">mail</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>墨镜猫 &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>

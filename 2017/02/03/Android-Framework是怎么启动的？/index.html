@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Jacky">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Android Framework是怎么启动的？"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="墨镜猫"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Android Framework是怎么启动的？ - 墨镜猫</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="墨镜猫" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  主页
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  归档
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  关于
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Android Framework是怎么启动的？
+            
+          </h1>
+          <p class="posted-on">
+          2017-02-03
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
+<p>Framework运行环境如下图：</p>
+<p><img src="http://img.blog.csdn.net/20151222223320604" alt="这里写图片描述"></p>
+<p>安卓系统中运行的第一个Dalvik虚拟机叫做zygote，这个的意思是“卵”，那有什么卵用呢？听这个词的意思就知道是孵化的意思，接下来所有的Dalvik虚拟机进程都是这个“卵”孵化出来的。</p>
+<p>zygote进程中包含两个主要模块，分别如下：</p>
+<ul>
+<li>Socket服务端。任务是用于接收启动新的Dalvik进程的命令。</li>
+<li>Framework共享类及共享资源。当zygote进程启动后会加载一些共享的类及资源，就像营养液一样，供其他的细胞吸收。其中共享类是在preload-classes文件中被定义的，共享资源是在preload-resources中被定义的。其他Dalvik进程是被zygote卵进程孵化出来的，所以这些类和资源加载后，新的Dalvik进程就可以直接使用这些类和资源就达到了共享目的，就像一个细胞分裂成两个，共享一些基因和营养。</li>
+</ul>
+<p>zygote进程对应的程序是app_process,该程序在system/bin目录下。</p>
+<p>zygote孵化出的第一个Dalvik进程是SystemServer，该进程对应的程序依然是app_process,因为该进程是从app_process中孵化出来的。</p>
+<p>SystemServer中创建了一个Socket客户端（生产线经理），之后所有的Dalvik进程都将通过该Socket客户端间接被启动，Ams负责管理这个客户端。如果需要启动新的APK进程时，Ams会通过该Socket客户端向zygote进程的Socket服务端（生产线工人）发送一个启动命令，然后zygote会孵化出新的进程（产品生产成型）。</p>
+<p>这样的架构有两个特点：</p>
+<ul>
+<li>每一个进程都是一个Dalvik虚拟机，Dalvik虚拟机是一种类似于java虚拟机的程序。</li>
+<li>zygote进程会预先装载共享类和共享资源，提供营养液和基因，这些类和资源其实就是SDK中定义的大部分类和资源。当通过zygote孵化出新进程后，新的APK只需要去加载APK自身包含的类和资源，这样多个APK就可以共享Framework资源了。</li>
+</ul>
+<h2 id="和Dalvik虚拟机关系比较好的可执行程序有哪些？"><a href="#和Dalvik虚拟机关系比较好的可执行程序有哪些？" class="headerlink" title="和Dalvik虚拟机关系比较好的可执行程序有哪些？"></a>和Dalvik虚拟机关系比较好的可执行程序有哪些？</h2><h3 id="1-dalvikvm"><a href="#1-dalvikvm" class="headerlink" title="1.dalvikvm"></a>1.dalvikvm</h3><p>java程序运行时都是由一个虚拟机来解释java字节码，将这些字节码翻译成本地CPU指令码然后执行。dalvikvm的作用就是创建一个虚拟机并执行参数中指定的java类。</p>
+<h3 id="2-dvz"><a href="#2-dvz" class="headerlink" title="2.dvz"></a>2.dvz</h3><p>dvz的作用是从zygote进程中孵化出一个新的进程，新进程其实就是一个Dalvik虚拟机。该进程与dalvikvm启动的虚拟机相比，区别是该进程中已经预装了Framework的大部分类和资源。</p>
+<h3 id="3-app-process"><a href="#3-app-process" class="headerlink" title="3.app_process"></a>3.app_process</h3><p>Framework在启动时需要加载运行两个特定java类，一个是ZygoteInit.java，一个是SystemServer.java。为了方便使用，系统才提供了一个app_process进程，该进程会自动运行这两个类，app_process其实就是使用dalvikvm启动ZygoteInit.java，启动后会加载Framework中得大部分类和资源。</p>
+<h2 id="Zygote是如何启动的？"><a href="#Zygote是如何启动的？" class="headerlink" title="Zygote是如何启动的？"></a>Zygote是如何启动的？</h2><h3 id="1-在init-rc中配置Zygote启动参数"><a href="#1-在init-rc中配置Zygote启动参数" class="headerlink" title="1.在init.rc中配置Zygote启动参数"></a>1.在init.rc中配置Zygote启动参数</h3><h3 id="2-启动Socket服务端口"><a href="#2-启动Socket服务端口" class="headerlink" title="2.启动Socket服务端口"></a>2.启动Socket服务端口</h3><p>当Zygote服务从app_process开始启动后，会启动一个Dalvik虚拟机，虚拟机第一个执行的java类就是ZygoteInit.java，该类第一个重要的工作就是启动一个Socket服务端口，该Socket端口用于接收启动新进程的命令。</p>
+<h3 id="3-加载preload-classes"><a href="#3-加载preload-classes" class="headerlink" title="3.加载preload-classes"></a>3.加载preload-classes</h3><p>在Zygote类的main（）函数中，创建完Socket服务端后还不能立即孵化出新的进程，因为这个“卵”还没有必须的“基因”，这个“基因”就是指预装的Framework大部分类及资源。</p>
+<h3 id="4-加载preload-resources"><a href="#4-加载preload-resources" class="headerlink" title="4.加载preload-resources"></a>4.加载preload-resources</h3><p>preload-resources包含两类资源，一类是drawable资源，一类是color资源。加载这些资源是在preloadResource（）函数中完成的，该函数调用preloadDrawable（）和preloadColorStateLists（）加载这两类资源，原理就是把这些资源读出来放到一个全局变量中，只要该类对象不被销毁，这些全局变量就会一直保存。</p>
+<h3 id="5-使用fork启动新的进程"><a href="#5-使用fork启动新的进程" class="headerlink" title="5.使用fork启动新的进程"></a>5.使用fork启动新的进程</h3><p>fork是Linux系统的一个系统调用，作用就是复制当前进程产生一个新的进程，相当于生物的克隆。除了进程id不同，新进程将拥有和原始进程完全相同的进程信息。进程的信息包括该进程所打开的文件描述符列表、所分配的内存等。当新进程被创建后，两个进程将共享已经分配的内存空间，如果其中一个需要向内存中写入数据时，操作系统才复制一份目标地址空间，并将要写的数据写入到新的地址中。这种“仅当写的时候才复制”的机制可以最大限度的在多个进程中共享物理内存。</p>
+<h4 id="举个栗子："><a href="#举个栗子：" class="headerlink" title="举个栗子："></a>举个栗子：</h4><p>去乌镇见一下习大大和去乌镇吃一次丁磊的猪肉，这是两个进程，但是两个进程中的很多任务是相同的，先订机票，做地铁到机场，做几小时飞机过去。到了之后不同的就是见习大大和吃猪肉。如果可以先雇一个秘书进程让它订机票、做地铁、做飞机，到乌镇。然后秘书在复制出两个秘书，一个去见习大大，一个去吃猪肉，好处是节省了大量内存。</p>
+<p>Zygote进程就是本例中的“秘书进程”，那些“订机票、做地铁、乘飞机”就是Zygote进程中加载的preload-classes类的功能。</p>
+<p>这样新的进程就脱离的Zygote进程的孵化成为一个真正的应用进程。</p>
+<h2 id="SystemServer-进程是如何启动的？"><a href="#SystemServer-进程是如何启动的？" class="headerlink" title="SystemServer 进程是如何启动的？"></a>SystemServer 进程是如何启动的？</h2><p>SystemServer进程是Zygote孵化出的第一个进程，然后再配置SystemServer进程的环境。</p>
+<h3 id="1-启动各种系统服务线程"><a href="#1-启动各种系统服务线程" class="headerlink" title="1.启动各种系统服务线程"></a>1.启动各种系统服务线程</h3><p>SystemServer进程在Android运行环境中扮演了“神经中枢”的作用，APK应用中能够直接交互的大部分系统服务都在该进程中运行，常见的有WindowManagerServer（Wms）、ActivityManagerService（Ams）、PackageManagerServer（Pms），这些系统服务都是以一个线程的方式存在于SystemServer进程中。</p>
+<h3 id="2-启动第一个Activity"><a href="#2-启动第一个Activity" class="headerlink" title="2.启动第一个Activity"></a>2.启动第一个Activity</h3><p>当以上服务线程都启动后，其中Ams服务是systemReady（）调用完成最后启动的，在Ams的systemReady（）函数的最后一段代码则发出了启动任务队列中最上面一个Activity消息。</p>
+<p>在Ams的startHomeActivityLocked（）中，系统发出了一个category字段包含CATEGORY_HOME的intent，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">intent.setComponent(mTopComponent);</div><div class="line">if(mFactoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL)&#123;</div><div class="line">intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
+<p>到此第一个Activity就启动了。</p>
+<p><strong><em>如有问题请留言，转载请注明出处。</em></strong></p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2017/02/03/来，谷歌安卓浏览器源码就在这！/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2017/02/03/Android-一个窗口是怎么创建出来的？/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          记录自己的代码和远方
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/JackyAndroid" class="icon icon-github" target="_blank">github</a>
+            
+              <a href="http://weibo.com/5885816355" class="icon icon-weibo" target="_blank">weibo</a>
+            
+              <a href="mailto:jacky.android@foxmail.com" class="icon icon-mail" target="_blank">mail</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>墨镜猫 &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>
