@@ -1,380 +1,68 @@
-<!doctype html>
-
-
-
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>墨镜猫</title>
   
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <link href="/atom.xml" rel="self"/>
   
+  <link href="http://yoursite.com/"/>
+  <updated>2017-02-07T06:55:02.000Z</updated>
+  <id>http://yoursite.com/</id>
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
+  <author>
+    <name>Jacky</name>
+    
+  </author>
   
+  <generator uri="http://hexo.io/">Hexo</generator>
   
-  
-  
-
-  
+  <entry>
+    <title>Android模块化与组件化--多模块区分编译</title>
+    <link href="http://yoursite.com/2017/02/03/Android%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%8C%96-%E5%A4%9A%E6%A8%A1%E5%9D%97%E5%8C%BA%E5%88%86%E7%BC%96%E8%AF%91/"/>
+    <id>http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/</id>
+    <published>2017-02-03T10:28:18.000Z</published>
+    <updated>2017-02-07T06:55:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？<br><a id="more"></a></p>
+<h1 id="模块化与组件化–多模块区分编译"><a href="#模块化与组件化–多模块区分编译" class="headerlink" title="模块化与组件化–多模块区分编译"></a>模块化与组件化–多模块区分编译</h1><blockquote>
+<p><strong>示例地址：<a href="https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library" target="_blank" rel="external">https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library</a></strong><br>Android-Architecture-Fairy开源项目重点分析主流技术与架构设计，欢迎star</p>
+</blockquote>
+<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？先看下<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Library-Publication" target="_blank" rel="external">官方文档</a>如下：</p>
+<p>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. You can control which variant gets published:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Note that this publishing configuration name references the full variant name. Release and debug are only applicable when there are no flavors. If you wanted to change the default published variant while using flavors, you would write:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"flavor1Debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>It is also possible to publish all variants of a library. We are planning to allow this while using a normal project-to-project dependency (like shown above), but this is not possible right now due to limitations in Gradle (we are working toward fixing those as well).<br>Publishing of all variants are not enabled by default. The snippet below enables this feature:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    publishNonDefault <span class="keyword">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>It is important to realize that publishing multiple variants means publishing multiple aar files, instead of a single aar containing multiple variants. Each aar packaging contains a single variant. Publishing a variant means making this aar available as an output artifact of the Gradle project. This can then be used either when publishing to a maven repository, or when another project creates a dependency on the library project.</p>
+<p>Gradle has a concept of default” artifact. This is the one that is used when writing:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>To create a dependency on another published artifact, you need to specify which one to use:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Important: Note that the published configuration is a full variant, including the build type, and needs to be referenced as such.<br>Important: When enabling publishing of non default, the Maven publishing plugin will publish these additional variants as extra packages (with classifier). This means that this is not really compatible with publishing to a maven repository. You should either publish a single variant to a repository OR enable all config publishing for inter-project dependencies.</p>
+<p>默认Library只发布Release版本，这个是Gradle官方的限制，Google官方正在试图解决这个问题。可以使用defaultPublishConfig去设置发布的版本，通过设置publishNonDefault true可以让Library发布多个产品版本。<br>下面的这种平常书写的方式是依赖的默认发布版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果想要分渠道编译多种形态的Library，需要修改如下的方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>编译的配置是产品名称的全称加编译类型，如：flavor1Release</li>
+<li>如果Library是Maven的公开库最好不要使用这种特性</li>
+<li>产品名称首字母要小写，否则会有语法问题</li>
+<li>如果Gradle里面有使用MultiDex选项会生成多个aar</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？&lt;br&gt;
+    
+    </summary>
     
     
+  </entry>
   
-
-  
-
-  
-
-  
-
-  
-
-  
+  <entry>
+    <title>国内一线互联网公司内部面试题库</title>
+    <link href="http://yoursite.com/2017/02/03/%E5%9B%BD%E5%86%85%E4%B8%80%E7%BA%BF%E4%BA%92%E8%81%94%E7%BD%91%E5%85%AC%E5%8F%B8%E5%86%85%E9%83%A8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/"/>
+    <id>http://yoursite.com/2017/02/03/国内一线互联网公司内部面试题库/</id>
+    <published>2017-02-03T10:03:01.000Z</published>
+    <updated>2017-02-07T06:52:10.000Z</updated>
     
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0" />
-
-
-
-
-
-
-<meta name="description" content="以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库
-熟悉本文中列出的知识点会大大增加通过前两轮技术面试的几率。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="国内一线互联网公司内部面试题库">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/国内一线互联网公司内部面试题库/index.html">
-<meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库
-熟悉本文中列出的知识点会大大增加通过前两轮技术面试的几率。">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/collection.png">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/algorithm.png">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/hashmap.jpg">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/http.png">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/fragment-life.png">
-<meta property="og:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/architucture.png">
-<meta property="og:updated_time" content="2017-02-07T06:52:10.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="国内一线互联网公司内部面试题库">
-<meta name="twitter:description" content="以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库
-熟悉本文中列出的知识点会大大增加通过前两轮技术面试的几率。">
-<meta name="twitter:image" content="https://github.com/JackyAndroid/AndroidInterview-Q-A/blob/master/picture/collection.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/国内一线互联网公司内部面试题库/"/>
-
-
-
-
-
-  <title> 国内一线互联网公司内部面试题库 | 墨镜猫 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?4d2cf2a50db9e9dfe60dd6d53ea17529";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">墨镜猫</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-    
-      <h1 class="site-subtitle" itemprop="description"></h1>
-    
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-plan">
-          <a href="/plan" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            年度计划
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-rss">
-          <a href="/atom.xml" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br />
-            
-            订阅本站
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/国内一线互联网公司内部面试题库/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Jacky">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="墨镜猫">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="墨镜猫" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                国内一线互联网公司内部面试题库
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T18:03:01+08:00">
-                2017-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/03/国内一线互联网公司内部面试题库/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/03/国内一线互联网公司内部面试题库/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库</p>
+    <content type="html"><![CDATA[<p>以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库</p>
 <p>熟悉本文中列出的知识点会大大增加通过前两轮技术面试的几率。</p>
 <a id="more"></a>
 <h1 id="国内一线互联网公司内部面试题库"><a href="#国内一线互联网公司内部面试题库" class="headerlink" title="国内一线互联网公司内部面试题库"></a>国内一线互联网公司内部面试题库</h1><p>以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库</p>
@@ -737,393 +425,409 @@
 <p>注意上面我在介绍补间动画的时候都有使用“对View进行操作”这样的描述，没错，补间动画是只能够作用在View上的。也就是说，我们可以对一个Button、TextView、甚至是LinearLayout、或者其它任何继承自View的组件进行动画操作，但是如果我们想要对一个非View的对象进行动画操作，抱歉，补间动画就帮不上忙了。可能有的朋友会感到不能理解，我怎么会需要对一个非View的对象进行动画操作呢？这里我举一个简单的例子，比如说我们有一个自定义的View，在这个View当中有一个Point对象用于管理坐标，然后在onDraw()方法当中就是根据这个Point对象的坐标值来进行绘制的。也就是说，如果我们可以对Point对象进行动画操作，那么整个自定义View的动画效果就有了。显然，补间动画是不具备这个功能的，这是它的第一个缺陷。</p>
 <p>然后补间动画还有一个缺陷，就是它只能够实现移动、缩放、旋转和淡入淡出这四种动画操作，那如果我们希望可以对View的背景色进行动态地改变呢？很遗憾，我们只能靠自己去实现了。说白了，之前的补间动画机制就是使用硬编码的方式来完成的，功能限定死就是这些，基本上没有任何扩展性可言。</p>
 <p>最后，补间动画还有一个致命的缺陷，就是它只是改变了View的显示效果而已，而不会真正去改变View的属性。什么意思呢？比如说，现在屏幕的左上角有一个按钮，然后我们通过补间动画将它移动到了屏幕的右下角，现在你可以去尝试点击一下这个按钮，点击事件是绝对不会触发的，因为实际上这个按钮还是停留在屏幕的左上角，只不过补间动画将这个按钮绘制到了屏幕的右下角而已。</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/02/03/来，谷歌安卓浏览器源码就在这！/" rel="next" title="来，谷歌安卓浏览器源码就在这！">
-                <i class="fa fa-chevron-left"></i> 来，谷歌安卓浏览器源码就在这！
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/03/Android模块化与组件化-多模块区分编译/" rel="prev" title="Android模块化与组件化--多模块区分编译">
-                Android模块化与组件化--多模块区分编译 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
-  </div>
-
-          
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+]]></content>
     
-      <div class="ds-thread" data-thread-key="2017/02/03/国内一线互联网公司内部面试题库/"
-           data-title="国内一线互联网公司内部面试题库" data-url="http://yoursite.com/2017/02/03/国内一线互联网公司内部面试题库/">
-      </div>
+    <summary type="html">
     
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Jacky" />
-          <p class="site-author-name" itemprop="name">Jacky</p>
-          <p class="site-description motion-element" itemprop="description">求知若渴，大智若愚</p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">标签</span>
-              
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/JackyAndroid" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/5885816355/home" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:jacky.android@foxmail.com" target="_blank" title="Email">
-                  
-                    <i class="fa fa-fw fa-envelope"></i>
-                  
-                  Email
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#国内一线互联网公司内部面试题库"><span class="nav-number">1.</span> <span class="nav-text">国内一线互联网公司内部面试题库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java"><span class="nav-number">1.1.1.</span> <span class="nav-text">java</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口的意义-百度"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">接口的意义-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类的意义-乐视"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">抽象类的意义-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类的作用-乐视"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">内部类的作用-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父类的静态方法能否被子类重写-猎豹"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">父类的静态方法能否被子类重写-猎豹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java排序算法-美团"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">java排序算法-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列举java的集合和继承关系-百度-美团"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">列举java的集合和继承关系-百度-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java虚拟机的特性-百度-乐视"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">java虚拟机的特性-百度-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#哪些情况下的对象会被垃圾回收机制处理掉-美团-小米"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">哪些情况下的对象会被垃圾回收机制处理掉-美团-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程和线程的区别-猎豹-美团"><span class="nav-number">1.1.1.9.</span> <span class="nav-text">进程和线程的区别-猎豹-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java中-和equals和hashCode的区别-乐视"><span class="nav-number">1.1.1.10.</span> <span class="nav-text">java中==和equals和hashCode的区别-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的排序算法时间复杂度-小米"><span class="nav-number">1.1.1.11.</span> <span class="nav-text">常见的排序算法时间复杂度-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的实现原理-美团"><span class="nav-number">1.1.1.12.</span> <span class="nav-text">HashMap的实现原理-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态机"><span class="nav-number">1.1.1.13.</span> <span class="nav-text">状态机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#int-char-long各占多少字节数"><span class="nav-number">1.1.1.14.</span> <span class="nav-text">int-char-long各占多少字节数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#int与integer的区别"><span class="nav-number">1.1.1.15.</span> <span class="nav-text">int与integer的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-stringbuffer-stringbuilder区别-小米-乐视-百度"><span class="nav-number">1.1.1.16.</span> <span class="nav-text">string-stringbuffer-stringbuilder区别-小米-乐视-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java多态-乐视"><span class="nav-number">1.1.1.17.</span> <span class="nav-text">java多态-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么导致线程阻塞-58-美团"><span class="nav-number">1.1.1.18.</span> <span class="nav-text">什么导致线程阻塞-58-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类接口区别-360"><span class="nav-number">1.1.1.19.</span> <span class="nav-text">抽象类接口区别-360</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器类之间的区别-乐视-美团"><span class="nav-number">1.1.1.20.</span> <span class="nav-text">容器类之间的区别-乐视-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">1.1.1.21.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hashmap和hashtable的区别-乐视-小米"><span class="nav-number">1.1.1.22.</span> <span class="nav-text">hashmap和hashtable的区别-乐视-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayMap对比HashMap"><span class="nav-number">1.1.1.23.</span> <span class="nav-text">ArrayMap对比HashMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何导入外部数据库"><span class="nav-number">1.1.1.24.</span> <span class="nav-text">如何导入外部数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地广播和全局广播有什么差别"><span class="nav-number">1.1.1.25.</span> <span class="nav-text">本地广播和全局广播有什么差别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intentService作用是什么-AIDL解决了什么问题-小米"><span class="nav-number">1.1.1.26.</span> <span class="nav-text">intentService作用是什么,AIDL解决了什么问题-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity-Window-View三者的差别-fragment的特点-360"><span class="nav-number">1.1.1.27.</span> <span class="nav-text">Activity/Window/View三者的差别,fragment的特点-360</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#描述一次网络请求的流程-新浪"><span class="nav-number">1.1.1.28.</span> <span class="nav-text">描述一次网络请求的流程-新浪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler-Thread和HandlerThread的差别-小米"><span class="nav-number">1.1.1.29.</span> <span class="nav-text">Handler,Thread和HandlerThread的差别-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#低版本SDK实现高版本api-小米"><span class="nav-number">1.1.1.30.</span> <span class="nav-text">低版本SDK实现高版本api-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu编译安卓系统-百度"><span class="nav-number">1.1.1.31.</span> <span class="nav-text">Ubuntu编译安卓系统-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LaunchMode应用场景-百度-小米-乐视"><span class="nav-number">1.1.1.32.</span> <span class="nav-text">LaunchMode应用场景-百度-小米-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Touch事件传递流程-小米"><span class="nav-number">1.1.1.33.</span> <span class="nav-text">Touch事件传递流程-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View绘制流程-百度"><span class="nav-number">1.1.1.34.</span> <span class="nav-text">View绘制流程-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程-360"><span class="nav-number">1.1.1.35.</span> <span class="nav-text">多线程-360</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程同步-百度"><span class="nav-number">1.1.1.36.</span> <span class="nav-text">线程同步-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么情况导致内存泄漏-美团"><span class="nav-number">1.1.1.37.</span> <span class="nav-text">什么情况导致内存泄漏-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ANR定位和修正"><span class="nav-number">1.1.1.38.</span> <span class="nav-text">ANR定位和修正</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么情况导致oom-乐视-美团"><span class="nav-number">1.1.1.39.</span> <span class="nav-text">什么情况导致oom-乐视-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Service与Activity之间通信的几种方式"><span class="nav-number">1.1.1.40.</span> <span class="nav-text">Service与Activity之间通信的几种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android各个版本API的区别"><span class="nav-number">1.1.1.41.</span> <span class="nav-text">Android各个版本API的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android代码中实现WAP方式联网-360"><span class="nav-number">1.1.1.42.</span> <span class="nav-text">Android代码中实现WAP方式联网-360</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何保证service在后台不被Kill"><span class="nav-number">1.1.1.43.</span> <span class="nav-text">如何保证service在后台不被Kill</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Requestlayout-onlayout-onDraw-DrawChild区别与联系-猎豹"><span class="nav-number">1.1.1.44.</span> <span class="nav-text">Requestlayout,onlayout,onDraw,DrawChild区别与联系-猎豹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invalidate-和postInvalidate-的区别及使用-百度"><span class="nav-number">1.1.1.45.</span> <span class="nav-text">invalidate()和postInvalidate()的区别及使用-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android动画框架实现原理"><span class="nav-number">1.1.1.46.</span> <span class="nav-text">Android动画框架实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android为每个应用程序分配的内存大小是多少-美团"><span class="nav-number">1.1.1.47.</span> <span class="nav-text">Android为每个应用程序分配的内存大小是多少-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View刷新机制-百度-美团"><span class="nav-number">1.1.1.48.</span> <span class="nav-text">View刷新机制-百度-美团</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinearLayout和RelativeLayout性能对比-百度"><span class="nav-number">1.1.1.49.</span> <span class="nav-text">LinearLayout和RelativeLayout性能对比-百度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化自定义view百度-乐视-小米"><span class="nav-number">1.1.1.50.</span> <span class="nav-text">优化自定义view百度-乐视-小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ContentProvider-乐视"><span class="nav-number">1.1.1.51.</span> <span class="nav-text">ContentProvider-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fragment生命周期"><span class="nav-number">1.1.1.52.</span> <span class="nav-text">Fragment生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volley解析-美团-乐视"><span class="nav-number">1.1.1.53.</span> <span class="nav-text">volley解析-美团-乐视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Glide源码解析"><span class="nav-number">1.1.1.54.</span> <span class="nav-text">Glide源码解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android设计模式"><span class="nav-number">1.1.1.55.</span> <span class="nav-text">Android设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#架构设计-搜狐"><span class="nav-number">1.1.1.56.</span> <span class="nav-text">架构设计-搜狐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android属性动画特性-乐视-小米"><span class="nav-number">1.1.1.57.</span> <span class="nav-text">Android属性动画特性-乐视-小米</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-jacky"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Jacky</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-  
+      &lt;p&gt;以下面试题来自于百度、小米、乐视、美团、58、猎豹、360、新浪、搜狐内部题库&lt;/p&gt;
+&lt;p&gt;熟悉本文中列出的知识点会大大增加通过前两轮技术面试的几率。&lt;/p&gt;
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"jackywang"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+    </summary>
     
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+  </entry>
   
+  <entry>
+    <title>来，谷歌安卓浏览器源码就在这！</title>
+    <link href="http://yoursite.com/2017/02/03/%E6%9D%A5%EF%BC%8C%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%90%E7%A0%81%E5%B0%B1%E5%9C%A8%E8%BF%99%EF%BC%81/"/>
+    <id>http://yoursite.com/2017/02/03/来，谷歌安卓浏览器源码就在这！/</id>
+    <published>2017-02-03T09:49:37.000Z</published>
+    <updated>2017-02-07T06:52:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>谷歌浏览器安卓版源码项目</li>
+<li>本项目是世界级的安卓架构</li>
+<li>理清本项目业务逻辑完全可以胜任国内一线公司工程师</li>
+<li>本项目会长期跟进并升级谷歌浏览器内核版本，欢迎star<a id="more"></a>
+</li>
+</ul>
+<h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
+<p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="external">http://blog.csdn.net/rain_butterfly</a></p>
+<hr>
+<h1 id="AndroidChromium"><a href="#AndroidChromium" class="headerlink" title="AndroidChromium"></a>AndroidChromium</h1><p><img src="http://img.blog.csdn.net/20160710111931406" alt="这里写图片描述"></p>
+<h4 id="AndroidChromium源码地址"><a href="#AndroidChromium源码地址" class="headerlink" title="AndroidChromium源码地址"></a><a href="https://github.com/JackyAndroid/AndroidChromium" target="_blank" rel="external">AndroidChromium源码地址</a></h4><p><strong>如果使用的是AndroidStudio 2.0以上版本且开启instant run功能，建议关闭后再进行调试（instant run会修改首先启动的Application导致chrome provider context 引用错误导致crash）</strong></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>谷歌浏览器安卓版源码项目</li>
+<li>本项目是世界级的安卓架构</li>
+<li>理清本项目业务逻辑完全可以胜任国内一线公司工程师</li>
+<li>本项目会长期跟进并升级谷歌浏览器内核版本，欢迎star</li>
+</ul>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="http://img.blog.csdn.net/20160710112035125" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20160710112101462" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20160710112120509" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20160710112144166" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20160710112154869" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20160710112205838" alt="这里写图片描述"></p>
+<hr>
+<h3 id="以下是升级chrome内核注意事项，如不是相关人员可以忽略"><a href="#以下是升级chrome内核注意事项，如不是相关人员可以忽略" class="headerlink" title="以下是升级chrome内核注意事项，如不是相关人员可以忽略"></a>以下是升级chrome内核注意事项，如不是相关人员可以忽略</h3><hr>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>参考<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md" target="_blank" rel="external">官方</a>及其他教程编译通过chromium源码，并能生成chrome.apk</p>
+<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>使用AndroidStudio开发环境调试Chromium Android UI层。</p>
+<h3 id="构建思路"><a href="#构建思路" class="headerlink" title="构建思路"></a>构建思路</h3><ol>
+<li>采用Android Studio作为开发环境，从Chromium for Android抽取chrome模块的源码，加入Android project。</li>
+<li>native代码在chromium环境中build，作为so加入Android project</li>
+<li>基础模块(base, content, net等)在chromium环境build为jar包，加入Android project</li>
+<li>content, chrome, ui等模块的资源文件加入Android library project</li>
+</ol>
+<h3 id="资源文件为什么不能直接都添加到Android-project呢？"><a href="#资源文件为什么不能直接都添加到Android-project呢？" class="headerlink" title="资源文件为什么不能直接都添加到Android project呢？"></a>资源文件为什么不能直接都添加到Android project呢？</h3><p>因为命名空间的原因，比如content模块的资源的命名空间为org.chromium.content, chrome模块的资源的命名空间为        org.chromium.chrome，所以需要建立不同的Android library project, 指定不同的包名。</p>
+<h3 id="本项目和源码目录对应关系"><a href="#本项目和源码目录对应关系" class="headerlink" title="本项目和源码目录对应关系"></a>本项目和源码目录对应关系</h3><p>app/libs ———– chromium/src/out/Release/lib.java</p>
+<p>app/src/main/aidl ———– chromium/src/chrome/android/java/src/android/support/customtabs/*.aidl</p>
+<p>app/src/main/assets ———– chromium/src/out/Release/assets/chrome_public_apk</p>
+<p>app/src/main/java ———— chromium/src/chrome/android/java/src</p>
+<p>app/src/main/jniLibs ———– chromium/src/out/Release/chrome_public_apk/libs</p>
+<p>app/src/main/res（app module 初始化资源）</p>
+<p>libraries/androidmedia_res ———– chromium/src/third_party/android_media/java/res</p>
+<p>libraries/chrome_res ———– chromium/src/chrome/android/java/res &amp; chromium/src/chrome/android/java/res_chromium</p>
+<p>libraries/content_res ———– chromium/src/content/public/android/java/res</p>
+<p>libraries/datausagechart_res ——— chromium/src/third_party/android_data_chart/java/res</p>
+<p>libraries/ui_res ———- chromium/src/ui/android/java/res</p>
+<h3 id="建议-amp-注意事项"><a href="#建议-amp-注意事项" class="headerlink" title="建议&amp;注意事项"></a>建议&amp;注意事项</h3><ol>
+<li>pak和dat等文件需要加入到assets目录，而且不能压缩</li>
+<li>aidl文件加入到main/aidl下，android studio会自动处理</li>
+<li>目前构建的chromium版本是48.0.2554.0，内核为官方版本</li>
+<li>因为某些java文件是通过C文件编译生成，只存在chromium/src/out  目录下。如果按以上对应关系升级版本缺失文件，请到out/目录下去搜索，根据命名空间添加相应文件。还有一些临时生成的xml资源文件也需要从out/目录下去拷贝到相应的资源模块。</li>
+<li>如果使用的是AndroidStudio 2.0以上版本且开启instant run功能，建议关闭后再进行调试（instant run会修改首先启动的Application导致chrome provider context 引用错误导致crash）</li>
+</ol>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>本项目灵感来自于365browser</p>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><pre><code>Copyright 2016 Jacky Wang&lt;jacky.android@foxmail.com&gt;
 
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
+  http://www.apache.org/licenses/LICENSE-2.0
 
-
-
-
-
-
-
-
-
-
-
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;谷歌浏览器安卓版源码项目&lt;/li&gt;
+&lt;li&gt;本项目是世界级的安卓架构&lt;/li&gt;
+&lt;li&gt;理清本项目业务逻辑完全可以胜任国内一线公司工程师&lt;/li&gt;
+&lt;li&gt;本项目会长期跟进并升级谷歌浏览器内核版本，欢迎star
+    
+    </summary>
+    
+    
+  </entry>
   
+  <entry>
+    <title>Android Framework是怎么启动的？</title>
+    <link href="http://yoursite.com/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/"/>
+    <id>http://yoursite.com/2017/02/03/Android-Framework是怎么启动的？/</id>
+    <published>2017-02-03T09:47:48.000Z</published>
+    <updated>2017-02-07T06:56:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。<br><a id="more"></a></p>
+<h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
+<p>Framework运行环境如下图：</p>
+<p><img src="http://img.blog.csdn.net/20151222223320604" alt="这里写图片描述"></p>
+<p>安卓系统中运行的第一个Dalvik虚拟机叫做zygote，这个的意思是“卵”，那有什么卵用呢？听这个词的意思就知道是孵化的意思，接下来所有的Dalvik虚拟机进程都是这个“卵”孵化出来的。</p>
+<p>zygote进程中包含两个主要模块，分别如下：</p>
+<ul>
+<li>Socket服务端。任务是用于接收启动新的Dalvik进程的命令。</li>
+<li>Framework共享类及共享资源。当zygote进程启动后会加载一些共享的类及资源，就像营养液一样，供其他的细胞吸收。其中共享类是在preload-classes文件中被定义的，共享资源是在preload-resources中被定义的。其他Dalvik进程是被zygote卵进程孵化出来的，所以这些类和资源加载后，新的Dalvik进程就可以直接使用这些类和资源就达到了共享目的，就像一个细胞分裂成两个，共享一些基因和营养。</li>
+</ul>
+<p>zygote进程对应的程序是app_process,该程序在system/bin目录下。</p>
+<p>zygote孵化出的第一个Dalvik进程是SystemServer，该进程对应的程序依然是app_process,因为该进程是从app_process中孵化出来的。</p>
+<p>SystemServer中创建了一个Socket客户端（生产线经理），之后所有的Dalvik进程都将通过该Socket客户端间接被启动，Ams负责管理这个客户端。如果需要启动新的APK进程时，Ams会通过该Socket客户端向zygote进程的Socket服务端（生产线工人）发送一个启动命令，然后zygote会孵化出新的进程（产品生产成型）。</p>
+<p>这样的架构有两个特点：</p>
+<ul>
+<li>每一个进程都是一个Dalvik虚拟机，Dalvik虚拟机是一种类似于java虚拟机的程序。</li>
+<li>zygote进程会预先装载共享类和共享资源，提供营养液和基因，这些类和资源其实就是SDK中定义的大部分类和资源。当通过zygote孵化出新进程后，新的APK只需要去加载APK自身包含的类和资源，这样多个APK就可以共享Framework资源了。</li>
+</ul>
+<h2 id="和Dalvik虚拟机关系比较好的可执行程序有哪些？"><a href="#和Dalvik虚拟机关系比较好的可执行程序有哪些？" class="headerlink" title="和Dalvik虚拟机关系比较好的可执行程序有哪些？"></a>和Dalvik虚拟机关系比较好的可执行程序有哪些？</h2><h3 id="1-dalvikvm"><a href="#1-dalvikvm" class="headerlink" title="1.dalvikvm"></a>1.dalvikvm</h3><p>java程序运行时都是由一个虚拟机来解释java字节码，将这些字节码翻译成本地CPU指令码然后执行。dalvikvm的作用就是创建一个虚拟机并执行参数中指定的java类。</p>
+<h3 id="2-dvz"><a href="#2-dvz" class="headerlink" title="2.dvz"></a>2.dvz</h3><p>dvz的作用是从zygote进程中孵化出一个新的进程，新进程其实就是一个Dalvik虚拟机。该进程与dalvikvm启动的虚拟机相比，区别是该进程中已经预装了Framework的大部分类和资源。</p>
+<h3 id="3-app-process"><a href="#3-app-process" class="headerlink" title="3.app_process"></a>3.app_process</h3><p>Framework在启动时需要加载运行两个特定java类，一个是ZygoteInit.java，一个是SystemServer.java。为了方便使用，系统才提供了一个app_process进程，该进程会自动运行这两个类，app_process其实就是使用dalvikvm启动ZygoteInit.java，启动后会加载Framework中得大部分类和资源。</p>
+<h2 id="Zygote是如何启动的？"><a href="#Zygote是如何启动的？" class="headerlink" title="Zygote是如何启动的？"></a>Zygote是如何启动的？</h2><h3 id="1-在init-rc中配置Zygote启动参数"><a href="#1-在init-rc中配置Zygote启动参数" class="headerlink" title="1.在init.rc中配置Zygote启动参数"></a>1.在init.rc中配置Zygote启动参数</h3><h3 id="2-启动Socket服务端口"><a href="#2-启动Socket服务端口" class="headerlink" title="2.启动Socket服务端口"></a>2.启动Socket服务端口</h3><p>当Zygote服务从app_process开始启动后，会启动一个Dalvik虚拟机，虚拟机第一个执行的java类就是ZygoteInit.java，该类第一个重要的工作就是启动一个Socket服务端口，该Socket端口用于接收启动新进程的命令。</p>
+<h3 id="3-加载preload-classes"><a href="#3-加载preload-classes" class="headerlink" title="3.加载preload-classes"></a>3.加载preload-classes</h3><p>在Zygote类的main（）函数中，创建完Socket服务端后还不能立即孵化出新的进程，因为这个“卵”还没有必须的“基因”，这个“基因”就是指预装的Framework大部分类及资源。</p>
+<h3 id="4-加载preload-resources"><a href="#4-加载preload-resources" class="headerlink" title="4.加载preload-resources"></a>4.加载preload-resources</h3><p>preload-resources包含两类资源，一类是drawable资源，一类是color资源。加载这些资源是在preloadResource（）函数中完成的，该函数调用preloadDrawable（）和preloadColorStateLists（）加载这两类资源，原理就是把这些资源读出来放到一个全局变量中，只要该类对象不被销毁，这些全局变量就会一直保存。</p>
+<h3 id="5-使用fork启动新的进程"><a href="#5-使用fork启动新的进程" class="headerlink" title="5.使用fork启动新的进程"></a>5.使用fork启动新的进程</h3><p>fork是Linux系统的一个系统调用，作用就是复制当前进程产生一个新的进程，相当于生物的克隆。除了进程id不同，新进程将拥有和原始进程完全相同的进程信息。进程的信息包括该进程所打开的文件描述符列表、所分配的内存等。当新进程被创建后，两个进程将共享已经分配的内存空间，如果其中一个需要向内存中写入数据时，操作系统才复制一份目标地址空间，并将要写的数据写入到新的地址中。这种“仅当写的时候才复制”的机制可以最大限度的在多个进程中共享物理内存。</p>
+<h4 id="举个栗子："><a href="#举个栗子：" class="headerlink" title="举个栗子："></a>举个栗子：</h4><p>去乌镇见一下习大大和去乌镇吃一次丁磊的猪肉，这是两个进程，但是两个进程中的很多任务是相同的，先订机票，做地铁到机场，做几小时飞机过去。到了之后不同的就是见习大大和吃猪肉。如果可以先雇一个秘书进程让它订机票、做地铁、做飞机，到乌镇。然后秘书在复制出两个秘书，一个去见习大大，一个去吃猪肉，好处是节省了大量内存。</p>
+<p>Zygote进程就是本例中的“秘书进程”，那些“订机票、做地铁、乘飞机”就是Zygote进程中加载的preload-classes类的功能。</p>
+<p>这样新的进程就脱离的Zygote进程的孵化成为一个真正的应用进程。</p>
+<h2 id="SystemServer-进程是如何启动的？"><a href="#SystemServer-进程是如何启动的？" class="headerlink" title="SystemServer 进程是如何启动的？"></a>SystemServer 进程是如何启动的？</h2><p>SystemServer进程是Zygote孵化出的第一个进程，然后再配置SystemServer进程的环境。</p>
+<h3 id="1-启动各种系统服务线程"><a href="#1-启动各种系统服务线程" class="headerlink" title="1.启动各种系统服务线程"></a>1.启动各种系统服务线程</h3><p>SystemServer进程在Android运行环境中扮演了“神经中枢”的作用，APK应用中能够直接交互的大部分系统服务都在该进程中运行，常见的有WindowManagerServer（Wms）、ActivityManagerService（Ams）、PackageManagerServer（Pms），这些系统服务都是以一个线程的方式存在于SystemServer进程中。</p>
+<h3 id="2-启动第一个Activity"><a href="#2-启动第一个Activity" class="headerlink" title="2.启动第一个Activity"></a>2.启动第一个Activity</h3><p>当以上服务线程都启动后，其中Ams服务是systemReady（）调用完成最后启动的，在Ams的systemReady（）函数的最后一段代码则发出了启动任务队列中最上面一个Activity消息。</p>
+<p>在Ams的startHomeActivityLocked（）中，系统发出了一个category字段包含CATEGORY_HOME的intent，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">intent.setComponent(mTopComponent);</div><div class="line"><span class="keyword">if</span>(mFactoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL)&#123;</div><div class="line">intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
+<p>到此第一个Activity就启动了。</p>
+<p><strong><em>如有问题请留言，转载请注明出处。</em></strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
-
+  <entry>
+    <title>Android 一个窗口是怎么创建出来的？</title>
+    <link href="http://yoursite.com/2017/02/03/Android-%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%9F/"/>
+    <id>http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/</id>
+    <published>2017-02-03T09:46:19.000Z</published>
+    <updated>2017-02-07T06:52:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。<br><a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
+<p>WmS并不在意该窗口是哪个应用程序的，关心的是活跃窗口，WmS按一定得规则判断哪个窗口处于活动状态，然后把用户消息给W类，W类再把用户消息传递给内部View变量，然后再由View对象完成剩下的消息处理。</p>
+<h2 id="窗户有几种类型？"><a href="#窗户有几种类型？" class="headerlink" title="窗户有几种类型？"></a>窗户有几种类型？</h2><p>Framework定义了三种窗口类型，三种窗口类型的定义在WindowManager类里面。</p>
+<ul>
+<li>应用窗口。应用窗口一般指该窗口对应一个Activity，由于加载Activity是由Ams完成的，所以对于应用程序创建应用类窗口只能在Activity内部完成。</li>
+<li>子窗口。子窗口是指该窗口必须要有一个父窗口，父窗口可以是一个应用类窗口也可以是任何其他的窗口。</li>
+<li>系统窗口。系统窗口不需要对应任何Activity，也不需要有父窗口。应用程序是没有办法创建系统窗口的，只有系统进程可以创建系统窗口。</li>
+</ul>
+<h2 id="那么该怎么创建应用窗口呢？"><a href="#那么该怎么创建应用窗口呢？" class="headerlink" title="那么该怎么创建应用窗口呢？"></a>那么该怎么创建应用窗口呢？</h2><p>1.每个应用类窗口都对应一个Activity对象，所以创建应用类窗口需要创建Activity对象。当AmS要启动某个Activity时就会通知客户端进程，每个客户端进程都对应一个ActivityThread类，所以需要ActivityThread启动Activity。</p>
+<p>启动某个Activity实际是构造一个Activity对象，使用ClassLoader从程序文件中装载指定的Activity对应的Class文件。</p>
+<p>2.创建完成Activity对象后调用Activity的attach（）方法，attach（）的作用就是为刚刚创造好的Activity设置内部变量。</p>
+<p>3.为该Activity创建Window对象。</p>
+<p>4.给Window对象中的mWindowManager变量赋值。</p>
+<p>5.然后就需要给该窗口添加真正的View或者ViewGroup。从performLaunchActivity（）调用callActivityOnCreate（）开始，然后经一系列调用到Activity的onCreate（）方法，在onCreate（）方法中调用setContentView（）方法实际是调用了其对应的Window对象的setContentView（）方法。</p>
+<p>6.接着会调用到PhoneWindow的setContentView，首先调用installDecor（）为Window类添加窗口装饰，其实就是标题栏，程序中设置的layout.xml界面被包含在窗口装饰中，就是窗口内容。窗口装饰也是ViewGroup，窗口装饰和它内部的内容加起来就是我们所说的窗口，或者叫做Window界面。</p>
+<p>7.把创建的窗口通知WmS，让WmS把窗口显示在屏幕上。当Activity准备好后会通知Ams，然后Ams经过一系列调用到Activity的makeVisible（），该方法将真正完成把窗口添加进Wms中。</p>
+<p>8.在makeVisible方法中，首先获得该Activity内部的WindowManager对象，然后调用该对象的addView（）方法。</p>
+<p>9.调用WindowManagerImpl的addView（）方法，流程如下：</p>
+<ul>
+<li>检查添加的窗口是否已经添加过，不能重复添加。</li>
+<li>如果添加的窗口是子窗口类型，找到父窗口并保存在临时变量panelParentView中，该变量作为后面调用ViewRoot的setView（）参数。</li>
+<li>创建一个新的ViewRoot</li>
+<li>调用ViewRoot的setView（）。</li>
+</ul>
+<p>10.完成新建一个ViewRoot对象后，需要把新建的ViewRoot对象添加到mRoots对象中。</p>
+<p>11.调用ViewRoot对象的setView方法。流程如下：</p>
+<ul>
+<li>给ViewRoot的重要变量赋值。</li>
+<li>调用requestLayout（），发出界面重绘请求。</li>
+<li>调用sWindowSession.add（），通知Wms添加窗口。</li>
+</ul>
+<p>创建子窗口或系统窗口过程和上面的类似。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
-
+  <entry>
+    <title>Android Context 到底是什么？</title>
+    <link href="http://yoursite.com/2017/02/03/Android-Context-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
+    <id>http://yoursite.com/2017/02/03/Android-Context-到底是什么？/</id>
+    <published>2017-02-03T09:44:37.000Z</published>
+    <updated>2017-02-07T06:56:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。<br><a id="more"></a></p>
+<h2 id="什么是Android-Context？"><a href="#什么是Android-Context？" class="headerlink" title="什么是Android Context？"></a>什么是Android Context？</h2><p>一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。</p>
+<p>那么从安卓程序的角度来看，Context是什么？其实一个Activity就是一个Context，一个Service也是一个Context。</p>
+<p>一个应用程序可以认为是一个约会环境，用户在这个环境中会切换到不同的场景，比如先去有情调的饭店吃饭，再去电影院看个电影，然后再去xxx（此处省略一万字…）。</p>
+<p>Activity类的确是基于Context，而Service类也是基于Context。Activity除了基于Context类外，还实现了一些其他重要的接口，从架构设计的角度看，interface仅仅是某些功能，而extends才是类的本质，即Activity的本质是一个Context，其所实现的其他接口只是为了扩充Context的功能而已，扩充后的类称之为一个Activity或Service。</p>
+<h2 id="一个应用程序中应该有多少个Context对象"><a href="#一个应用程序中应该有多少个Context对象" class="headerlink" title="一个应用程序中应该有多少个Context对象"></a>一个应用程序中应该有多少个Context对象</h2><p>我们在应用程序开发中经常会调用Context的一些方法，这些方法看起来似乎会返回一些全局的对象，而不仅仅是某个Activity，可能会有点疑问，一个应用程序到底有多少个Context对象呢？比如，Context.getResources（）返回该应用程序所对应的Resource类对象，无论从哪个Activity中调用，都会返回同一个Resource对象。</p>
+<ul>
+<li>一个Activity就是一个场景（Context），一个Service也是一个场景，所以，应用程序中有多少个Activity或者Service就会有多少个Context对象，也就是有多少个场景。</li>
+<li>getResource（）等方法返回的是同一个全局对象。</li>
+</ul>
+<h2 id="Context-继承关系是怎么样的呢？"><a href="#Context-继承关系是怎么样的呢？" class="headerlink" title="Context 继承关系是怎么样的呢？"></a>Context 继承关系是怎么样的呢？</h2><p><img src="http://hi.csdn.net/attachment/201203/1/0_1330607569Vj4c.gif" alt="Context类及其子类的继承关系"></p>
+<p>Context类本身是一个纯abstract类。为了使用方便又定义了Context包装类-ContextWrapper，穿上了一身装备显得也比较强大，ContextWrapper构造函数中必须包含一个真正的Context引用，同时ContextWrapper中有attachBaseContext（）用于给ContextWrapper对象中指定真正的Context对象。</p>
+<p>ContextThemeWrapper内部包含了与主题相关的接口，这里的主题就是指在AndroidManifest.xml中通过android：theme为Application或者Activity指定的主题。</p>
+<p>只有Activity才需要主题，Service默默的后台工作者不需要穿的那么鲜艳，所以Service直接继承于ContextWrapper。</p>
+<p>ContextImpl类真正实现了Context中所有的函数，真正的八块腹肌，我们所调用的各种Context类的方法其实实现均来自于该类。</p>
+<h2 id="什么时候创建的Context"><a href="#什么时候创建的Context" class="headerlink" title="什么时候创建的Context?"></a>什么时候创建的Context?</h2><p>每一个应用程序在客户端都是从ActivityThread类开始的，创建Context对象也是在该类中完成，具体创建ContextImpl类的地方一共有6处：</p>
+<ul>
+<li>PackageInfo.makeApplication（）</li>
+<li>performLaunchActivity（）</li>
+<li>handleCreateBackupAgent（）</li>
+<li>handleCreateService（）</li>
+<li>handleBindApplication（）</li>
+<li>attach（）</li>
+</ul>
+<p>其中attach（）方法仅在Framework进程启动时调用，应用程序运行时不会调用到该方法。</p>
+<h3 id="Application对应的Context"><a href="#Application对应的Context" class="headerlink" title="Application对应的Context"></a>Application对应的Context</h3><p>程序第一次启动时，会辗转调用到makeApplication（）方法。具体代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(<span class="keyword">this</span>,<span class="keyword">null</span>,mActivityThread);</div><div class="line">....</div><div class="line">appContext.setOuterContext(app);</div></pre></td></tr></table></figure>
+<h3 id="Activity对应的Context"><a href="#Activity对应的Context" class="headerlink" title="Activity对应的Context"></a>Activity对应的Context</h3><p>启动Activity时，Ams会通过IPC调用到ActivityThread的scheduleLaunchActivity（）方法，该方法包含两种参数。一种是ActivityInfo，这是一个实现了Parcelable接口的数据类，意味着该对象是Ams创建的，并通过IPC传递到ActivityThread；另一种是其他的一些参数。</p>
+<p>scheduleLaunchActivity（）方法中会根据以上两种参数构造一个本地ActivityRecord数据类，ActivityThread内部会为每一个Activity创建一个ActivityRecord对象，并使用这些数据对象来管理Activity。</p>
+<p>然后会调用handleLaunchActivity（），再调用performLaunchActivity（），该方法中创建ContextImpl的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(r.packageInfo,r.token,<span class="keyword">this</span>);</div><div class="line">appContext.setOuterContext(activity);</div></pre></td></tr></table></figure>
+<p>在performLaunchActivity（）开始执行时，会为r.packageInfo变量赋值。r.packageInfo对象的PackageInfo对象和Application对应的packageInfo对象是同一个。</p>
+<h3 id="Service对应的Context"><a href="#Service对应的Context" class="headerlink" title="Service对应的Context"></a>Service对应的Context</h3><p>启动Service时，Ams会通过IPC调用到ActivityThread的scheduleCreateService（）方法，该方法也包含两种参数。第一种是ServiceInfo，这是实现了一个Parcelable接口的数据类，该对象由AmS创建，并通过IPC传递到ActivityThread内部；第二种是其他参数。</p>
+<p>在scheduleCreateService（）方法中，会使用以上两种参数构造一个CreateServiceData的数据对象，ActivityThread会为其所包含的每一个Service创建该数据对象，并通过这些对象来管理Service。</p>
+<p>然后在执行handleCreateService（）方法，创建ContextImpl对象代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(packageInfo,<span class="keyword">null</span>,<span class="keyword">this</span>);</div><div class="line">...</div><div class="line">appContext.setOuterContext(service);</div></pre></td></tr></table></figure>
+<p>Service对应的Context对象内部的mPackageInfo与Activity、Application中是完全相同的。</p>
+<h2 id="这几个Context之间的关系"><a href="#这几个Context之间的关系" class="headerlink" title="这几个Context之间的关系"></a>这几个Context之间的关系</h2><p>从以上可以看出，创建Context对象的过程基本上是相同的，不同的仅仅是针对Application、Activity、Service使用了不同的数据对象。</p>
+<p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
+<p>应用程序中包含多个ContextImpl对象，而内部变量mPackageInfo却指向同一个PackageInfo对象，这种设计结构一般意味着ContextImpl是一种轻量级类，而PackageInfo是一个重量级类。事实上确实是这样，ContextImpl中的大多数进行包操作的重量级函数实际上都是转向了mPackageInfo对象相应的方法，也就是事实上调用了同一个PackageInfo对象。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
-
+  <entry>
+    <title>我眼中的Android Framework</title>
+    <link href="http://yoursite.com/2017/02/03/%E6%88%91%E7%9C%BC%E4%B8%AD%E7%9A%84Android-Framework/"/>
+    <id>http://yoursite.com/2017/02/03/我眼中的Android-Framework/</id>
+    <published>2017-02-03T09:40:58.000Z</published>
+    <updated>2017-02-07T06:53:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong><br><a id="more"></a></p>
+<h1 id="我眼中的Android-Framework"><a href="#我眼中的Android-Framework" class="headerlink" title="我眼中的Android Framework"></a>我眼中的Android Framework</h1><p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong></p>
+<p>任何控制类程序都有一个入口，安卓应用程序肯定也是有滴。<br>Android framework包含三个小伙伴：服务端、客户端、linux驱动。</p>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><p> 服务端主要包含两个狠重要的类：WindowManagerService（WMS）和ActivityManagerService（AMS）</p>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>客户端包含以下类：</p>
+<ul>
+<li><p>ActivityThread：是安卓应用程序的主线程类，这个小伙伴所在的线程就是UI线程或者称为主线程。</p>
+</li>
+<li><p>Activity：ActivityThread会根据用户的操作选择让哪个Activity对象上它的船。</p>
+</li>
+<li><p>PhoneWindow：富二代，继承于牛气的Window类，自己屋里住着一个DecorView对象，像它老爸喜欢制定规则提供了一些通用窗口操作API。</p>
+</li>
+<li><p>Window：富一代，长得比较抽象，喜欢制定规则提供了一些通用的窗口操作API。它不喜欢被人管所以呢，注意：WindowManagerService管理的窗口不是Window类，其实是View和ViewGroup。</p>
+</li>
+<li><p>DecorView：很能干的家伙，家产来自FrameLayout，比较注重外在喜欢打扮，DecorView是对FrameLayout进行了一些修饰，从名字就可以看出来。</p>
+</li>
+<li><p>ViewRoot：小管家继承于Handler，主要作用是把WMS的IPC调用转换为本地的一个异步调用。</p>
+</li>
+<li><p>W类：ViewRoot小助手，继承于binder，是ViewRoot内部类。主要帮助ViewRoot实现把WMS的IPC调用转换为本地的一个异步调用。</p>
+</li>
+<li><p>WindowManager：客户端如果想创建一个窗口得先告诉WindowManager一声，然后它再和WindowManagerService交流一下看看能不能创建，客户端不能直接和WMS交互。</p>
+</li>
+</ul>
+<h2 id="Linux驱动"><a href="#Linux驱动" class="headerlink" title="Linux驱动"></a>Linux驱动</h2><p> Linux驱动和Framework相关的主要是两个部分：画家SurfaceFlingger和快递员Binder。</p>
+<p> 每一个窗口都对应一个画Surface，SF主要是把各个Surface显示到同一屏幕上。Binder是提供跨进程的消息传递。</p>
+<h2 id="从apk程序的运行过程去看看上面各个组件在啥时候干啥活的"><a href="#从apk程序的运行过程去看看上面各个组件在啥时候干啥活的" class="headerlink" title="从apk程序的运行过程去看看上面各个组件在啥时候干啥活的"></a>从apk程序的运行过程去看看上面各个组件在啥时候干啥活的</h2><p>ActivityThread从main()函数中就开始动起来，然后调用prepareMainLooper()为UI线程创建一个消息快递通道即MessageQueue。</p>
+<p>接着创建ActivityThread对象，创建过程会创建一个消息装卸工Handler对象和一个快递员Binder对象，其中Binder负责接收远程Ams的IPC调用，接收到调用后让Handler把消息装到消息快递队列，UI线程很忙的都是异步的从消息快递队列中取出消息并执行相应操作，比如 start、stop、pause。</p>
+<p>然后UI线程让队列调用Looper.loop()方法进入消息循环体，进入后就会不断地从消息队列中读取并处理消息。</p>
+<p>当ActivityThread接收到Ams发送start某个Activity的快递后就会创建指定的Activity对象。Activity会先按窗户再去按玻璃和贴窗花，所以先创建PhoneWindow-&gt;DecorView-&gt;创建相应的View或ViewGroup。创建完成后就可以让大家欣赏了，调用WindowManager把界面显示到屏幕上，然后创建ViewRoot，然后调用Wms提供的远程接口添加一个窗口并显示到屏幕上。</p>
+<p>接下来就是用户的操作，事件线程不断的把消息快递发到事件队列中去，然后事件分发线程秘书逐个取出消息，然后调用Wms中的相应函数处理该消息。</p>
+<h3 id="很多线程是不是很晕？"><a href="#很多线程是不是很晕？" class="headerlink" title="很多线程是不是很晕？"></a>很多线程是不是很晕？</h3><ol>
+<li><p>安卓程序中都有哪些线程？</p>
+<p>  客户端小伙伴至少包含三个线程小弟，Activity启动后会创建一个ViewRoot.W对象，同时ActivityThread会创建一个ApplicationThread对象，这两个对象继承消息总管Binder，每个Binder对应一个线程，负责接收Linux Binder驱动发送的IPC调用。还有一个是UI线程呗。</p>
+</li>
+<li><p>UI线程是什么？</p>
+<p> 一直在倾听用户的心声，所有的处理用户消息，以及绘制页面的工作都在该线程中完成。</p>
+</li>
+<li><p>自定义的线程和UI线程有什么区别？</p>
+<p> UI线程是从ActivityThread运行的，在该类的main()方法中已经使用了Looper.prepareMainLooper()为该线程添加了Looper对象，已经为该线程创建了消息队列，是自带秘书光环的。因此，我们才可以在Activity中去定义Handler对象，因为创建Handler对象时其线程必须已经创建了消息队列，装卸工得配运输带要不然没法干活。而普通的Thread则没有默认创建消息队列，所以不能直接在Thread中直接定义Handler，这个就是我们不懂程序运行原理导致的困惑。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—&lt;strong&gt;前言&lt;/strong&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
-
+  <entry>
+    <title>Android 设计模式-单例模式</title>
+    <link href="http://yoursite.com/2017/02/03/Android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/02/03/Android-设计模式-单例模式/</id>
+    <published>2017-02-03T09:35:12.000Z</published>
+    <updated>2017-02-07T06:57:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
+<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
+<li><strong>类会被许多类和线程调用</strong><a id="more"></a>
+</li>
+</ul>
+<h1 id="Android-设计模式-单例模式"><a href="#Android-设计模式-单例模式" class="headerlink" title="Android 设计模式-单例模式"></a>Android 设计模式-单例模式</h1><h3 id="什么情况下需要单例模式？-1"><a href="#什么情况下需要单例模式？-1" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
+<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
+<li><strong>类会被许多类和线程调用</strong></li>
+</ul>
+<hr>
+<h3 id="设计单例模式"><a href="#设计单例模式" class="headerlink" title="设计单例模式"></a>设计单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line"><span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</div><div class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的做法在多线程的时候会出现问题，比如有两个线程同时调用getInstance(),这时会new两个对象出来。</p>
+<h3 id="单例模式改进1"><a href="#单例模式改进1" class="headerlink" title="单例模式改进1"></a>单例模式改进1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">synchronized</span>(Singleton.class)&#123;</div><div class="line">    <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</div><div class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方式还是会有问题，就是高并发情况下多线程去抢夺锁，假如有几百个线程，其中有一个运气比较差，这个线程就会出现一直去getInstance，资源一直返回不回去，UI也不会得到更新。</p>
+<h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;\\<span class="function">A</span></div><div class="line">    <span class="title">synchronized</span><span class="params">(Singleton.class)</span>&#123;\\<span class="function">C</span></div><div class="line">     <span class="title">if</span><span class="params">(mSingleton == <span class="keyword">null</span>)</span></div><div class="line">      mSingleton = <span class="keyword">new</span> Singleton();\\B</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
+<h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;什么情况下需要单例模式？&quot;&gt;&lt;a href=&quot;#什么情况下需要单例模式？&quot; class=&quot;headerlink&quot; title=&quot;什么情况下需要单例模式？&quot;&gt;&lt;/a&gt;什么情况下需要单例模式？&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一些类提供公共功能供别人调用，本身不会处理业务逻辑&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;类会被许多类和线程调用&lt;/strong&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
-
-
-</body>
-</html>
+  <entry>
+    <title>东半球最好的TV桌面开源项目</title>
+    <link href="http://yoursite.com/2017/02/03/%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84TV%E6%A1%8C%E9%9D%A2%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/</id>
+    <published>2017-02-03T09:14:46.000Z</published>
+    <updated>2017-02-07T06:53:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。<br><a id="more"></a></p>
+<h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
+<p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="external">http://blog.csdn.net/rain_butterfly</a></p>
+<hr>
+<h1 id="AndroidTVLauncher"><a href="#AndroidTVLauncher" class="headerlink" title="AndroidTVLauncher"></a>AndroidTVLauncher</h1><p><img src="http://img.blog.csdn.net/20160914141146439" alt="这里写图片描述"></p>
+<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>CatLauncher(Leanback风格) 目前功能已基本稳定，后续会跟进官方Leanback库的进展，Compatible桌面理论上不再维护</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><blockquote>
+<ul>
+<li>Leanback风格</li>
+<li>图片展示</li>
+<li>视频直播（节操播放器-基于ijkplayer）</li>
+<li>媒体详情</li>
+<li>第三方应用列表</li>
+<li>桌面特殊功能</li>
+</ul>
+</blockquote>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="http://img.blog.csdn.net/20160914141236454" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141253290" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141304978" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141318267" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141351260" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141402120" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160914141411939" alt="这里写图片描述"></p>
+<h3 id="下一步的改进"><a href="#下一步的改进" class="headerlink" title="下一步的改进"></a>下一步的改进</h3><blockquote>
+<ul>
+<li>跟进官方Leanback库新功能</li>
+</ul>
+</blockquote>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><p>Apache License, Version 2.0</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="AndroidTV,开源" scheme="http://yoursite.com/tags/AndroidTV-%E5%BC%80%E6%BA%90/"/>
+    
+  </entry>
+  
+</feed>
