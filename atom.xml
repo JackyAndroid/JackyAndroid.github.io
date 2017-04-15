@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-15T08:55:35.000Z</updated>
+  <updated>2017-04-15T10:05:06.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/04/15/数据库到底哪家强？/</id>
     <published>2017-04-15T06:24:26.000Z</published>
-    <updated>2017-04-15T08:55:35.000Z</updated>
+    <updated>2017-04-15T10:05:06.000Z</updated>
     
     <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？<br><a id="more"></a></p>
 <p>我们先看基于SQLite发展而来的框架，这方面主要分成两条发展路线，一条是Rx或者叫做对象映射（OM）路线，一条是对象关系映射（ORM）路线。</p>
@@ -41,6 +41,20 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable users = db.createQuery(<span class="string">"users"</span>, <span class="string">"SELECT * FROM users"</span>);</div><div class="line">users.subscribe(<span class="keyword">new</span> Action1() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Query query)</span> </span>&#123;</div><div class="line">    Cursor cursor = query.run();</div><div class="line">    <span class="comment">// TODO parse data...</span></div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>在保证性能和复杂扩展性的同时，利用Rxjava操作Sql在易用性上有部分提高。</p>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>还需要编写Sql语句，复杂性还是较高。</p>
+<h3 id="SqlDelight"><a href="#SqlDelight" class="headerlink" title="SqlDelight"></a>SqlDelight</h3><blockquote>
+<p>SqlDelight通过从 SQL 语句来生成 JAVA 模型代码。这样的好处是，所有 SQL 语句都位于同一个位置，通过查看 SQL 语句可以清楚的了解需要实现的功能和数据库的结构,也便于管理以及java类访问。</p>
+</blockquote>
+<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><p>需要把 SQL 语句放到对应的 .sq 文件中，默认目录为和 main 目录下的 java 代码同级，例如<br>src/main/sqldelight/com/example/HockeyPlayer.sq ，其中 com/example/ 为对应 java 对象的包名字。 在该 .sq 文件中一般第一个语句是创建表的语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> hockey_player (</div><div class="line">  _id <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span> AUTOINCREMENT,</div><div class="line">  <span class="built_in">number</span> <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="keyword">name</span> <span class="built_in">TEXT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span></div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">-- 其他的语句通过标识符来引用。在生成的 Java 对象中会包含</span></div><div class="line"><span class="comment">-- 一个该标识符的常亮引用这个语句。</span></div><div class="line">select_by_name:</div><div class="line"><span class="keyword">SELECT</span> *</div><div class="line"><span class="keyword">FROM</span> hockey_player</div><div class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span> = ?;</div></pre></td></tr></table></figure>
+<p>上面的 SQL 语句会生成一个 HockeyPlayerModel Java 接口。该接口内有两个嵌套类分别把 Cursor 映射为 Java 对象以及把 Java 对象转换为 ContentValues 好插入数据库</p>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>所有的SQL statement都存在.sq文件中，便于管理</li>
+<li>可以自由的使用普通SQLite的同时帮助你处理了程式化的代码</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>需要编写原生sql</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>SqlBrite方便在 RxJava 中使用 Sql 操作，并且额外添加了对数据库表数据更新通知的机制，当你对数据表进行操作的时候，其他订阅者可以在数据发生变化的时候收到通知。然后可以用 RxJava 的方式来操作数据。只是一个 SQLiteOpenHelper 的轻量级封装，并不关心你的对象是如何实现的，也不关心你的数据库。SqlBrite也不支持对象映射和类型安全的查询，SqlBrite 不是一个 ORM 框架，也不是一个类型安全的查询框架。不会提供类似Gson中对象序列化的功能，也不会提供数据库迁移的功能。</p>
+<p>SqlDelight 的做法是从 SQL 语句来生成 JAVA 模型代码。 这样的好处是，所有 SQL 语句都位于同一个位置。SqlDelight 添加了对 SQL 语句的编译时验证、表名字和列名字的代码自动完成功能。让编写 SQL 语句更加快捷。在编译的时候，根据 SQL 语句生成 Java 模型接口和 builder 来把数据行和 Java 对象实现转换。SqlDelight 不会做很重的功能（比如数据懒加载、缓存 、级联删除 等 ORM 框架内常见的功能）。</p>
+<h2 id="对象关系映射（ORM）路线"><a href="#对象关系映射（ORM）路线" class="headerlink" title="对象关系映射（ORM）路线"></a>对象关系映射（ORM）路线</h2><p>这部分框架在易用性上和性能上都做了很多工作，易用性上基本达到极致，在性能上接近原生Sql。</p>
 ]]></content>
     
     <summary type="html">
