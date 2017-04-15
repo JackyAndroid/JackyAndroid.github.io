@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/15/数据库到底哪家强？/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
-<meta property="og:updated_time" content="2017-04-15T08:51:20.000Z">
+<meta property="og:updated_time" content="2017-04-15T08:55:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库到底哪家强？">
 <meta name="twitter:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
@@ -366,8 +366,11 @@
 <p>SqlBrite是对 Android 系统的 SQLiteOpenHelper 的封装，对SQL操作引入了响应式语义 （Rx）（用来在 RxJava 中使用）</p>
 </blockquote>
 <h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><ul>
-<li>创建一个SqlBrite对象，该对象是该库的入口：<figure class="highlight plain"><figcaption><span>sqlBrite = SqlBrite.create();```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- 提供一个 SQLiteOpenHelper实例和一个Scheduler实例来创建一个 BriteDatabase 对象：```BriteDatabase db = sqlBrite.wrapDatabaseHelper(openHelper, Schedulers.io());```，Scheduler 是指定执行查询的操作的线程，由于查询数据库是不建议在 UI 线程中执行的，所以一般指定 Schedulers.io() 。</div><div class="line">- BriteDatabase.createQuery方法和SQLiteDatabase.rawQuery方法相比，多了一个table(s)表参数，用于监听数据变更。当我们订阅subscribe返回的Observable的时候，立刻执行需要的查询语句。</div><div class="line"></div><div class="line">```java</div><div class="line">Observable users = db.createQuery(&quot;users&quot;, &quot;SELECT * FROM users&quot;);</div><div class="line">users.subscribe(new Action1() &#123;</div><div class="line">  @Override public void call(Query query) &#123;</div><div class="line">    Cursor cursor = query.run();</div><div class="line">    // TODO parse data...</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></li>
+<li>创建一个SqlBrite对象，该对象是该库的入口：<code>SqlBrite sqlBrite = SqlBrite.create();</code></li>
+<li>提供一个 SQLiteOpenHelper实例和一个Scheduler实例来创建一个 BriteDatabase 对象：<code>BriteDatabase db = sqlBrite.wrapDatabaseHelper(openHelper, Schedulers.io());</code>，Scheduler 是指定执行查询的操作的线程，由于查询数据库是不建议在 UI 线程中执行的，所以一般指定 Schedulers.io() 。</li>
+<li>BriteDatabase.createQuery方法和SQLiteDatabase.rawQuery方法相比，多了一个table(s)表参数，用于监听数据变更。当我们订阅subscribe返回的Observable的时候，立刻执行需要的查询语句。</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable users = db.createQuery(<span class="string">"users"</span>, <span class="string">"SELECT * FROM users"</span>);</div><div class="line">users.subscribe(<span class="keyword">new</span> Action1() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Query query)</span> </span>&#123;</div><div class="line">    Cursor cursor = query.run();</div><div class="line">    <span class="comment">// TODO parse data...</span></div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>在保证性能和复杂扩展性的同时，利用Rxjava操作Sql在易用性上有部分提高。</p>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>还需要编写Sql语句，复杂性还是较高。</p>
 
