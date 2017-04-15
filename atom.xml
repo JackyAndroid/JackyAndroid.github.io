@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-15T07:36:22.000Z</updated>
+  <updated>2017-04-15T08:51:20.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,14 +20,29 @@
     <link href="http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/04/15/数据库到底哪家强？/</id>
     <published>2017-04-15T06:24:26.000Z</published>
-    <updated>2017-04-15T07:36:22.000Z</updated>
+    <updated>2017-04-15T08:51:20.000Z</updated>
     
-    <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于Sqlite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？<br><a id="more"></a></p>
+    <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？<br><a id="more"></a></p>
+<p>我们先看基于SQLite发展而来的框架，这方面主要分成两条发展路线，一条是Rx或者叫做对象映射（OM）路线，一条是对象关系映射（ORM）路线。</p>
+<h2 id="Rx-对象映射路线"><a href="#Rx-对象映射路线" class="headerlink" title="Rx/对象映射路线"></a>Rx/对象映射路线</h2><p>代表数据库有<a href="https://github.com/square/sqlbrite" target="_blank" rel="external">sqlbrite</a>、<a href="https://github.com/square/sqldelight" target="_blank" rel="external">sqldelight</a>，这两个都是Square出品。</p>
+<blockquote>
+<p>SqlBrite和SqlDelight都是对象映射（OM，Object Mappers）而不是对象关系映射（ORM，Object/Relational Mappers）。</p>
+<p>ORM 其实并不是一个优秀的框架。很多平台的 ORM 实现都有性能和内存的问题。我们也不会编写ORM。 – JakeWharton</p>
+</blockquote>
+<p>上面这句话很好的说明了这两个框架的出发点，知道这些我们就容易理解了。</p>
+<h3 id="SqlBrite"><a href="#SqlBrite" class="headerlink" title="SqlBrite"></a>SqlBrite</h3><blockquote>
+<p>SqlBrite是对 Android 系统的 SQLiteOpenHelper 的封装，对SQL操作引入了响应式语义 （Rx）（用来在 RxJava 中使用）</p>
+</blockquote>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><ul>
+<li>创建一个SqlBrite对象，该对象是该库的入口：<figure class="highlight plain"><figcaption><span>sqlBrite = SqlBrite.create();```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- 提供一个 SQLiteOpenHelper实例和一个Scheduler实例来创建一个 BriteDatabase 对象：```BriteDatabase db = sqlBrite.wrapDatabaseHelper(openHelper, Schedulers.io());```，Scheduler 是指定执行查询的操作的线程，由于查询数据库是不建议在 UI 线程中执行的，所以一般指定 Schedulers.io() 。</div><div class="line">- BriteDatabase.createQuery方法和SQLiteDatabase.rawQuery方法相比，多了一个table(s)表参数，用于监听数据变更。当我们订阅subscribe返回的Observable的时候，立刻执行需要的查询语句。</div><div class="line"></div><div class="line">```java</div><div class="line">Observable users = db.createQuery(&quot;users&quot;, &quot;SELECT * FROM users&quot;);</div><div class="line">users.subscribe(new Action1() &#123;</div><div class="line">  @Override public void call(Query query) &#123;</div><div class="line">    Cursor cursor = query.run();</div><div class="line">    // TODO parse data...</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>在保证性能和复杂扩展性的同时，利用Rxjava操作Sql在易用性上有部分提高。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>还需要编写Sql语句，复杂性还是较高。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;目前大部分开源数据库都是基于Sqlite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？&lt;br&gt;
+      &lt;p&gt;目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？&lt;br&gt;
     
     </summary>
     
