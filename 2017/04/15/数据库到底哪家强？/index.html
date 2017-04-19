@@ -95,15 +95,14 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/15/数据库到底哪家强？/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
-<meta property="og:image" content="http://static.580bang.com/wp-content/uploads/2016/07/20160719_578da6665d360.png">
-<meta property="og:image" content="http://static.580bang.com/wp-content/uploads/2016/07/20160719_578da6671be28.png">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png">
 <meta property="og:image" content="http://greenrobot.org/wordpress/wp-content/uploads/greenDAO-vs-OrmLite-vs-ActiveAndroid.png">
 <meta property="og:image" content="http://www.2cto.com/uploadfile/Collfiles/20160811/201608111004341068.png">
-<meta property="og:updated_time" content="2017-04-15T13:08:08.000Z">
+<meta property="og:updated_time" content="2017-04-19T07:18:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库到底哪家强？">
 <meta name="twitter:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
-<meta name="twitter:image" content="http://static.580bang.com/wp-content/uploads/2016/07/20160719_578da6665d360.png">
+<meta name="twitter:image" content="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png">
 
 
 
@@ -410,8 +409,7 @@
 <li>greenDAO 支持 protocol buffer(protobuf) 协议数据的直接存储，如果你通过 protobuf 协议与服务器交互，将不需要任何的映射。</li>
 <li>数据加密</li>
 </ul>
-<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><img src="http://static.580bang.com/wp-content/uploads/2016/07/20160719_578da6665d360.png" alt=""></p>
-<p><img src="http://static.580bang.com/wp-content/uploads/2016/07/20160719_578da6671be28.png" alt=""></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png" alt=""></p>
 <p><img src="http://greenrobot.org/wordpress/wp-content/uploads/greenDAO-vs-OrmLite-vs-ActiveAndroid.png" alt=""></p>
 <p>DaoMaster保存了sqlitedatebase对象以及操作DAO classes。其提供了一些创建和删除table的静态方法，其内部类OpenHelper和DevOpenHelper实现了SQLiteOpenHelper并创建数据库的框架。</p>
 <p>DaoMaster除了具有创建表和删除表的两个功能外，还有两个内部类，分别为OpenHelper和DevOpenHelper，而DevOpenHelper继承自OpenHelper，而OpenHelper继承自SQLiteOpenHelper，而重写的onCreate()方法中调用了createAllTables(db,false)；方法来创建数据表，而createAllTables()方法中是通过调用UserDao静态方法来创建表的UserDao.createTable(db, ifNotExists)；</p>
