@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="AndroidTV,开源," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -89,25 +89,16 @@
 
 
 
-<meta name="description" content="这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。">
+<meta name="description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="东半球最好的TV桌面开源项目">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/index.html">
+<meta property="og:title" content="JVM 答疑解惑">
+<meta property="og:url" content="http://yoursite.com/2017/05/11/JVM-答疑解惑/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141146439">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141236454">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141253290">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141304978">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141318267">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141351260">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141402120">
-<meta property="og:image" content="http://img.blog.csdn.net/20160914141411939">
-<meta property="og:updated_time" content="2017-02-07T06:53:33.000Z">
+<meta property="og:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
+<meta property="og:updated_time" content="2017-05-11T09:47:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="东半球最好的TV桌面开源项目">
-<meta name="twitter:description" content="这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160914141146439">
+<meta name="twitter:title" content="JVM 答疑解惑">
+<meta name="twitter:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
 
 
 
@@ -135,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/11/JVM-答疑解惑/"/>
 
 
 
 
 
-  <title> 东半球最好的TV桌面开源项目 | 墨镜猫 </title>
+  <title> JVM 答疑解惑 | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -288,7 +279,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/11/JVM-答疑解惑/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -312,7 +303,7 @@
             
             
               
-                东半球最好的TV桌面开源项目
+                JVM 答疑解惑
               
             
           </h2>
@@ -327,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T17:14:46+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-11T17:40:00+08:00">
+                2017-05-11
               </time>
             
 
@@ -363,36 +354,8 @@
       
 
       
-        <p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。<br><a id="more"></a></p>
-<h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
-<p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="external">http://blog.csdn.net/rain_butterfly</a></p>
-<hr>
-<h1 id="AndroidTVLauncher"><a href="#AndroidTVLauncher" class="headerlink" title="AndroidTVLauncher"></a>AndroidTVLauncher</h1><p><img src="http://img.blog.csdn.net/20160914141146439" alt="这里写图片描述"></p>
-<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>CatLauncher(Leanback风格) 目前功能已基本稳定，后续会跟进官方Leanback库的进展，Compatible桌面理论上不再维护</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><blockquote>
-<ul>
-<li>Leanback风格</li>
-<li>图片展示</li>
-<li>视频直播（节操播放器-基于ijkplayer）</li>
-<li>媒体详情</li>
-<li>第三方应用列表</li>
-<li>桌面特殊功能</li>
-</ul>
-</blockquote>
-<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="http://img.blog.csdn.net/20160914141236454" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141253290" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141304978" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141318267" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141351260" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141402120" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160914141411939" alt="这里写图片描述"></p>
-<h3 id="下一步的改进"><a href="#下一步的改进" class="headerlink" title="下一步的改进"></a>下一步的改进</h3><blockquote>
-<ul>
-<li>跟进官方Leanback库新功能</li>
-</ul>
-</blockquote>
-<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><p>Apache License, Version 2.0</p>
+        <p>JVM是什么？<br>平常接触的东西都存在哪里？<br>类如何加载？<br>怎么运行？<br>清洁工怎么工作？</p>
+<a id="more"></a>
 
       
     </div>
@@ -435,12 +398,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/AndroidTV-开源/" rel="tag"># AndroidTV,开源</a>
-          
-        </div>
-      
 
       
         
@@ -450,15 +407,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/15/数据库到底哪家强？/" rel="next" title="数据库到底哪家强？">
+                <i class="fa fa-chevron-left"></i> 数据库到底哪家强？
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/03/Android-设计模式-单例模式/" rel="prev" title="Android 设计模式-单例模式">
-                Android 设计模式-单例模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,17 +487,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -625,22 +573,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#欢迎在GitHub或者CSDN上关注我"><span class="nav-number">1.</span> <span class="nav-text">欢迎在GitHub或者CSDN上关注我</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AndroidTVLauncher"><span class="nav-number"></span> <span class="nav-text">AndroidTVLauncher</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">1.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特性"><span class="nav-number">2.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果图"><span class="nav-number">3.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下一步的改进"><span class="nav-number">4.</span> <span class="nav-text">下一步的改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#License"><span class="nav-number">5.</span> <span class="nav-text">License</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
