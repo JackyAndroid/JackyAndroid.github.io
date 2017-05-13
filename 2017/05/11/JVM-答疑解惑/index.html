@@ -95,10 +95,12 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/11/JVM-答疑解惑/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
-<meta property="og:updated_time" content="2017-05-11T09:47:13.000Z">
+<meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif">
+<meta property="og:updated_time" content="2017-05-13T10:10:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 答疑解惑">
 <meta name="twitter:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
+<meta name="twitter:image" content="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif">
 
 
 
@@ -356,6 +358,9 @@
       
         <p>JVM是什么？<br>平常接触的东西都存在哪里？<br>类如何加载？<br>怎么运行？<br>清洁工怎么工作？</p>
 <a id="more"></a>
+<h2 id="JVM是什么？"><a href="#JVM是什么？" class="headerlink" title="JVM是什么？"></a>JVM是什么？</h2><p>Java 虚拟机屏蔽了与具体操作系统平台相关的信息,使得 Java 语言编译程序只需生成在 Java 虚拟机上运行的目标代码(字节码),就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时,实际上最终还是把字节码解释成具体平台上的机器指令执行。</p>
+<p>Java 虚拟机就像一个熟悉多个国家语言的导游，你只要向他说出自己的语言，他就能带着你在多个国家无障碍的玩耍。比如说，你说“我要吃肉夹馍”，无论到了哪个国家，你只需要和导游说这句话就可以，寻找和本地人交流导游就会帮你办好，最后结果是相同的：吃的都是肉夹馍。</p>
+<p>可以参考如下Java技术体系图：<br><img src="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif" alt=""></p>
 
       
     </div>
@@ -487,8 +492,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -573,6 +587,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM是什么？"><span class="nav-number">1.</span> <span class="nav-text">JVM是什么？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

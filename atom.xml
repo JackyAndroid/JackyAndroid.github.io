@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-11T09:47:13.000Z</updated>
+  <updated>2017-05-13T10:10:30.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,10 +20,13 @@
     <link href="http://yoursite.com/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"/>
     <id>http://yoursite.com/2017/05/11/JVM-答疑解惑/</id>
     <published>2017-05-11T09:40:00.000Z</published>
-    <updated>2017-05-11T09:47:13.000Z</updated>
+    <updated>2017-05-13T10:10:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>JVM是什么？<br>平常接触的东西都存在哪里？<br>类如何加载？<br>怎么运行？<br>清洁工怎么工作？</p>
 <a id="more"></a>
+<h2 id="JVM是什么？"><a href="#JVM是什么？" class="headerlink" title="JVM是什么？"></a>JVM是什么？</h2><p>Java 虚拟机屏蔽了与具体操作系统平台相关的信息,使得 Java 语言编译程序只需生成在 Java 虚拟机上运行的目标代码(字节码),就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时,实际上最终还是把字节码解释成具体平台上的机器指令执行。</p>
+<p>Java 虚拟机就像一个熟悉多个国家语言的导游，你只要向他说出自己的语言，他就能带着你在多个国家无障碍的玩耍。比如说，你说“我要吃肉夹馍”，无论到了哪个国家，你只需要和导游说这句话就可以，寻找和本地人交流导游就会帮你办好，最后结果是相同的：吃的都是肉夹馍。</p>
+<p>可以参考如下Java技术体系图：<br><img src="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif" alt=""></p>
 ]]></content>
     
     <summary type="html">
