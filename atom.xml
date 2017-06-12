@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-13T10:20:54.000Z</updated>
+  <updated>2017-06-12T06:35:29.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,130 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Kotlin需要知道的一切</title>
+    <link href="http://yoursite.com/2017/06/12/%E5%85%B3%E4%BA%8EKotlin%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%80%E5%88%87/"/>
+    <id>http://yoursite.com/2017/06/12/关于Kotlin需要知道的一切/</id>
+    <published>2017-06-12T06:16:18.000Z</published>
+    <updated>2017-06-12T06:35:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前世今生<br>有什么样的语法？<br>语法是怎么实现的？<br>如何编译的？<br>迁移成本<br>为我们带来什么改变？<br><a id="more"></a></p>
+<h2 id="前世今生"><a href="#前世今生" class="headerlink" title="前世今生"></a>前世今生</h2><h3 id="设计出发点"><a href="#设计出发点" class="headerlink" title="设计出发点"></a>设计出发点</h3><ol>
+<li>Concise — 简洁</li>
+<li>Safe — 安全</li>
+<li>Interoperable — 协作</li>
+</ol>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>Statically typed programming language for modern multiplatform applications<br>静态类型编程语言用于现代多平台应用</p>
+<h2 id="有什么样的语法？"><a href="#有什么样的语法？" class="headerlink" title="有什么样的语法？"></a>有什么样的语法？</h2><h3 id="语法对比"><a href="#语法对比" class="headerlink" title="语法对比"></a>语法对比</h3><table>
+<thead>
+<tr>
+<th>Kotlin vs Java</th>
+<th>kotlin</th>
+<th>Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>函数</td>
+<td>fun sum(a: Int, b: Int): Int { return a + b }</td>
+<td>public int sum(int a, int b) {return a + b;}</td>
+</tr>
+<tr>
+<td>变量</td>
+<td>var a: Int = 1</td>
+<td>int a = 1;</td>
+</tr>
+<tr>
+<td>非空判断</td>
+<td>text?.let { val length = text.length }</td>
+<td>if (text != null) { int length = text.length(); }</td>
+</tr>
+<tr>
+<td>开关</td>
+<td>var grade = when (score) {1, 2 -&gt; “Excellent” }</td>
+<td>String grade; switch (score) { case 1: case 2: grade = “Excellent”; break; }</td>
+</tr>
+</tbody>
+</table>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p><strong>数字</strong></p>
+<ol>
+<li>数字没有隐式拓宽转换，如 Java 中 int可以隐式转换为long</li>
+<li>使数字常量更易，val oneMillion = 1_000_000</li>
+<li>对于位运算，没有特殊字符来表示，而只可用中缀方式调用命名函数，例如:val x = (1 shl 2) and 0x000FF000，shl:有符号左移 and:位与</li>
+</ol>
+<p><strong>字符</strong></p>
+<ol>
+<li>字符用 Char 类型表示，它们不能直接当作数字，但可以显示转换</li>
+<li>模板：val i = 10  val s = “i = $i” // 求值结果为 “i = 10”</li>
+</ol>
+<p><strong>控制流</strong></p>
+<p><strong>If</strong>：是一个表达式，即它会返回一个值，没有三元运算符，使用if表达：<code>val max = if (a &gt; b) a else b</code></p>
+<p><strong>When</strong>：取代了类 C 语言的 switch 操作符，简单形式如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">when</span> (x) &#123;</div><div class="line">    <span class="number">1</span> -&gt; print(<span class="string">"x == 1"</span>)</div><div class="line">    <span class="number">2</span> -&gt; print(<span class="string">"x == 2"</span>)</div><div class="line">    <span class="keyword">else</span> -&gt; &#123; <span class="comment">// 注意这个块</span></div><div class="line">        print(<span class="string">"x is neither 1 nor 2"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>when 既可以被当做表达式使用也可以被当做语句使用。可以用任意表达式（而不只是常量）作为分支条件：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">when</span> (x) &#123;</div><div class="line">    parseInt(s) -&gt; print(<span class="string">"s encodes x"</span>)</div><div class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">"s does not encode x"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>返回和跳转</strong></p>
+<p>跳转表达式都可以用作更大表达式的一部分：<br><code>val s = person.name ?: return</code></p>
+<p>标签：我们可以用标签限制 break 或者continue：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">loop@ for (i in 1..100) &#123;</div><div class="line">    for (j in 1..100) &#123;</div><div class="line">        if (……) break@loop</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p><strong>类</strong></p>
+<p>类声明：<br>Kotlin 中所有的类默认都是 final，由类名、类头（指定其类型参数、主 构造函数等）和由大括号包围的类体构成。类头和类体都是可选的； 如果一个类没有类体，可以省略花括号。通常如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Invoice</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实例：<br><code>val invoice = Invoice()</code>，Kotlin 并没有 new 关键字。</p>
+<p>覆盖：<br>Kotlin力求清晰显式。与 Java 不同，Kotlin 需要显式 标注可覆盖的成员。如：override、open</p>
+<p>静态方法：<br>Kotlin 中类没有静态方法。建议简单地使用包级函数。</p>
+<p><strong>属性和字段</strong></p>
+<p>声明一个属性的完整语法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var &lt;propertyName&gt;[: &lt;PropertyType&gt;] [= &lt;property_initializer&gt;]</div><div class="line">    [&lt;getter&gt;]</div><div class="line">    [&lt;setter&gt;]</div></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stringRepresentation: String</div><div class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>.toString()</div><div class="line">    <span class="keyword">set</span>(value) &#123;</div><div class="line">        setDataFromString(value) <span class="comment">// 解析字符串并赋值给其他属性</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><strong>接口</strong></p>
+<p>Kotlin 的接口与 Java 8 类似，既包含抽象方法的声明，也包含实现。与抽象类不同的是，接口无法保存状态。它可以有 属性但必须声明为抽象或提供访问器实现。</p>
+<p>使用关键字 interface 来定义接口</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyInterface</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">      <span class="comment">// 可选的方法体</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>可见性修饰符</strong></p>
+<p>Kotlin 中有这四个可见性修饰符：private、 protected、 internal 和 public， 默认可见性是 public。</p>
+<p>可见性修饰符 internal 意味着该成员只在相同模块内可见。更具体地说， 一个模块是编译在一起的一套 Kotlin 文件：<br>        一个 IntelliJ IDEA 模块；<br>        一个 Maven 或者 Gradle 项目；<br>        一次 ＜kotlinc＞ Ant 任务执行所编译的一套文件。</p>
+<p><strong>扩展</strong>        </p>
+<p>Kotlin 同 C# 和 Gosu 类似，能够扩展一个类的新功能而无需继承该类或使用像装饰者这样的任何类型的设计模式。 这通过叫做 扩展 的特殊声明完成。Kotlin 支持 扩展函数 和 扩展属性。</p>
+<p>声明一个扩展函数，我们需要用一个 接收者类型 也就是被扩展的类型来作为他的前缀。 下面代码为 MutableList<int> 添加一个swap 函数：</int></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> MutableList<span class="type">&lt;Int&gt;</span>.<span class="title">swap</span><span class="params">(index1: <span class="type">Int</span>, index2: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">val</span> tmp = <span class="keyword">this</span>[index1] <span class="comment">// “this”对应该列表</span></div><div class="line">    <span class="keyword">this</span>[index1] = <span class="keyword">this</span>[index2]</div><div class="line">    <span class="keyword">this</span>[index2] = tmp</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>数据类</strong></p>
+<p>我们经常创建一些只保存数据的类。在这些类中，一些标准函数往往是从 数据机械推导而来的。在 Kotlin 中，这叫做 数据类 并标记为<br><code>data：data class User(val name: String, val age: Int)</code></p>
+<h3 id="语法实现原理"><a href="#语法实现原理" class="headerlink" title="语法实现原理"></a>语法实现原理</h3><p><strong>Null Safe Operator实现原理</strong><br>示例函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fun testNullSafeOperator(string: String?) &#123;</div><div class="line">    System.out.println(string?.toCharArray()?.getOrNull(10)?.hashCode())</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>生成的字节码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public final static testNullSafeOperator(Ljava/lang/String;)V</div><div class="line">    @Lorg/jetbrains/annotations/Nullable;() // invisible, parameter 0</div><div class="line">   L0</div><div class="line">    LINENUMBER 11 L0</div><div class="line">    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;</div><div class="line">    ALOAD 0</div><div class="line">    DUP</div><div class="line">    IFNULL L1   //对string字符串判空</div><div class="line">    INVOKESTATIC kotlin/text/StringsKt.toCharArray (Ljava/lang/String;)[C</div><div class="line">    DUP</div><div class="line">    IFNULL L1  //对CharArray判空</div><div class="line">    BIPUSH 10</div><div class="line">    INVOKESTATIC kotlin/collections/ArraysKt.getOrNull ([CI)Ljava/lang/Character;</div><div class="line">    DUP</div><div class="line">    IFNULL L1  //对Char判空</div><div class="line">    INVOKEVIRTUAL java/lang/Object.hashCode ()I</div><div class="line">    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;</div><div class="line">    GOTO L2</div><div class="line">   L1</div><div class="line">    POP</div><div class="line">    ACONST_NULL</div><div class="line">   L2</div><div class="line">    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/Object;)V</div><div class="line">   L3</div><div class="line">    LINENUMBER 12 L3</div><div class="line">    RETURN</div><div class="line">   L4</div><div class="line">    LOCALVARIABLE string Ljava/lang/String; L0 L4 0</div><div class="line">    MAXSTACK = 3</div><div class="line">    MAXLOCALS = 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>反编译为Java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">testNullSafeOperator</span><span class="params">(@Nullable String string)</span> </span>&#123;</div><div class="line">      PrintStream var10000;</div><div class="line">      Integer var5;</div><div class="line">      label18: &#123;</div><div class="line">         var10000 = System.out;</div><div class="line">         <span class="keyword">if</span>(string != <span class="keyword">null</span>) &#123;</div><div class="line">            PrintStream var2 = var10000;</div><div class="line">            <span class="keyword">if</span>(string == <span class="keyword">null</span>) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> TypeCastException(<span class="string">"null cannot be cast to non-null type java.lang.String"</span>);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">char</span>[] var4 = ((String)string).toCharArray();</div><div class="line">            Intrinsics.checkExpressionValueIsNotNull(var4, <span class="string">"(this as java.lang.String).toCharArray()"</span>);</div><div class="line">            <span class="keyword">char</span>[] var3 = var4;</div><div class="line">            var10000 = var2;</div><div class="line">            <span class="keyword">if</span>(var3 != <span class="keyword">null</span>) &#123;</div><div class="line">               Character var10001 = ArraysKt.getOrNull(var3, <span class="number">10</span>);</div><div class="line">               <span class="keyword">if</span>(var10001 != <span class="keyword">null</span>) &#123;</div><div class="line">                  var5 = Integer.valueOf(var10001.hashCode());</div><div class="line">                  <span class="keyword">break</span> label18;</div><div class="line">               &#125;</div><div class="line">            &#125;</div><div class="line">         &#125;</div><div class="line"></div><div class="line">         var5 = <span class="keyword">null</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      var10000.println(var5);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>由此可见kotlin实现的非空 <code>？</code> 语法，内部就是利用非空判断实现。</p>
+<h2 id="如何编译？"><a href="#如何编译？" class="headerlink" title="如何编译？"></a>如何编译？</h2><h3 id="编译入口"><a href="#编译入口" class="headerlink" title="编译入口"></a>编译入口</h3><p>从<code>kotlinc Hello.kt</code> 开始分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">cygwin=false;</div><div class="line">case &quot;`uname`&quot; in</div><div class="line">    CYGWIN*) cygwin=true ;;</div><div class="line">esac</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">declare -a kotlin_app</div><div class="line"></div><div class="line">//运行入口</div><div class="line">if [ -n &quot;$KOTLIN_RUNNER&quot; ];</div><div class="line">then</div><div class="line">    java_args=(&quot;$&#123;java_args[@]&#125;&quot; &quot;-Dkotlin.home=$&#123;KOTLIN_HOME&#125;&quot;)</div><div class="line">    kotlin_app=(&quot;$&#123;KOTLIN_HOME&#125;/lib/kotlin-runner.jar&quot; &quot;org.jetbrains.kotlin.runner.Main&quot;)</div><div class="line">else</div><div class="line">//编译入口</div><div class="line">    [ -n &quot;$KOTLIN_COMPILER&quot; ] || KOTLIN_COMPILER=org.jetbrains.kotlin.cli.jvm.K2JVMCompiler</div><div class="line">    java_args=(&quot;$&#123;java_args[@]&#125;&quot; &quot;-noverify&quot;)</div><div class="line">    kotlin_app=(&quot;$&#123;KOTLIN_HOME&#125;/lib/kotlin-preloader.jar&quot; &quot;org.jetbrains.kotlin.preloading.Preloader&quot; &quot;-cp&quot; &quot;$&#123;KOTLIN_HOME&#125;/lib/kotlin-compiler.jar&quot; $KOTLIN_COMPILER)</div><div class="line">fi</div><div class="line"></div><div class="line">&quot;$&#123;JAVACMD:=java&#125;&quot; $JAVA_OPTS &quot;$&#123;java_args[@]&#125;&quot; -cp &quot;$&#123;kotlin_app[@]&#125;&quot; &quot;$&#123;kotlin_args[@]&#125;&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">fun compileBunchOfSources(environment: KotlinCoreEnvironment): Boolean &#123;</div><div class="line">        val moduleVisibilityManager = ModuleVisibilityManager.SERVICE.getInstance(environment.project)</div><div class="line"></div><div class="line">        val friendPaths = environment.configuration.getList(JVMConfigurationKeys.FRIEND_PATHS)</div><div class="line">        for (path in friendPaths) &#123;</div><div class="line">            moduleVisibilityManager.addFriendPath(path)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (!checkKotlinPackageUsage(environment, environment.getSourceFiles())) return false</div><div class="line"></div><div class="line">        //词法、语法分析、语义分析、目标代码生成等过程</div><div class="line">        val generationState = analyzeAndGenerate(environment) ?: return false</div><div class="line"></div><div class="line">        // 找到运行主类</div><div class="line">        val mainClass = findMainClass(generationState, environment.getSourceFiles())</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //写入文件</div><div class="line">            writeOutput(environment.configuration, generationState.factory, mainClass)</div><div class="line">            return true</div><div class="line">        &#125;</div><div class="line">        finally &#123;</div><div class="line">            generationState.destroy()</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="目标代码的生成"><a href="#目标代码的生成" class="headerlink" title="目标代码的生成"></a>目标代码的生成</h3><p>在代码类生成的过程中，又包括生成类名、类体、字段、函数方法等环节，相关的生成类有ClassBodyCodegen、ClassFunctionCodegen、MemberCodegen、ExpressionCodegen、PropertyCodegen等。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KotlinCodegenFacade</span> </span>&#123;</div><div class="line">	 <span class="keyword">public</span> static void doGenerateFiles(</div><div class="line">            <span class="meta">@NotNull</span> Collection&lt;KtFile&gt; files,</div><div class="line">            <span class="meta">@NotNull</span> GenerationState state,</div><div class="line">            <span class="meta">@NotNull</span> CompilationErrorHandler errorHandler</div><div class="line">    ) &#123;</div><div class="line">		...</div><div class="line">        <span class="keyword">for</span> (KtFile file : files) &#123;</div><div class="line">         ...</div><div class="line">        Set&lt;FqName&gt; obsoleteMultifileClasses = new HashSet&lt;FqName&gt;(state.getObsoleteMultifileClasses());</div><div class="line">        <span class="keyword">for</span> (FqName multifileClassFqName : Sets.union(filesInMultifileClasses.keySet(), obsoleteMultifileClasses)) &#123;</div><div class="line">            doCheckCancelled(state);</div><div class="line">            <span class="comment">//目标代码类生成</span></div><div class="line">            generateMultifileClass(state, multifileClassFqName, filesInMultifileClasses.<span class="keyword">get</span>(multifileClassFqName), errorHandler);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Set&lt;FqName&gt; packagesWithObsoleteParts = new HashSet&lt;FqName&gt;(state.getPackagesWithObsoleteParts());</div><div class="line">        <span class="keyword">for</span> (FqName packageFqName : Sets.union(packagesWithObsoleteParts, filesInPackages.keySet())) &#123;</div><div class="line">            doCheckCancelled(state);</div><div class="line">            <span class="comment">//目标代码类包生成</span></div><div class="line">            generatePackage(state, packageFqName, filesInPackages.<span class="keyword">get</span>(packageFqName), errorHandler);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        doCheckCancelled(state);</div><div class="line">        <span class="comment">//生成结束</span></div><div class="line">        state.getFactory().done();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Kotlin在目标代码生成环节做了更多的处理，在该环节实现了自动生成Getter、Setter的代码。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertyCodegen</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> void gen(</div><div class="line">            <span class="meta">@Nullable</span> KtProperty declaration, <span class="comment">// 属性声明</span></div><div class="line">            <span class="meta">@NotNull</span> PropertyDescriptor descriptor,  <span class="comment">//描述，包括权限修饰符、注解、类型等。</span></div><div class="line">            <span class="meta">@Nullable</span> KtPropertyAccessor getter, <span class="comment">// 决定是否生成getter</span></div><div class="line">            <span class="meta">@Nullable</span> KtPropertyAccessor setter  <span class="comment">//决定是否生成setter</span></div><div class="line">    ) &#123;</div><div class="line">        assert kind == OwnerKind.PACKAGE || kind == OwnerKind.IMPLEMENTATION || kind == OwnerKind.DEFAULT_IMPLS</div><div class="line">                : <span class="string">"Generating property with a wrong kind ("</span> + kind + <span class="string">"): "</span> + descriptor;</div><div class="line">		  <span class="comment">//生成注解信息</span></div><div class="line">        genBackingFieldAndAnnotations(declaration, descriptor, <span class="literal">false</span>);</div><div class="line"></div><div class="line">		  <span class="comment">//根据注解和权限修饰符等信息判断是否自动生成Getter代码</span></div><div class="line">        <span class="keyword">if</span> (isAccessorNeeded(declaration, descriptor, getter)) &#123;</div><div class="line">            generateGetter(declaration, descriptor, getter);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//根据注解和权限修饰符等信息判断是否自动生成Setter代码</span></div><div class="line">        <span class="keyword">if</span> (isAccessorNeeded(declaration, descriptor, setter)) &#123;</div><div class="line">            generateSetter(declaration, descriptor, setter);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Kotlin到Java的迁移成本"><a href="#Kotlin到Java的迁移成本" class="headerlink" title="Kotlin到Java的迁移成本"></a>Kotlin到Java的迁移成本</h2><ol>
+<li>文件自动转换，点击菜单栏 Code | Convert Java File to Kotlin File</li>
+<li>语法兼容性</li>
+<li>第三方库兼容性</li>
+</ol>
+<h2 id="Kotlin为Android开发者带来什么改变？"><a href="#Kotlin为Android开发者带来什么改变？" class="headerlink" title="Kotlin为Android开发者带来什么改变？"></a>Kotlin为Android开发者带来什么改变？</h2><ol>
+<li>效率</li>
+<li>多平台</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前世今生&lt;br&gt;有什么样的语法？&lt;br&gt;语法是怎么实现的？&lt;br&gt;如何编译的？&lt;br&gt;迁移成本&lt;br&gt;为我们带来什么改变？&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>JVM 答疑解惑</title>
