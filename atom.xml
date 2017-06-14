@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-14T10:09:50.000Z</updated>
+  <updated>2017-06-14T10:12:02.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/06/12/%E5%85%B3%E4%BA%8EKotlin%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%80%E5%88%87/"/>
     <id>http://yoursite.com/2017/06/12/关于Kotlin需要知道的一切/</id>
     <published>2017-06-12T06:16:18.000Z</published>
-    <updated>2017-06-14T10:09:50.000Z</updated>
+    <updated>2017-06-14T10:12:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>前世今生<br>有什么样的语法？<br>语法是怎么实现的？<br>如何编译的？<br>迁移成本<br>为我们带来什么改变？<br><a id="more"></a></p>
 <h2 id="前世今生"><a href="#前世今生" class="headerlink" title="前世今生"></a>前世今生</h2><h3 id="设计出发点"><a href="#设计出发点" class="headerlink" title="设计出发点"></a>设计出发点</h3><ol>
@@ -133,7 +133,11 @@
 <li>效率</li>
 <li>多平台</li>
 </ol>
-<p><strong>参考：</strong><a href="http://shinelw.com/2017/03/19/kotlin-compiler-process-analysis/" target="_blank" rel="external">Kotlin编译过程分析</a></p>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a href="http://shinelw.com/2017/03/19/kotlin-compiler-process-analysis/" target="_blank" rel="external">Kotlin编译过程分析</a></li>
+<li><a href="http://droidyue.com/blog/2017/05/08/how-to-study-kotlin/" target="_blank" rel="external">研究学习Kotlin的一些方法</a></li>
+</ul>
 ]]></content>
     
     <summary type="html">
