@@ -89,22 +89,16 @@
 
 
 
-<meta name="description" content="什么情况下需要单例模式？
-一些类提供公共功能供别人调用，本身不会处理业务逻辑
-类会被许多类和线程调用">
+<meta name="description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 设计模式-单例模式">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/index.html">
+<meta property="og:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
+<meta property="og:url" content="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="什么情况下需要单例模式？
-一些类提供公共功能供别人调用，本身不会处理业务逻辑
-类会被许多类和线程调用">
-<meta property="og:updated_time" content="2017-02-07T06:57:10.000Z">
+<meta property="og:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
+<meta property="og:updated_time" content="2017-06-14T12:32:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 设计模式-单例模式">
-<meta name="twitter:description" content="什么情况下需要单例模式？
-一些类提供公共功能供别人调用，本身不会处理业务逻辑
-类会被许多类和线程调用">
+<meta name="twitter:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
+<meta name="twitter:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
 
 
 
@@ -132,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/"/>
 
 
 
 
 
-  <title> Android 设计模式-单例模式 | 墨镜猫 </title>
+  <title> Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？ | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -285,7 +279,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -309,7 +303,7 @@
             
             
               
-                Android 设计模式-单例模式
+                Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？
               
             
           </h2>
@@ -324,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T17:35:12+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-14T18:27:59+08:00">
+                2017-06-14
               </time>
             
 
@@ -360,23 +354,22 @@
       
 
       
-        <h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
-<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
-<li><strong>类会被许多类和线程调用</strong><a id="more"></a>
-</li>
-</ul>
-<h1 id="Android-设计模式-单例模式"><a href="#Android-设计模式-单例模式" class="headerlink" title="Android 设计模式-单例模式"></a>Android 设计模式-单例模式</h1><h3 id="什么情况下需要单例模式？-1"><a href="#什么情况下需要单例模式？-1" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
-<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
-<li><strong>类会被许多类和线程调用</strong></li>
-</ul>
-<hr>
-<h3 id="设计单例模式"><a href="#设计单例模式" class="headerlink" title="设计单例模式"></a>设计单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line"><span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</div><div class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的做法在多线程的时候会出现问题，比如有两个线程同时调用getInstance(),这时会new两个对象出来。</p>
-<h3 id="单例模式改进1"><a href="#单例模式改进1" class="headerlink" title="单例模式改进1"></a>单例模式改进1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">synchronized</span>(Singleton.class)&#123;</div><div class="line">    <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</div><div class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这种方式还是会有问题，就是高并发情况下多线程去抢夺锁，假如有几百个线程，其中有一个运气比较差，这个线程就会出现一直去getInstance，资源一直返回不回去，UI也不会得到更新。</p>
-<h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;\\<span class="function">A</span></div><div class="line">    <span class="title">synchronized</span><span class="params">(Singleton.class)</span>&#123;\\<span class="function">C</span></div><div class="line">     <span class="title">if</span><span class="params">(mSingleton == <span class="keyword">null</span>)</span></div><div class="line">      mSingleton = <span class="keyword">new</span> Singleton();\\B</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
-<h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
+        <p>主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。</p>
+<a id="more"></a>
+<p>在Lollipop之前的设备上，主Dex仅仅被Framework加载。为了支持multi-dex，应用必须明确的让类加载器去加载二级Dex文件（这就是为什么要调用MultiDex#install）</p>
+<p>那就是说应用的主Dex应该包含所有的即将被加载器访问的类，如果你的应用的代码试着在类加载器加载之前，去引用二级Dex里面的class就会抛出Class Not Found异常。</p>
+<p><strong>那什么样的类会被包含在主Dex里面？</strong></p>
+<p>会有三个顺序执行的任务将会决定哪个类应该被包含在主Dex里。</p>
+<ol>
+<li><code>collect{variant}MultiDexComponents task</code>，这个任务会根据manifest把所有应用组件（application, activities, services, receivers, providers）的名字写到一个文本文件。因此，如果你没有把其中的组件注册到manifest，那就不会被包含到主Dex里，也会有一些不注册的class也会被包含进去，比如注解。查看下CreateManifestKeepList.groovy 的源码就可以看到完整的包含列表。这个任务输出的文件是 manifest_keep.txt，路径为：app/build/intermediates/multi-dex。</li>
+<li><code>shrink{variant}MultiDexComponents task</code>，这个任务会掉起ProGuard程序创建一个压缩过的Jar文件，这个文件里只包含manifest_keep.txt里的class，这个任务输出的文件是componentClasses.jar</li>
+<li><code>create{variant}MainDexClassList task</code>，这个任务会解析componentClasses.jar文件，为每一个类文件计算直接的引用层级，具体实现请查看<a href="https://android.googlesource.com/platform/dalvik/+/master/dx/src/com/android/multidex/ClassReferenceListBuilder.java" target="_blank" rel="external">链接</a>。因此，如果你应用有一个注册的组件包含类X的变量，类X也会被包含进主Dex里面。这个任务输出的文件为：maindexlist.txt，包含主Dex里面所有的类。</li>
+</ol>
+<p><strong>如果最低版本是21会发生什么？</strong><br>如果最低版本是21上面所有的任务都不会执行，也不会有主Dex列表的计算。这是因为在应用安装期间所有的dex文件都会被ART转换为一个.oat文件。</p>
+<p>所以如果这些类的引用超过了65536，构建的时候就会抛出这个<code>Too many classes in --main-dex-list, main dex capacity exceeded</code> 错误</p>
+<p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8" target="_blank" rel="external">Google Issue Tracker</a></p>
+<p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded" target="_blank" rel="external">Too many classes in –main-dex-list, main dex capacity exceeded
+</a></p>
 
       
     </div>
@@ -428,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/03/东半球最好的TV桌面开源项目/" rel="next" title="东半球最好的TV桌面开源项目">
-                <i class="fa fa-chevron-left"></i> 东半球最好的TV桌面开源项目
+              <a href="/2017/06/12/关于Kotlin需要知道的一切/" rel="next" title="关于Kotlin需要知道的一切">
+                <i class="fa fa-chevron-left"></i> 关于Kotlin需要知道的一切
               </a>
             
           </div>
@@ -437,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/03/我眼中的Android-Framework/" rel="prev" title="我眼中的Android Framework">
-                我眼中的Android Framework <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,17 +501,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -607,22 +587,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下需要单例模式？"><span class="nav-number">1.</span> <span class="nav-text">什么情况下需要单例模式？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-设计模式-单例模式"><span class="nav-number"></span> <span class="nav-text">Android 设计模式-单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下需要单例模式？-1"><span class="nav-number">1.</span> <span class="nav-text">什么情况下需要单例模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计单例模式"><span class="nav-number">2.</span> <span class="nav-text">设计单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式改进1"><span class="nav-number">3.</span> <span class="nav-text">单例模式改进1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式改进2"><span class="nav-number">4.</span> <span class="nav-text">单例模式改进2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><span class="nav-number">5.</span> <span class="nav-text">但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
