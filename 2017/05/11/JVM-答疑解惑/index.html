@@ -97,7 +97,7 @@
 <meta property="og:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif">
 <meta property="og:image" content="https://gavinzhang1.gitbooks.io/java-jvm-us/content/201208212311249241.png">
-<meta property="og:updated_time" content="2017-06-16T12:39:45.000Z">
+<meta property="og:updated_time" content="2017-08-08T10:18:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 答疑解惑">
 <meta name="twitter:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
@@ -371,6 +371,40 @@
 <h3 id="方法区（永久代）"><a href="#方法区（永久代）" class="headerlink" title="方法区（永久代）"></a>方法区（永久代）</h3><p>线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。<br>这区域的内存回收目标主要是针对常量池的回收和对类型的卸载！</p>
 <h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>他是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息就是常量池，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
 <h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>直接内存不是虚拟机运行时数据区的一部分。但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。<br>在JDK1.4中新加入了NIO类，引入了一种基于通道与缓存区（buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</p>
+<h2 id="类如何加载？"><a href="#类如何加载？" class="headerlink" title="类如何加载？"></a>类如何加载？</h2><p>在加载阶段，虚拟机需要完成以下 3 件事情：</p>
+<ol>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在内存中生成一个代表这个类的 java. lang. Class 对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+<p>Class文件的获取方式：</p>
+<ul>
+<li>从 ZIP 包中读取，这很常见，最终成为日后 JAR、 EAR、 WAR 格式的基础。</li>
+<li>从网络中获取，这种场景最典型的应用就是 Applet。</li>
+<li>运行时计算生成，这种场景使用得最多的就是动态代理技术，在 java.lang.reflect.Proxy 中，就是用了 ProxyGenerator.generateProxyClass 来为特定接口生成形式为*$Proxy 的代理类的二进制字节流。由其他文件生成，典型场景是 JSP 应用，即由 JSP 文件生成对应的 Class 类。</li>
+<li>从数据库中读取。</li>
+</ul>
+<p>一个非数组类的加载阶段（准确地说，是加载阶段中获取类的二进制字节流的动作）是开发人员可控性最强的。开发人员可以通过自定义的类加载器去控制字节流的获取方式（即重写一个类加载器的loadClass方法），这里以后可以找一些比较重要的类，分析里面所有的函数，从而知道这些东西怎么用。</p>
+<p>对于数组类而言，情况就有所不同，数组类本身不通过类加载器创建，它是由 Java 虚拟机直接创建的。但数组类与类加载器仍然有很密切的关系，因为数组类的元素类型（ Element Type， 指的是数组去掉所有维度的类型）最终是要靠类加载器去创建，一个数组类（下面简称为 C） 创建过程就遵循以下规则：</p>
+<ol>
+<li>如果数组的组件类型（ Component Type， 指的是数组去掉一个维度的类型）是引用类型，那就递归采用本节中定义的加载过程去加载这个组件类型，数组 C 将在加载该组件类型的类加载器的类名称空间上被标识（这点很重要，在 7. 4 节会介绍到，一个类必须与类加载器一起确定唯一性）。</li>
+<li>如果数组的组件类型不是引用类型（例如 int[] 数组）， Java 虚拟机将会把数组 C 标记为与引导类加载器关联。</li>
+<li>数组类的可见性与它的组件可见性一致，如果组件类型不是引用类型，那数组类的可见性将默认设置为public</li>
+</ol>
+<p>加载阶段完成后，虚拟机外部的二进制字节流就按照虚拟机所需的格式存储在方法区之中，方法区怎么存储由JVM自己定义。然后在内存中实例化一个java.lang.Class类的对象（并没有明确规定是在Java堆中，对于HotSpot虚拟机而言，Class对象比较特殊，它虽然是对象，但是存放在方法区里面）。</p>
+<p>加载阶段和连接阶段的部分内容（如一部分字节码文件格式验证动作）是交叉进行的，加载阶段尚未完成，连接阶段可能已经开始。</p>
+<h2 id="怎么运行？"><a href="#怎么运行？" class="headerlink" title="怎么运行？"></a>怎么运行？</h2><h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>解析阶段是虚拟机将常量池中的符号引用转化为直接引用的过程。在 Class 类文件结构一文中已经比较过了符号引用和直接引用的区别和关联，这里不再赘述。前面说解析阶段可能开始于初始化之前，也可能在初始化之后开始，虚拟机会根据需要来判断，到底是在类被加载器加载时就对常量池中的符号引用进行解析（初始化之前），还是等到一个符号引用将要被使用前才去解析它（初始化之后）。</p>
+<p>对同一个符号引用进行多次解析请求时很常见的事情，虚拟机实现可能会对第一次解析的结果进行缓存（在运行时常量池中记录直接引用，并把常量标示为已解析状态），从而避免解析动作重复进行。</p>
+<p>解析动作主要针对类或接口、字段、类方法、接口方法四类符号引用进行，分别对应于常量池中的 CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info、CONSTANT_InterfaceMethodref_info 四种常量类型。</p>
+<ol>
+<li>类或接口的解析：判断所要转化成的直接引用是对数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li>
+<li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li>
+</ol>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>初始化是类加载过程的最后一步，到了此阶段，才真正开始执行类中定义的 Java 程序代码。在准备阶段，类变量已经被赋过一次系统要求的初始值，而在初始化阶段，则是根据程序员通过程序指定的主观计划去初始化类变量和其他资源，或者可以从另一个角度来表达：初始化阶段是执行类构造器()方法的过程。</p>
+<h2 id="清洁工怎么工作？"><a href="#清洁工怎么工作？" class="headerlink" title="清洁工怎么工作？"></a>清洁工怎么工作？</h2><p>GC要完成3件事：</p>
+<p><strong>哪些内存需要回收？</strong><br>引用计数算法、根搜索算法</p>
+<p><strong>什么时候回收？</strong><br>标记—清除算法、标记—整理算法</p>
+<p><strong>如何回收？</strong><br>分代收集、垃圾收集器（不同厂商有不同实现）</p>
 
       
     </div>
@@ -611,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM是什么？"><span class="nav-number">1.</span> <span class="nav-text">JVM是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平常接触的东西都存在哪里？"><span class="nav-number">2.</span> <span class="nav-text">平常接触的东西都存在哪里？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序计数器"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地方法栈"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-number">2.4.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区（永久代）"><span class="nav-number">2.5.</span> <span class="nav-text">方法区（永久代）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接内存"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM是什么？"><span class="nav-number">1.</span> <span class="nav-text">JVM是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平常接触的东西都存在哪里？"><span class="nav-number">2.</span> <span class="nav-text">平常接触的东西都存在哪里？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序计数器"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地方法栈"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-number">2.4.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区（永久代）"><span class="nav-number">2.5.</span> <span class="nav-text">方法区（永久代）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接内存"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类如何加载？"><span class="nav-number">3.</span> <span class="nav-text">类如何加载？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么运行？"><span class="nav-number">4.</span> <span class="nav-text">怎么运行？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">4.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">4.2.</span> <span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清洁工怎么工作？"><span class="nav-number">5.</span> <span class="nav-text">清洁工怎么工作？</span></a></li></ol></div>
             
 
           </div>
