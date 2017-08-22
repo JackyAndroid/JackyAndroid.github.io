@@ -89,16 +89,18 @@
 
 
 
-<meta name="description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
+<meta name="description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android模块化与组件化--多模块区分编译">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/index.html">
+<meta property="og:title" content="关于Dalvik，我们该知道些什么？">
+<meta property="og:url" content="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
-<meta property="og:updated_time" content="2017-02-07T06:55:02.000Z">
+<meta property="og:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
+<meta property="og:image" content="https://i.stack.imgur.com/1kLrB.png">
+<meta property="og:updated_time" content="2017-08-22T07:04:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android模块化与组件化--多模块区分编译">
-<meta name="twitter:description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
+<meta name="twitter:title" content="关于Dalvik，我们该知道些什么？">
+<meta name="twitter:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
+<meta name="twitter:image" content="https://i.stack.imgur.com/1kLrB.png">
 
 
 
@@ -126,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/"/>
 
 
 
 
 
-  <title> Android模块化与组件化--多模块区分编译 | 墨镜猫 </title>
+  <title> 关于Dalvik，我们该知道些什么？ | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -303,7 +305,7 @@
             
             
               
-                Android模块化与组件化--多模块区分编译
+                关于Dalvik，我们该知道些什么？
               
             
           </h2>
@@ -318,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T18:28:18+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T20:51:54+08:00">
+                2017-08-21
               </time>
             
 
@@ -354,28 +356,63 @@
       
 
       
-        <p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？<br><a id="more"></a></p>
-<h1 id="模块化与组件化–多模块区分编译"><a href="#模块化与组件化–多模块区分编译" class="headerlink" title="模块化与组件化–多模块区分编译"></a>模块化与组件化–多模块区分编译</h1><blockquote>
-<p><strong>示例地址：<a href="https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library" target="_blank" rel="external">https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library</a></strong><br>Android-Architecture-Fairy开源项目重点分析主流技术与架构设计，欢迎star</p>
-</blockquote>
-<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？先看下<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Library-Publication" target="_blank" rel="external">官方文档</a>如下：</p>
-<p>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. You can control which variant gets published:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Note that this publishing configuration name references the full variant name. Release and debug are only applicable when there are no flavors. If you wanted to change the default published variant while using flavors, you would write:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"flavor1Debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>It is also possible to publish all variants of a library. We are planning to allow this while using a normal project-to-project dependency (like shown above), but this is not possible right now due to limitations in Gradle (we are working toward fixing those as well).<br>Publishing of all variants are not enabled by default. The snippet below enables this feature:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    publishNonDefault <span class="keyword">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>It is important to realize that publishing multiple variants means publishing multiple aar files, instead of a single aar containing multiple variants. Each aar packaging contains a single variant. Publishing a variant means making this aar available as an output artifact of the Gradle project. This can then be used either when publishing to a maven repository, or when another project creates a dependency on the library project.</p>
-<p>Gradle has a concept of default” artifact. This is the one that is used when writing:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>To create a dependency on another published artifact, you need to specify which one to use:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Important: Note that the published configuration is a full variant, including the build type, and needs to be referenced as such.<br>Important: When enabling publishing of non default, the Maven publishing plugin will publish these additional variants as extra packages (with classifier). This means that this is not really compatible with publishing to a maven repository. You should either publish a single variant to a repository OR enable all config publishing for inter-project dependencies.</p>
-<p>默认Library只发布Release版本，这个是Gradle官方的限制，Google官方正在试图解决这个问题。可以使用defaultPublishConfig去设置发布的版本，通过设置publishNonDefault true可以让Library发布多个产品版本。<br>下面的这种平常书写的方式是依赖的默认发布版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果想要分渠道编译多种形态的Library，需要修改如下的方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<hr>
-<p><strong>注意事项：</strong></p>
-<ol>
-<li>编译的配置是产品名称的全称加编译类型，如：flavor1Release</li>
-<li>如果Library是Maven的公开库最好不要使用这种特性</li>
-<li>产品名称首字母要小写，否则会有语法问题</li>
-<li>如果Gradle里面有使用MultiDex选项会生成多个aar</li>
-</ol>
+        <p>Dalvik和JVM的区别<br>Dex文件的结构<br>Dalvik如何加载Class<br><a id="more"></a></p>
+<h2 id="Dalvik和JVM的区别"><a href="#Dalvik和JVM的区别" class="headerlink" title="Dalvik和JVM的区别"></a>Dalvik和JVM的区别</h2><p>Dalvik和JVM最主要区别是它们分别具有不同的类文件格式和指令集。Dalvik使用的是dex（Dalvik Executable）格式的类文件，而Java虚拟机使用的是class格式的类文件。</p>
+<p>Dalvik的指令是基于寄存器的，而JVM的指令是基于堆栈的，因此Dalvik需要更多的指令空间。这样的区别其实各有优劣，JVM需要占用更多的CPU时间，而Dalvik的数据缓冲更容易失效。</p>
+<h2 id="Dex文件结构"><a href="#Dex文件结构" class="headerlink" title="Dex文件结构"></a>Dex文件结构</h2><p>先看一张Class文件和Dex文件对比图：<br><img src="https://i.stack.imgur.com/1kLrB.png" alt=""></p>
+<p>Dex这么设计可以使文件更紧凑，减少拢余，还可以共享资源，进而减少文件大小。</p>
+<p>各个字段含义如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">数据名称</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">header</td>
+<td style="text-align:left">Dex文件头部，记录整个Dex文件的相关属性</td>
+</tr>
+<tr>
+<td style="text-align:left">string_ids</td>
+<td style="text-align:left">字符串数据索引，记录了每个字符串在数据区的偏移量</td>
+</tr>
+<tr>
+<td style="text-align:left">type_ids</td>
+<td style="text-align:left">类似数据索引，记录了每个类型的字符串索引</td>
+</tr>
+<tr>
+<td style="text-align:left">proto_ids</td>
+<td style="text-align:left">原型数据索引，记录了方法声明的字符串，返回类型字符串，参数列表</td>
+</tr>
+<tr>
+<td style="text-align:left">field_ids</td>
+<td style="text-align:left">字段数据索引，记录了所属类、类型以及方法名</td>
+</tr>
+<tr>
+<td style="text-align:left">method_ids</td>
+<td style="text-align:left">类方法索引，记录方法所属类名、方法声明以及方法名等信息</td>
+</tr>
+<tr>
+<td style="text-align:left">class_defs</td>
+<td style="text-align:left">类定义数据索引，记录指定类各类信息，包括接口，超类，类数据偏移量</td>
+</tr>
+<tr>
+<td style="text-align:left">data</td>
+<td style="text-align:left">数据区，保存了各个类的真实数据</td>
+</tr>
+<tr>
+<td style="text-align:left">link_data</td>
+<td style="text-align:left">链接数据区</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Dalvik如何加载Class"><a href="#Dalvik如何加载Class" class="headerlink" title="Dalvik如何加载Class"></a>Dalvik如何加载Class</h2><h3 id="解析Dex"><a href="#解析Dex" class="headerlink" title="解析Dex"></a>解析Dex</h3><p>加载之前需要有一个解析过程，Dex文件大体可以分为三大部分：头部、索引、数据。通过头部可以找到索引的数目、位置和数据的起始位置。然后，Dalvik会调用dexFileParse函数对它进行分析，分析的结果放到DexFile数据结构中。</p>
+<h3 id="加载Dex"><a href="#加载Dex" class="headerlink" title="加载Dex"></a>加载Dex</h3><p>存储的数据结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Object &#123;</div><div class="line">    ClassObject* clazz;  <span class="comment">// 类型对象</span></div><div class="line">    Lock lock;           <span class="comment">// 锁对象</span></div><div class="line">&#125; Object;</div></pre></td></tr></table></figure>
+<p>clazz指向ClassObject对象，里面还包含一个Lock对象。如果其它线程想要获取它的锁，只有等当前线程释放掉才可以。</p>
+<p>从Dex数据区读取过程中，会在内存中分配几个内存区域，用于存放directMethod、virtualMethod、sfield、ifield。等得到索引后，加载实际是由loadClassFromDex完成，它首先会先读取class的具体信息，再加载directMethod、virtualMethod、sfield、ifield，然后会为ClassObject数据结构分配内存，并读取Dex文件相关信息。等加载完成后，将加载的class放入哈希表中方便下次快速查找。</p>
 
       
     </div>
@@ -427,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/03/来，谷歌安卓浏览器源码就在这！/" rel="next" title="来，谷歌安卓浏览器源码就在这！">
-                <i class="fa fa-chevron-left"></i> 来，谷歌安卓浏览器源码就在这！
+              <a href="/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/" rel="next" title="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
+                <i class="fa fa-chevron-left"></i> Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？
               </a>
             
           </div>
@@ -436,10 +473,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/15/数据库到底哪家强？/" rel="prev" title="数据库到底哪家强？">
-                数据库到底哪家强？ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -616,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化与组件化–多模块区分编译"><span class="nav-number">1.</span> <span class="nav-text">模块化与组件化–多模块区分编译</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dalvik和JVM的区别"><span class="nav-number">1.</span> <span class="nav-text">Dalvik和JVM的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dex文件结构"><span class="nav-number">2.</span> <span class="nav-text">Dex文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dalvik如何加载Class"><span class="nav-number">3.</span> <span class="nav-text">Dalvik如何加载Class</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析Dex"><span class="nav-number">3.1.</span> <span class="nav-text">解析Dex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载Dex"><span class="nav-number">3.2.</span> <span class="nav-text">加载Dex</span></a></li></ol></li></ol></div>
             
 
           </div>
