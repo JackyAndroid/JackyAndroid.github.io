@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-11T12:40:49.754Z</updated>
+  <updated>2017-10-20T07:16:09.190Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android 热更原理及对比</title>
+    <link href="http://yoursite.com/2017/10/20/Android%20%E7%83%AD%E6%9B%B4%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AF%B9%E6%AF%94/"/>
+    <id>http://yoursite.com/2017/10/20/Android 热更原理及对比/</id>
+    <published>2017-10-20T03:11:11.000Z</published>
+    <updated>2017-10-20T07:16:09.190Z</updated>
+    
+    <content type="html"><![CDATA[<p>透过热更新的表象，看透它的本质。<br><a id="more"></a></p>
+<p>热更新给我们的第一印象，一般是线上出了问题，不用重新发包就可以及时修复，那这种技术的原理是什么呢？</p>
+<p>我们应用的class是由PathClassLoader来加载的，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PathClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PathClassLoader</span><span class="params">(String dexPath, ClassLoader parent)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(dexPath, <span class="keyword">null</span>, <span class="keyword">null</span>, parent);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PathClassLoader</span><span class="params">(String dexPath, String librarySearchPath, ClassLoader parent)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(dexPath, <span class="keyword">null</span>, librarySearchPath, parent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;透过热更新的表象，看透它的本质。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Android业务中间层该如何设计？</title>
