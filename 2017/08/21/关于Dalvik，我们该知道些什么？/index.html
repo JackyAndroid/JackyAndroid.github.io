@@ -96,7 +96,8 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
 <meta property="og:image" content="https://i.stack.imgur.com/1kLrB.png">
-<meta property="og:updated_time" content="2017-08-22T07:04:31.000Z">
+<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
+<meta property="og:updated_time" content="2017-11-26T13:35:25.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Dalvik，我们该知道些什么？">
 <meta name="twitter:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
@@ -413,6 +414,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Object &#123;</div><div class="line">    ClassObject* clazz;  <span class="comment">// 类型对象</span></div><div class="line">    Lock lock;           <span class="comment">// 锁对象</span></div><div class="line">&#125; Object;</div></pre></td></tr></table></figure>
 <p>clazz指向ClassObject对象，里面还包含一个Lock对象。如果其它线程想要获取它的锁，只有等当前线程释放掉才可以。</p>
 <p>从Dex数据区读取过程中，会在内存中分配几个内存区域，用于存放directMethod、virtualMethod、sfield、ifield。等得到索引后，加载实际是由loadClassFromDex完成，它首先会先读取class的具体信息，再加载directMethod、virtualMethod、sfield、ifield，然后会为ClassObject数据结构分配内存，并读取Dex文件相关信息。等加载完成后，将加载的class放入哈希表中方便下次快速查找。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 
       
     </div>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-11T12:40:49.754Z</updated>
+  <updated>2017-11-26T13:35:02.532Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/10/11/Android业务中间层该如何设计？/</id>
     <published>2017-10-11T11:04:45.000Z</published>
-    <updated>2017-10-11T12:40:49.754Z</updated>
+    <updated>2017-11-26T13:35:02.532Z</updated>
     
     <content type="html"><![CDATA[<p>如果一个产品需要有多个业务线，各业务线之间如何协作才是最高效的？<br><a id="more"></a></p>
 <p><img src="/images/Android业务中间层1.png" alt=""></p>
@@ -39,6 +39,7 @@
 <p><strong>中间层实现</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 委托</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> jacky</div><div class="line"> * <span class="doctag">@version</span> v1.0</div><div class="line"> * <span class="doctag">@description</span> 委托，隔离各业务间的耦合</div><div class="line"> * <span class="doctag">@since</span> 2017/9/14</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessDelegate</span> <span class="keyword">extends</span> <span class="title">RelativeLayout</span> <span class="keyword">implements</span> <span class="title">IBusinessDelegate</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> WeakReference&lt;Context&gt; mContextReference;</div><div class="line">    <span class="keyword">private</span> TimingChestContract.Presenter mTimingChestPresenter;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line">        mContextReference = <span class="keyword">new</span> WeakReference&lt;&gt;(getContext());</div><div class="line">        removeAllViews();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ---- 动态加载挂件 Start ----</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness1</span><span class="params">()</span> </span>&#123;</div><div class="line">        TimingChestView chestView = <span class="keyword">new</span> TimingChestView(mContextReference.get());</div><div class="line">        mTimingChestPresenter = <span class="keyword">new</span> TimingChestPresenter(chestView, <span class="keyword">new</span> TimingChestModel());</div><div class="line">        chestView.setPresenter(mTimingChestPresenter);</div><div class="line">        LayoutParams params = <span class="keyword">new</span> LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);</div><div class="line">        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);</div><div class="line">        addView(chestView, params);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness2</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness3</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness4</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ---- 动态加载挂件 End ----</span></div><div class="line"></div><div class="line">    <span class="comment">// ---- 接收事件 Start ----</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">event1</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</div><div class="line">            mTimingChestPresenter.notify();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">event2</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ---- 接收事件 End ----</span></div><div class="line"></div><div class="line">    <span class="comment">// ---- 生命周期 Start ----</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!EventBus.getDefault().isRegistered(<span class="keyword">this</span>)) &#123;</div><div class="line">            EventBus.getDefault().register(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</div><div class="line">            mTimingChestPresenter.onCreate();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</div><div class="line">            mTimingChestPresenter.onResume();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</div><div class="line">            mTimingChestPresenter.onPause();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        EventBus.getDefault().unregister(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</div><div class="line">            mTimingChestPresenter.onDestroy();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ---- 生命周期 End ----</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>委托作为中间层的呈现方式，动态加载业务积木，并感应外部环境变化反应到业务积木。通过这种方式，业务积木就有了很好的稳定性和扩展性。并辅以辅助手段，使委托变得异常强大。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -55,7 +56,7 @@
     <link href="http://yoursite.com/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/</id>
     <published>2017-08-21T12:51:54.000Z</published>
-    <updated>2017-08-22T07:04:31.000Z</updated>
+    <updated>2017-11-26T13:35:25.586Z</updated>
     
     <content type="html"><![CDATA[<p>Dalvik和JVM的区别<br>Dex文件的结构<br>Dalvik如何加载Class<br><a id="more"></a></p>
 <h2 id="Dalvik和JVM的区别"><a href="#Dalvik和JVM的区别" class="headerlink" title="Dalvik和JVM的区别"></a>Dalvik和JVM的区别</h2><p>Dalvik和JVM最主要区别是它们分别具有不同的类文件格式和指令集。Dalvik使用的是dex（Dalvik Executable）格式的类文件，而Java虚拟机使用的是class格式的类文件。</p>
@@ -114,6 +115,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Object &#123;</div><div class="line">    ClassObject* clazz;  <span class="comment">// 类型对象</span></div><div class="line">    Lock lock;           <span class="comment">// 锁对象</span></div><div class="line">&#125; Object;</div></pre></td></tr></table></figure>
 <p>clazz指向ClassObject对象，里面还包含一个Lock对象。如果其它线程想要获取它的锁，只有等当前线程释放掉才可以。</p>
 <p>从Dex数据区读取过程中，会在内存中分配几个内存区域，用于存放directMethod、virtualMethod、sfield、ifield。等得到索引后，加载实际是由loadClassFromDex完成，它首先会先读取class的具体信息，再加载directMethod、virtualMethod、sfield、ifield，然后会为ClassObject数据结构分配内存，并读取Dex文件相关信息。等加载完成后，将加载的class放入哈希表中方便下次快速查找。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -130,7 +132,7 @@
     <link href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/</id>
     <published>2017-06-14T10:27:59.000Z</published>
-    <updated>2017-06-14T12:32:05.000Z</updated>
+    <updated>2017-11-26T13:34:54.566Z</updated>
     
     <content type="html"><![CDATA[<p>主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。</p>
 <a id="more"></a>
@@ -148,6 +150,7 @@
 <p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8" target="_blank" rel="external">Google Issue Tracker</a></p>
 <p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded" target="_blank" rel="external">Too many classes in –main-dex-list, main dex capacity exceeded
 </a></p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -164,7 +167,7 @@
     <link href="http://yoursite.com/2017/06/12/Hello%20Kotlin/"/>
     <id>http://yoursite.com/2017/06/12/Hello Kotlin/</id>
     <published>2017-06-12T06:16:18.000Z</published>
-    <updated>2017-06-23T01:43:40.000Z</updated>
+    <updated>2017-11-26T13:33:35.580Z</updated>
     
     <content type="html"><![CDATA[<p>前世今生<br>有什么样的语法？<br>语法是怎么实现的？<br>如何编译的？<br>迁移成本<br>为我们带来什么改变？<br><a id="more"></a></p>
 <h2 id="前世今生"><a href="#前世今生" class="headerlink" title="前世今生"></a>前世今生</h2><h3 id="设计出发点"><a href="#设计出发点" class="headerlink" title="设计出发点"></a>设计出发点</h3><ol>
@@ -278,6 +281,7 @@
 <li>多平台</li>
 </ol>
 <p><strong>参考：</strong><a href="http://shinelw.com/2017/03/19/kotlin-compiler-process-analysis/" target="_blank" rel="external">Kotlin编译过程分析</a>、<a href="http://droidyue.com/blog/2017/05/08/how-to-study-kotlin/" target="_blank" rel="external">研究学习Kotlin的一些方法</a></p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -294,7 +298,7 @@
     <link href="http://yoursite.com/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"/>
     <id>http://yoursite.com/2017/05/11/JVM-答疑解惑/</id>
     <published>2017-05-11T09:40:00.000Z</published>
-    <updated>2017-08-08T10:18:32.000Z</updated>
+    <updated>2017-11-26T13:34:14.589Z</updated>
     
     <content type="html"><![CDATA[<p>JVM是什么？<br>平常接触的东西都存在哪里？<br>类如何加载？<br>怎么运行？<br>清洁工怎么工作？</p>
 <a id="more"></a>
@@ -344,6 +348,7 @@
 <p><strong>哪些内存需要回收？</strong><br>引用计数算法、根搜索算法</p>
 <p><strong>什么时候回收？</strong><br>标记—清除算法、标记—整理算法</p>
 <p><strong>如何回收？</strong><br>分代收集、垃圾收集器（不同厂商有不同实现）</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -360,7 +365,7 @@
     <link href="http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/04/15/数据库到底哪家强？/</id>
     <published>2017-04-15T06:24:26.000Z</published>
-    <updated>2017-04-19T07:18:25.000Z</updated>
+    <updated>2017-11-26T13:33:45.580Z</updated>
     
     <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？<br><a id="more"></a></p>
 <p>我们先看基于SQLite发展而来的框架，这方面主要分成两条发展路线，一条是Rx或者叫做对象映射（OM）路线，一条是对象关系映射（ORM）路线。</p>
@@ -453,6 +458,7 @@
 <li>线程限制，如果在UI线程获取到了当前Realm对象，在异步线程中使用当前Realm对象进行操作，就会抛出异常。</li>
 </ul>
 <h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>如果数据量没有达到SQLite的性能瓶颈的话，建议选择基于SQLite的数据库，如果不喜欢编写原生Sql语句就牺牲一点性能去适应业务快速迭代。<br>这些框架同时存在都有其道理，性能有优势兼容性和稳定性不能保证，易用性很好必然就不能做太多的定制化操作，各取所需，对于一般的业务GreenDao便是一个比较好的方案。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -469,7 +475,7 @@
     <link href="http://yoursite.com/2017/02/03/Android%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%8C%96-%E5%A4%9A%E6%A8%A1%E5%9D%97%E5%8C%BA%E5%88%86%E7%BC%96%E8%AF%91/"/>
     <id>http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/</id>
     <published>2017-02-03T10:28:18.000Z</published>
-    <updated>2017-02-07T06:55:02.000Z</updated>
+    <updated>2017-11-26T13:34:45.196Z</updated>
     
     <content type="html"><![CDATA[<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？<br><a id="more"></a></p>
 <h1 id="模块化与组件化–多模块区分编译"><a href="#模块化与组件化–多模块区分编译" class="headerlink" title="模块化与组件化–多模块区分编译"></a>模块化与组件化–多模块区分编译</h1><blockquote>
@@ -493,6 +499,7 @@
 <li>产品名称首字母要小写，否则会有语法问题</li>
 <li>如果Gradle里面有使用MultiDex选项会生成多个aar</li>
 </ol>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -509,7 +516,7 @@
     <link href="http://yoursite.com/2017/02/03/%E6%9D%A5%EF%BC%8C%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%90%E7%A0%81%E5%B0%B1%E5%9C%A8%E8%BF%99%EF%BC%81/"/>
     <id>http://yoursite.com/2017/02/03/来，谷歌安卓浏览器源码就在这！/</id>
     <published>2017-02-03T09:49:37.000Z</published>
-    <updated>2017-02-07T06:52:29.000Z</updated>
+    <updated>2017-11-26T13:33:05.576Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li>谷歌浏览器安卓版源码项目</li>
@@ -520,6 +527,7 @@
 </ul>
 <h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
 <p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="external">http://blog.csdn.net/rain_butterfly</a></p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 <hr>
 <h1 id="AndroidChromium"><a href="#AndroidChromium" class="headerlink" title="AndroidChromium"></a>AndroidChromium</h1><p><img src="http://img.blog.csdn.net/20160710111931406" alt="这里写图片描述"></p>
 <h4 id="AndroidChromium源码地址"><a href="#AndroidChromium源码地址" class="headerlink" title="AndroidChromium源码地址"></a><a href="https://github.com/JackyAndroid/AndroidChromium" target="_blank" rel="external">AndroidChromium源码地址</a></h4><p><strong>如果使用的是AndroidStudio 2.0以上版本且开启instant run功能，建议关闭后再进行调试（instant run会修改首先启动的Application导致chrome provider context 引用错误导致crash）</strong></p>
@@ -593,7 +601,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-Framework是怎么启动的？/</id>
     <published>2017-02-03T09:47:48.000Z</published>
-    <updated>2017-02-07T06:56:09.000Z</updated>
+    <updated>2017-11-26T13:34:05.580Z</updated>
     
     <content type="html"><![CDATA[<p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。<br><a id="more"></a></p>
 <h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
@@ -631,6 +639,7 @@ limitations under the License.
 <p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
 <p>到此第一个Activity就启动了。</p>
 <p><strong><em>如有问题请留言，转载请注明出处。</em></strong></p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -647,7 +656,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/</id>
     <published>2017-02-03T09:46:19.000Z</published>
-    <updated>2017-02-07T06:52:58.000Z</updated>
+    <updated>2017-11-26T13:34:27.477Z</updated>
     
     <content type="html"><![CDATA[<p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。<br><a id="more"></a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
@@ -682,6 +691,7 @@ limitations under the License.
 <li>调用sWindowSession.add（），通知Wms添加窗口。</li>
 </ul>
 <p>创建子窗口或系统窗口过程和上面的类似。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -756,7 +766,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/%E6%88%91%E7%9C%BC%E4%B8%AD%E7%9A%84Android-Framework/"/>
     <id>http://yoursite.com/2017/02/03/我眼中的Android-Framework/</id>
     <published>2017-02-03T09:40:58.000Z</published>
-    <updated>2017-02-07T06:53:19.000Z</updated>
+    <updated>2017-11-26T13:33:24.503Z</updated>
     
     <content type="html"><![CDATA[<p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong><br><a id="more"></a></p>
 <h1 id="我眼中的Android-Framework"><a href="#我眼中的Android-Framework" class="headerlink" title="我眼中的Android Framework"></a>我眼中的Android Framework</h1><p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong></p>
@@ -799,6 +809,7 @@ limitations under the License.
 <p> UI线程是从ActivityThread运行的，在该类的main()方法中已经使用了Looper.prepareMainLooper()为该线程添加了Looper对象，已经为该线程创建了消息队列，是自带秘书光环的。因此，我们才可以在Activity中去定义Handler对象，因为创建Handler对象时其线程必须已经创建了消息队列，装卸工得配运输带要不然没法干活。而普通的Thread则没有默认创建消息队列，所以不能直接在Thread中直接定义Handler，这个就是我们不懂程序运行原理导致的困惑。</p>
 </li>
 </ol>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -815,7 +826,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     <id>http://yoursite.com/2017/02/03/Android-设计模式-单例模式/</id>
     <published>2017-02-03T09:35:12.000Z</published>
-    <updated>2017-02-07T06:57:10.000Z</updated>
+    <updated>2017-11-26T13:34:35.579Z</updated>
     
     <content type="html"><![CDATA[<h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
 <li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
@@ -834,6 +845,7 @@ limitations under the License.
 <h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton mSingleton;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;\\<span class="function">A</span></div><div class="line">    <span class="title">synchronized</span><span class="params">(Singleton.class)</span>&#123;\\<span class="function">C</span></div><div class="line">     <span class="title">if</span><span class="params">(mSingleton == <span class="keyword">null</span>)</span></div><div class="line">      mSingleton = <span class="keyword">new</span> Singleton();\\B</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mSingleton;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
 <h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
@@ -852,11 +864,12 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84TV%E6%A1%8C%E9%9D%A2%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
     <id>http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/</id>
     <published>2017-02-03T09:14:46.000Z</published>
-    <updated>2017-02-07T06:53:33.000Z</updated>
+    <updated>2017-11-26T13:33:55.581Z</updated>
     
     <content type="html"><![CDATA[<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。<br><a id="more"></a></p>
 <h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
 <p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="external">http://blog.csdn.net/rain_butterfly</a></p>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 <hr>
 <h1 id="AndroidTVLauncher"><a href="#AndroidTVLauncher" class="headerlink" title="AndroidTVLauncher"></a>AndroidTVLauncher</h1><p><img src="http://img.blog.csdn.net/20160914141146439" alt="这里写图片描述"></p>
 <p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。</p>

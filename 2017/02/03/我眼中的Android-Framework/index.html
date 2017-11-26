@@ -95,10 +95,12 @@
 <meta property="og:url" content="http://yoursite.com/2017/02/03/我眼中的Android-Framework/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—前言">
-<meta property="og:updated_time" content="2017-02-07T06:53:19.000Z">
+<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
+<meta property="og:updated_time" content="2017-11-26T13:33:24.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我眼中的Android Framework">
 <meta name="twitter:description" content="在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—前言">
+<meta name="twitter:image" content="http://www.jackywang.tech/images/gongzh.png">
 
 
 
@@ -395,6 +397,7 @@
 <p> UI线程是从ActivityThread运行的，在该类的main()方法中已经使用了Looper.prepareMainLooper()为该线程添加了Looper对象，已经为该线程创建了消息队列，是自带秘书光环的。因此，我们才可以在Activity中去定义Handler对象，因为创建Handler对象时其线程必须已经创建了消息队列，装卸工得配运输带要不然没法干活。而普通的Thread则没有默认创建消息队列，所以不能直接在Thread中直接定义Handler，这个就是我们不懂程序运行原理导致的困惑。</p>
 </li>
 </ol>
+<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 
       
     </div>
