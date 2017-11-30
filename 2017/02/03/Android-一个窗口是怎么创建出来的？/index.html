@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-26T13:34:27.477Z">
+<meta property="og:updated_time" content="2017-11-30T02:34:46.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 一个窗口是怎么创建出来的？">
 <meta name="twitter:description" content="在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。">
@@ -389,6 +389,7 @@
 <li>调用sWindowSession.add（），通知Wms添加窗口。</li>
 </ul>
 <p>创建子窗口或系统窗口过程和上面的类似。</p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 
       

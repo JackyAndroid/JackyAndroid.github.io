@@ -97,7 +97,7 @@
 <meta property="og:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201203/1/0_1330607569Vj4c.gif">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-26T13:38:58.946Z">
+<meta property="og:updated_time" content="2017-11-30T02:35:02.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Context 到底是什么？">
 <meta name="twitter:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
@@ -397,6 +397,7 @@
 <h2 id="这几个Context之间的关系"><a href="#这几个Context之间的关系" class="headerlink" title="这几个Context之间的关系"></a>这几个Context之间的关系</h2><p>从以上可以看出，创建Context对象的过程基本上是相同的，不同的仅仅是针对Application、Activity、Service使用了不同的数据对象。</p>
 <p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
 <p>应用程序中包含多个ContextImpl对象，而内部变量mPackageInfo却指向同一个PackageInfo对象，这种设计结构一般意味着ContextImpl是一种轻量级类，而PackageInfo是一个重量级类。事实上确实是这样，ContextImpl中的大多数进行包操作的重量级函数实际上都是转向了mPackageInfo对象相应的方法，也就是事实上调用了同一个PackageInfo对象。</p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 
       

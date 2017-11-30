@@ -601,7 +601,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-Framework是怎么启动的？/</id>
     <published>2017-02-03T09:47:48.000Z</published>
-    <updated>2017-11-26T13:34:05.580Z</updated>
+    <updated>2017-11-30T02:35:45.167Z</updated>
     
     <content type="html"><![CDATA[<p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。<br><a id="more"></a></p>
 <h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
@@ -639,6 +639,7 @@ limitations under the License.
 <p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
 <p>到此第一个Activity就启动了。</p>
 <p><strong><em>如有问题请留言，转载请注明出处。</em></strong></p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
@@ -656,7 +657,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/</id>
     <published>2017-02-03T09:46:19.000Z</published>
-    <updated>2017-11-26T13:34:27.477Z</updated>
+    <updated>2017-11-30T02:34:46.703Z</updated>
     
     <content type="html"><![CDATA[<p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。<br><a id="more"></a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
@@ -691,6 +692,7 @@ limitations under the License.
 <li>调用sWindowSession.add（），通知Wms添加窗口。</li>
 </ul>
 <p>创建子窗口或系统窗口过程和上面的类似。</p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
@@ -708,7 +710,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-Context-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-Context-到底是什么？/</id>
     <published>2017-02-03T09:44:37.000Z</published>
-    <updated>2017-11-26T13:38:58.946Z</updated>
+    <updated>2017-11-30T02:35:02.472Z</updated>
     
     <content type="html"><![CDATA[<p>一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。<br><a id="more"></a></p>
 <h2 id="什么是Android-Context？"><a href="#什么是Android-Context？" class="headerlink" title="什么是Android Context？"></a>什么是Android Context？</h2><p>一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。</p>
@@ -750,6 +752,7 @@ limitations under the License.
 <h2 id="这几个Context之间的关系"><a href="#这几个Context之间的关系" class="headerlink" title="这几个Context之间的关系"></a>这几个Context之间的关系</h2><p>从以上可以看出，创建Context对象的过程基本上是相同的，不同的仅仅是针对Application、Activity、Service使用了不同的数据对象。</p>
 <p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
 <p>应用程序中包含多个ContextImpl对象，而内部变量mPackageInfo却指向同一个PackageInfo对象，这种设计结构一般意味着ContextImpl是一种轻量级类，而PackageInfo是一个重量级类。事实上确实是这样，ContextImpl中的大多数进行包操作的重量级函数实际上都是转向了mPackageInfo对象相应的方法，也就是事实上调用了同一个PackageInfo对象。</p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
@@ -767,7 +770,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/%E6%88%91%E7%9C%BC%E4%B8%AD%E7%9A%84Android-Framework/"/>
     <id>http://yoursite.com/2017/02/03/我眼中的Android-Framework/</id>
     <published>2017-02-03T09:40:58.000Z</published>
-    <updated>2017-11-26T13:33:24.503Z</updated>
+    <updated>2017-11-30T02:35:58.239Z</updated>
     
     <content type="html"><![CDATA[<p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong><br><a id="more"></a></p>
 <h1 id="我眼中的Android-Framework"><a href="#我眼中的Android-Framework" class="headerlink" title="我眼中的Android Framework"></a>我眼中的Android Framework</h1><p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong></p>
@@ -810,6 +813,7 @@ limitations under the License.
 <p> UI线程是从ActivityThread运行的，在该类的main()方法中已经使用了Looper.prepareMainLooper()为该线程添加了Looper对象，已经为该线程创建了消息队列，是自带秘书光环的。因此，我们才可以在Activity中去定义Handler对象，因为创建Handler对象时其线程必须已经创建了消息队列，装卸工得配运输带要不然没法干活。而普通的Thread则没有默认创建消息队列，所以不能直接在Thread中直接定义Handler，这个就是我们不懂程序运行原理导致的困惑。</p>
 </li>
 </ol>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 ]]></content>
     
