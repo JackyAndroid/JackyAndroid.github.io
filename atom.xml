@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-26T13:35:02.532Z</updated>
+  <updated>2017-12-17T11:00:23.040Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>容器框架Atlas原理解析</title>
+    <link href="http://yoursite.com/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/12/17/容器框架Atlas原理解析/</id>
+    <published>2017-12-17T10:03:03.000Z</published>
+    <updated>2017-12-17T11:00:23.040Z</updated>
+    
+    <content type="html"><![CDATA[<p>优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。<br><a id="more"></a></p>
+<p>一个产品，当只有一两个工程师，这时没什么问题。当达到10人左右，沟通成本、协作效率、软件质量问题开始显现。当达到30+人，多业务线并行，开发效率、线上事故、代码合板等问题已经开始成为了产品瓶颈。那我们该怎么解决？</p>
+<p>Atlas是在手淘架构不断发展演化出来的一个解决方案，比较适用于多业务线产品。Atlas把各个业务线分为多个bundle，bundle之间共享资源放在Host中，这样在编码编译期做到了天然隔离。在工程期，各bundle和host独立编译开发。运行期，按需加载bundle。运维期，动态部署业务需求、灵活精确灰度测试。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Android业务中间层该如何设计？</title>

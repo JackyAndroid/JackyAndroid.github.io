@@ -89,18 +89,16 @@
 
 
 
-<meta name="description" content="在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。">
+<meta name="description" content="优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 一个窗口是怎么创建出来的？">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/index.html">
+<meta property="og:title" content="容器框架Atlas原理解析">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/容器框架Atlas原理解析/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-30T02:34:46.703Z">
+<meta property="og:description" content="优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。">
+<meta property="og:updated_time" content="2017-12-17T11:00:23.040Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 一个窗口是怎么创建出来的？">
-<meta name="twitter:description" content="在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。">
-<meta name="twitter:image" content="http://www.jackywang.tech/images/gongzh.png">
+<meta name="twitter:title" content="容器框架Atlas原理解析">
+<meta name="twitter:description" content="优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/17/容器框架Atlas原理解析/"/>
 
 
 
 
 
-  <title> Android 一个窗口是怎么创建出来的？ | 墨镜猫 </title>
+  <title> 容器框架Atlas原理解析 | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -281,7 +279,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/17/容器框架Atlas原理解析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -305,7 +303,7 @@
             
             
               
-                Android 一个窗口是怎么创建出来的？
+                容器框架Atlas原理解析
               
             
           </h2>
@@ -320,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T17:46:19+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-17T18:03:03+08:00">
+                2017-12-17
               </time>
             
 
@@ -356,41 +354,9 @@
       
 
       
-        <p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。<br><a id="more"></a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
-<p>WmS并不在意该窗口是哪个应用程序的，关心的是活跃窗口，WmS按一定得规则判断哪个窗口处于活动状态，然后把用户消息给W类，W类再把用户消息传递给内部View变量，然后再由View对象完成剩下的消息处理。</p>
-<h2 id="窗户有几种类型？"><a href="#窗户有几种类型？" class="headerlink" title="窗户有几种类型？"></a>窗户有几种类型？</h2><p>Framework定义了三种窗口类型，三种窗口类型的定义在WindowManager类里面。</p>
-<ul>
-<li>应用窗口。应用窗口一般指该窗口对应一个Activity，由于加载Activity是由Ams完成的，所以对于应用程序创建应用类窗口只能在Activity内部完成。</li>
-<li>子窗口。子窗口是指该窗口必须要有一个父窗口，父窗口可以是一个应用类窗口也可以是任何其他的窗口。</li>
-<li>系统窗口。系统窗口不需要对应任何Activity，也不需要有父窗口。应用程序是没有办法创建系统窗口的，只有系统进程可以创建系统窗口。</li>
-</ul>
-<h2 id="那么该怎么创建应用窗口呢？"><a href="#那么该怎么创建应用窗口呢？" class="headerlink" title="那么该怎么创建应用窗口呢？"></a>那么该怎么创建应用窗口呢？</h2><p>1.每个应用类窗口都对应一个Activity对象，所以创建应用类窗口需要创建Activity对象。当AmS要启动某个Activity时就会通知客户端进程，每个客户端进程都对应一个ActivityThread类，所以需要ActivityThread启动Activity。</p>
-<p>启动某个Activity实际是构造一个Activity对象，使用ClassLoader从程序文件中装载指定的Activity对应的Class文件。</p>
-<p>2.创建完成Activity对象后调用Activity的attach（）方法，attach（）的作用就是为刚刚创造好的Activity设置内部变量。</p>
-<p>3.为该Activity创建Window对象。</p>
-<p>4.给Window对象中的mWindowManager变量赋值。</p>
-<p>5.然后就需要给该窗口添加真正的View或者ViewGroup。从performLaunchActivity（）调用callActivityOnCreate（）开始，然后经一系列调用到Activity的onCreate（）方法，在onCreate（）方法中调用setContentView（）方法实际是调用了其对应的Window对象的setContentView（）方法。</p>
-<p>6.接着会调用到PhoneWindow的setContentView，首先调用installDecor（）为Window类添加窗口装饰，其实就是标题栏，程序中设置的layout.xml界面被包含在窗口装饰中，就是窗口内容。窗口装饰也是ViewGroup，窗口装饰和它内部的内容加起来就是我们所说的窗口，或者叫做Window界面。</p>
-<p>7.把创建的窗口通知WmS，让WmS把窗口显示在屏幕上。当Activity准备好后会通知Ams，然后Ams经过一系列调用到Activity的makeVisible（），该方法将真正完成把窗口添加进Wms中。</p>
-<p>8.在makeVisible方法中，首先获得该Activity内部的WindowManager对象，然后调用该对象的addView（）方法。</p>
-<p>9.调用WindowManagerImpl的addView（）方法，流程如下：</p>
-<ul>
-<li>检查添加的窗口是否已经添加过，不能重复添加。</li>
-<li>如果添加的窗口是子窗口类型，找到父窗口并保存在临时变量panelParentView中，该变量作为后面调用ViewRoot的setView（）参数。</li>
-<li>创建一个新的ViewRoot</li>
-<li>调用ViewRoot的setView（）。</li>
-</ul>
-<p>10.完成新建一个ViewRoot对象后，需要把新建的ViewRoot对象添加到mRoots对象中。</p>
-<p>11.调用ViewRoot对象的setView方法。流程如下：</p>
-<ul>
-<li>给ViewRoot的重要变量赋值。</li>
-<li>调用requestLayout（），发出界面重绘请求。</li>
-<li>调用sWindowSession.add（），通知Wms添加窗口。</li>
-</ul>
-<p>创建子窗口或系统窗口过程和上面的类似。</p>
-<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+        <p>优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。<br><a id="more"></a></p>
+<p>一个产品，当只有一两个工程师，这时没什么问题。当达到10人左右，沟通成本、协作效率、软件质量问题开始显现。当达到30+人，多业务线并行，开发效率、线上事故、代码合板等问题已经开始成为了产品瓶颈。那我们该怎么解决？</p>
+<p>Atlas是在手淘架构不断发展演化出来的一个解决方案，比较适用于多业务线产品。Atlas把各个业务线分为多个bundle，bundle之间共享资源放在Host中，这样在编码编译期做到了天然隔离。在工程期，各bundle和host独立编译开发。运行期，按需加载bundle。运维期，动态部署业务需求、灵活精确灰度测试。</p>
 
       
     </div>
@@ -442,8 +408,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/03/Android-Context-到底是什么？/" rel="next" title="Android Context 到底是什么？">
-                <i class="fa fa-chevron-left"></i> Android Context 到底是什么？
+              <a href="/2017/10/11/Android业务中间层该如何设计？/" rel="next" title="Android业务中间层该如何设计？">
+                <i class="fa fa-chevron-left"></i> Android业务中间层该如何设计？
               </a>
             
           </div>
@@ -451,10 +417,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/03/Android-Framework是怎么启动的？/" rel="prev" title="Android Framework是怎么启动的？">
-                Android Framework是怎么启动的？ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,17 +488,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -621,22 +574,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗户有几种类型？"><span class="nav-number">2.</span> <span class="nav-text">窗户有几种类型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那么该怎么创建应用窗口呢？"><span class="nav-number">3.</span> <span class="nav-text">那么该怎么创建应用窗口呢？</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
