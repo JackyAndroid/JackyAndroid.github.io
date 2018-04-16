@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-08T13:16:47.180Z</updated>
+  <updated>2018-03-11T10:06:03.130Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/03/08/%E5%96%84%E5%8F%98%E7%9A%84%E6%9E%B6%E6%9E%84/"/>
     <id>http://yoursite.com/2018/03/08/善变的架构/</id>
     <published>2018-03-08T12:14:49.000Z</published>
-    <updated>2018-03-08T13:16:47.180Z</updated>
+    <updated>2018-03-11T10:06:03.130Z</updated>
     
     <content type="html"><![CDATA[<p>架构会有多善变？<br><a id="more"></a></p>
 <p><img src="/images/mercurial_arch1.jpg" alt=""><br>上图是一个常见的App分层架构，之后随着业务发展，架构会如何变化呢？</p>
@@ -51,7 +51,7 @@
     <link href="http://yoursite.com/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2017/12/17/容器框架Atlas原理解析/</id>
     <published>2017-12-17T10:03:03.000Z</published>
-    <updated>2017-12-17T11:00:23.040Z</updated>
+    <updated>2017-12-17T11:00:23.041Z</updated>
     
     <content type="html"><![CDATA[<p>优秀的架构在于解决产品编码期、运行期、测试期及后期运维的各种问题。<br><a id="more"></a></p>
 <p>一个产品，当只有一两个工程师，这时没什么问题。当达到10人左右，沟通成本、协作效率、软件质量问题开始显现。当达到30+人，多业务线并行，开发效率、线上事故、代码合板等问题已经开始成为了产品瓶颈。那我们该怎么解决？</p>
@@ -72,7 +72,7 @@
     <link href="http://yoursite.com/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/10/11/Android业务中间层该如何设计？/</id>
     <published>2017-10-11T11:04:45.000Z</published>
-    <updated>2017-11-26T13:35:02.532Z</updated>
+    <updated>2017-11-26T13:35:02.533Z</updated>
     
     <content type="html"><![CDATA[<p>如果一个产品需要有多个业务线，各业务线之间如何协作才是最高效的？<br><a id="more"></a></p>
 <p><img src="/images/Android业务中间层1.png" alt=""></p>
@@ -108,7 +108,7 @@
     <link href="http://yoursite.com/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/</id>
     <published>2017-08-21T12:51:54.000Z</published>
-    <updated>2017-11-26T13:35:25.586Z</updated>
+    <updated>2017-11-26T13:35:25.587Z</updated>
     
     <content type="html"><![CDATA[<p>Dalvik和JVM的区别<br>Dex文件的结构<br>Dalvik如何加载Class<br><a id="more"></a></p>
 <h2 id="Dalvik和JVM的区别"><a href="#Dalvik和JVM的区别" class="headerlink" title="Dalvik和JVM的区别"></a>Dalvik和JVM的区别</h2><p>Dalvik和JVM最主要区别是它们分别具有不同的类文件格式和指令集。Dalvik使用的是dex（Dalvik Executable）格式的类文件，而Java虚拟机使用的是class格式的类文件。</p>
@@ -184,7 +184,7 @@
     <link href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/</id>
     <published>2017-06-14T10:27:59.000Z</published>
-    <updated>2017-11-26T13:34:54.566Z</updated>
+    <updated>2017-11-26T13:34:54.567Z</updated>
     
     <content type="html"><![CDATA[<p>主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。</p>
 <a id="more"></a>
@@ -219,7 +219,7 @@
     <link href="http://yoursite.com/2017/06/12/Hello%20Kotlin/"/>
     <id>http://yoursite.com/2017/06/12/Hello Kotlin/</id>
     <published>2017-06-12T06:16:18.000Z</published>
-    <updated>2017-11-26T13:33:35.580Z</updated>
+    <updated>2017-11-26T13:33:35.581Z</updated>
     
     <content type="html"><![CDATA[<p>前世今生<br>有什么样的语法？<br>语法是怎么实现的？<br>如何编译的？<br>迁移成本<br>为我们带来什么改变？<br><a id="more"></a></p>
 <h2 id="前世今生"><a href="#前世今生" class="headerlink" title="前世今生"></a>前世今生</h2><h3 id="设计出发点"><a href="#设计出发点" class="headerlink" title="设计出发点"></a>设计出发点</h3><ol>
@@ -417,7 +417,7 @@
     <link href="http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/04/15/数据库到底哪家强？/</id>
     <published>2017-04-15T06:24:26.000Z</published>
-    <updated>2017-11-26T13:33:45.580Z</updated>
+    <updated>2017-11-26T13:33:45.581Z</updated>
     
     <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？<br><a id="more"></a></p>
 <p>我们先看基于SQLite发展而来的框架，这方面主要分成两条发展路线，一条是Rx或者叫做对象映射（OM）路线，一条是对象关系映射（ORM）路线。</p>
@@ -527,7 +527,7 @@
     <link href="http://yoursite.com/2017/02/03/Android%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%8C%96-%E5%A4%9A%E6%A8%A1%E5%9D%97%E5%8C%BA%E5%88%86%E7%BC%96%E8%AF%91/"/>
     <id>http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/</id>
     <published>2017-02-03T10:28:18.000Z</published>
-    <updated>2017-11-26T13:34:45.196Z</updated>
+    <updated>2017-11-26T13:34:45.197Z</updated>
     
     <content type="html"><![CDATA[<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？<br><a id="more"></a></p>
 <h1 id="模块化与组件化–多模块区分编译"><a href="#模块化与组件化–多模块区分编译" class="headerlink" title="模块化与组件化–多模块区分编译"></a>模块化与组件化–多模块区分编译</h1><blockquote>
@@ -568,7 +568,7 @@
     <link href="http://yoursite.com/2017/02/03/%E6%9D%A5%EF%BC%8C%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%90%E7%A0%81%E5%B0%B1%E5%9C%A8%E8%BF%99%EF%BC%81/"/>
     <id>http://yoursite.com/2017/02/03/来，谷歌安卓浏览器源码就在这！/</id>
     <published>2017-02-03T09:49:37.000Z</published>
-    <updated>2017-11-26T13:33:05.576Z</updated>
+    <updated>2017-11-26T13:33:05.577Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li>谷歌浏览器安卓版源码项目</li>
@@ -653,7 +653,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-Framework是怎么启动的？/</id>
     <published>2017-02-03T09:47:48.000Z</published>
-    <updated>2017-11-30T02:35:45.167Z</updated>
+    <updated>2017-11-30T02:35:45.168Z</updated>
     
     <content type="html"><![CDATA[<p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。<br><a id="more"></a></p>
 <h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
@@ -709,7 +709,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%9F/"/>
     <id>http://yoursite.com/2017/02/03/Android-一个窗口是怎么创建出来的？/</id>
     <published>2017-02-03T09:46:19.000Z</published>
-    <updated>2017-11-30T02:34:46.703Z</updated>
+    <updated>2017-11-30T02:34:46.704Z</updated>
     
     <content type="html"><![CDATA[<p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。<br><a id="more"></a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在WmS看来窗口并不是Window类，而是一个View类。WmS收到用户消息后，需要把消息发送到窗口，View类其实并不能直接接受传递过来的消息，而接受消息的必须是IWindow类，实现IWindow类的是ViewRoot.W类，每一个W内部都包含了一个View变量。</p>
@@ -822,7 +822,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/%E6%88%91%E7%9C%BC%E4%B8%AD%E7%9A%84Android-Framework/"/>
     <id>http://yoursite.com/2017/02/03/我眼中的Android-Framework/</id>
     <published>2017-02-03T09:40:58.000Z</published>
-    <updated>2017-11-30T02:35:58.239Z</updated>
+    <updated>2017-11-30T02:35:58.240Z</updated>
     
     <content type="html"><![CDATA[<p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong><br><a id="more"></a></p>
 <h1 id="我眼中的Android-Framework"><a href="#我眼中的Android-Framework" class="headerlink" title="我眼中的Android Framework"></a>我眼中的Android Framework</h1><p>在开发中我们会遇到各种各样的非常奇怪的问题，有些问题是百思不得骑姐。其实这些问题大都是因为我们不了解安卓内部运行原理，知其所以然才是我们的目的。—<strong>前言</strong></p>
@@ -883,7 +883,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/Android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     <id>http://yoursite.com/2017/02/03/Android-设计模式-单例模式/</id>
     <published>2017-02-03T09:35:12.000Z</published>
-    <updated>2017-11-26T13:34:35.579Z</updated>
+    <updated>2017-11-26T13:34:35.580Z</updated>
     
     <content type="html"><![CDATA[<h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
 <li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
@@ -921,7 +921,7 @@ limitations under the License.
     <link href="http://yoursite.com/2017/02/03/%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84TV%E6%A1%8C%E9%9D%A2%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
     <id>http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/</id>
     <published>2017-02-03T09:14:46.000Z</published>
-    <updated>2017-11-26T13:33:55.581Z</updated>
+    <updated>2017-11-26T13:33:55.582Z</updated>
     
     <content type="html"><![CDATA[<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。<br><a id="more"></a></p>
 <h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="external">https://github.com/JackyAndroid</a></p>
