@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="架构," />
 
 
 
@@ -90,13 +90,15 @@
 
 
 <meta name="description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
+<meta name="keywords" content="架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android模块化与组件化--多模块区分编译">
 <meta property="og:url" content="http://yoursite.com/2017/02/03/Android模块化与组件化-多模块区分编译/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-26T13:34:45.197Z">
+<meta property="og:updated_time" content="2018-05-04T03:35:17.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android模块化与组件化--多模块区分编译">
 <meta name="twitter:description" content="有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？">
@@ -358,18 +360,18 @@
       
         <p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？<br><a id="more"></a></p>
 <h1 id="模块化与组件化–多模块区分编译"><a href="#模块化与组件化–多模块区分编译" class="headerlink" title="模块化与组件化–多模块区分编译"></a>模块化与组件化–多模块区分编译</h1><blockquote>
-<p><strong>示例地址：<a href="https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library" target="_blank" rel="external">https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library</a></strong><br>Android-Architecture-Fairy开源项目重点分析主流技术与架构设计，欢迎star</p>
+<p><strong>示例地址：<a href="https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library" target="_blank" rel="noopener">https://github.com/JackyAndroid/Android-Architecture-Fairy/tree/master/multi-variants-library</a></strong><br>Android-Architecture-Fairy开源项目重点分析主流技术与架构设计，欢迎star</p>
 </blockquote>
-<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？先看下<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Library-Publication" target="_blank" rel="external">官方文档</a>如下：</p>
-<p>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. You can control which variant gets published:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Note that this publishing configuration name references the full variant name. Release and debug are only applicable when there are no flavors. If you wanted to change the default published variant while using flavors, you would write:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultPublishConfig <span class="string">"flavor1Debug"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>It is also possible to publish all variants of a library. We are planning to allow this while using a normal project-to-project dependency (like shown above), but this is not possible right now due to limitations in Gradle (we are working toward fixing those as well).<br>Publishing of all variants are not enabled by default. The snippet below enables this feature:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    publishNonDefault <span class="keyword">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>有时我们一个项目中存在多个产品形态，且不同产品需要不同的编译环境，这是模块化组件化的基础。最普通的情况便是在主模块里面加入渠道统计，但此时如果我们有多个Library，多种产品形态的主模块需要编译多种产品形态的Library，怎么办？先看下<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Library-Publication" target="_blank" rel="noopener">官方文档</a>如下：</p>
+<p>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. You can control which variant gets published:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">"debug"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Note that this publishing configuration name references the full variant name. Release and debug are only applicable when there are no flavors. If you wanted to change the default published variant while using flavors, you would write:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">"flavor1Debug"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>It is also possible to publish all variants of a library. We are planning to allow this while using a normal project-to-project dependency (like shown above), but this is not possible right now due to limitations in Gradle (we are working toward fixing those as well).<br>Publishing of all variants are not enabled by default. The snippet below enables this feature:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    publishNonDefault <span class="keyword">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>It is important to realize that publishing multiple variants means publishing multiple aar files, instead of a single aar containing multiple variants. Each aar packaging contains a single variant. Publishing a variant means making this aar available as an output artifact of the Gradle project. This can then be used either when publishing to a maven repository, or when another project creates a dependency on the library project.</p>
-<p>Gradle has a concept of default” artifact. This is the one that is used when writing:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>To create a dependency on another published artifact, you need to specify which one to use:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Gradle has a concept of default” artifact. This is the one that is used when writing:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>To create a dependency on another published artifact, you need to specify which one to use:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></span><br><span class="line"><span class="function">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
 <p>Important: Note that the published configuration is a full variant, including the build type, and needs to be referenced as such.<br>Important: When enabling publishing of non default, the Maven publishing plugin will publish these additional variants as extra packages (with classifier). This means that this is not really compatible with publishing to a maven repository. You should either publish a single variant to a repository OR enable all config publishing for inter-project dependencies.</p>
-<p>默认Library只发布Release版本，这个是Gradle官方的限制，Google官方正在试图解决这个问题。可以使用defaultPublishConfig去设置发布的版本，通过设置publishNonDefault true可以让Library发布多个产品版本。<br>下面的这种平常书写的方式是依赖的默认发布版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果想要分渠道编译多种形态的Library，需要修改如下的方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></div><div class="line">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>默认Library只发布Release版本，这个是Gradle官方的限制，Google官方正在试图解决这个问题。可以使用defaultPublishConfig去设置发布的版本，通过设置publishNonDefault true可以让Library发布多个产品版本。<br>下面的这种平常书写的方式是依赖的默认发布版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:lib2'</span>)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果想要分渠道编译多种形态的Library，需要修改如下的方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="function">flavor1Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor1Release'</span>)</span></span></span><br><span class="line"><span class="function">    flavor2Compile <span class="title">project</span><span class="params">(path: <span class="string">':lib1'</span>, configuration: <span class="string">'flavor2Release'</span>)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
 <hr>
 <p><strong>注意事项：</strong></p>
 <ol>
@@ -420,6 +422,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+        </div>
       
 
       
@@ -537,7 +545,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -548,7 +556,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

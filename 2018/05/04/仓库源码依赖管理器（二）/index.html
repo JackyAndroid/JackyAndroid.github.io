@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="依赖管理器," />
 
 
 
@@ -89,22 +89,18 @@
 
 
 
-<meta name="description" content="这几天我们或许都看到了这样的新闻，标题大多数为：《中国首位00后CEO…》，连雷军都进行了转发（如下）。但今天意想不到的事却发生了…">
+<meta name="description" content="如何动态生成依赖描述？">
+<meta name="keywords" content="依赖管理器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="中国首位00后CEO公然抄袭、复制我的开源作品">
-<meta property="og:url" content="http://yoursite.com/2017/09/05/中国首位00后CEO公然抄袭、复制我的开源作品/index.html">
+<meta property="og:title" content="仓库源码依赖管理器（二）">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/仓库源码依赖管理器（二）/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="这几天我们或许都看到了这样的新闻，标题大多数为：《中国首位00后CEO…》，连雷军都进行了转发（如下）。但今天意想不到的事却发生了…">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/9/4/86a1ded6a7b86a0c393c49c827fabef0">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/9/4/b77449382afa2036683ce8c228dbf013">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/9/4/4bdd5b3400e0d993c3c2914044d59e57">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/9/4/519632499c052e8dfd7defb9d5bf6c61">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/9/4/ab4550b558c0fb7eb4091bc39e59e47b">
-<meta property="og:updated_time" content="2017-09-05T06:03:54.000Z">
+<meta property="og:description" content="如何动态生成依赖描述？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-04T06:18:59.606Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="中国首位00后CEO公然抄袭、复制我的开源作品">
-<meta name="twitter:description" content="这几天我们或许都看到了这样的新闻，标题大多数为：《中国首位00后CEO…》，连雷军都进行了转发（如下）。但今天意想不到的事却发生了…">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/9/4/86a1ded6a7b86a0c393c49c827fabef0">
+<meta name="twitter:title" content="仓库源码依赖管理器（二）">
+<meta name="twitter:description" content="如何动态生成依赖描述？">
 
 
 
@@ -132,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/05/中国首位00后CEO公然抄袭、复制我的开源作品/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（二）/"/>
 
 
 
 
 
-  <title> 中国首位00后CEO公然抄袭、复制我的开源作品 | 墨镜猫 </title>
+  <title> 仓库源码依赖管理器（二） | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -285,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/中国首位00后CEO公然抄袭、复制我的开源作品/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（二）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -309,7 +305,7 @@
             
             
               
-                中国首位00后CEO公然抄袭、复制我的开源作品
+                仓库源码依赖管理器（二）
               
             
           </h2>
@@ -324,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T09:42:24+08:00">
-                2017-09-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-04T10:47:50+08:00">
+                2018-05-04
               </time>
             
 
@@ -360,28 +356,25 @@
       
 
       
-        <p>这几天我们或许都看到了这样的新闻，标题大多数为：《中国首位00后CEO…》，连雷军都进行了转发（如下）。但今天意想不到的事却发生了…<br><a id="more"></a></p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/9/4/86a1ded6a7b86a0c393c49c827fabef0" alt=""></p>
-<p>9.4号晚上，有一个我项目的关注者在我的开源项目<a href="https://github.com/JackyAndroid/AndroidTVLauncher" target="_blank" rel="external">智能电视桌面</a>提了一个issue问题（截图如下），智能电视桌面项目其中一个产品是猫桌面，是我在GitHub开源社区发布的一款智能电视桌面，按照Google官方TV交互规范开发。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/9/4/b77449382afa2036683ce8c228dbf013" alt=""></p>
-<p>一开始我还以为别人只是引用了我的作品什么的，但打开其中的<a href="http://www.cnbeta.com/articles/tech/648297.htm" target="_blank" rel="external">链接</a>却发现，不是那么简单。这位所谓的“中国首位00后CEO”在公司产品列表公然写着“猫桌面”（截图如下）。</p>
-<p>一开始还以为只是巧合，但点开视频却大吃一惊。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/9/4/4bdd5b3400e0d993c3c2914044d59e57" alt=""></p>
-<p>视频采访截图如下，大家也可以去看链接中的视频（1分29秒处）。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/9/4/519632499c052e8dfd7defb9d5bf6c61" alt=""></p>
-<p>然后再让大家看看我<a href="https://github.com/JackyAndroid/AndroidTVLauncher" target="_blank" rel="external">项目</a>中的效果图。如下：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/9/4/ab4550b558c0fb7eb4091bc39e59e47b" alt=""></p>
-<p>大家觉得这是抄袭吗？这不是，这就是赤裸裸的复制！</p>
-<p>连作品名字及图片都没有更换，这就是这位”年少有为”CEO的行为。</p>
-<p>一个举着创业、创新、年少有为大旗的CEO，却在背地里抄袭、复制其他人的劳动成果，而作者我在此之前毫不知情。</p>
-<p>请投资人、创业者及开发者，警惕这种人品有严重问题的人。也请大家转发，抵制这种偷窃的行为。</p>
-<p><strong>证据链接如下：</strong></p>
-<ol>
-<li>cnBeta：<a href="http://www.cnbeta.com/articles/tech/648297.htm" target="_blank" rel="external">http://www.cnbeta.com/articles/tech/648297.htm</a></li>
-<li>微博：<a href="http://weibo.com/6004281123/FjVYCcMsG?type=repost" target="_blank" rel="external">http://weibo.com/6004281123/FjVYCcMsG?type=repost</a></li>
-<li>我的开源作品：<a href="https://github.com/JackyAndroid/AndroidTVLauncher" target="_blank" rel="external">https://github.com/JackyAndroid/AndroidTVLauncher</a></li>
-</ol>
-<p><strong>声明：本人对此不再做二次回应，目的只是让大家清楚这个人的为人，借此提醒大家提高版权意识。</strong></p>
+        <p>如何动态生成依赖描述？<br><a id="more"></a></p>
+<p>上一篇我们定义了依赖描述的基本格式，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off true</span><br><span class="line">    name &quot;我是名字&quot;</span><br><span class="line">    path &quot;/path&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们想做的更通用，能让其他业务工程方便的接入仓库源码依赖，那每一次接入的时候都要编写大量的依赖描述，而且每一次依赖变了，都需要手动修改描述文件。那可不可以动态生成依赖描述？</p>
+<p>我们都知道有一个androidDependencies任务，执行任务会把工程的依赖在控制台输出，如果我们实现类似的任务，可以扫描出当前的依赖关系，然后根据我们的依赖描述定义输出为DSL文件就可以解决了。</p>
+<p>我们在任务执行期间可以拿到project config 信息，然后根据第一级的依赖信息生成节点依赖信息，然后递归查找当前节点的子节点，最后就可以生成类似树状的依赖关系，基本思路如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">project.configurations.each &#123; config -&gt;</span><br><span class="line">    // 这里可以添加些异常检查</span><br><span class="line">    config.resolvedConfiguration.firstLevelModuleDependencies.each &#123; dep -&gt;</span><br><span class="line">        def generateModuleDep</span><br><span class="line">        generateModuleDep = &#123; resolvedDep -&gt;</span><br><span class="line">            // 这里可以根据 resolvedDep moduleGroup moduleName 等信息生成当前依赖信息</span><br><span class="line">            resolvedDep.children.each &#123; childResolvedDep -&gt;</span><br><span class="line">                if (resolvedDep in childResolvedDep.getParents()) &#123;</span><br><span class="line">                    // 子节点递归扫描依赖</span><br><span class="line">                    generateModuleDep(childResolvedDep)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        generateModuleDep(dep)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>节点的信息可以按照实际情况存储到相应的数据结构中，我这里是把节点的对象直接存到List中。</p>
+<p>现在我们已经获取到各个节点的信息了，那我们怎么把节点信息导出为文件呢？</p>
+<p>groovy 支持使用模板生成字符串，生成文件当然也是可以的。</p>
+<p>先定义一个依赖描述模板，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off $&#123;on_off&#125;</span><br><span class="line">    name $&#123;name&#125;</span><br><span class="line">    path $&#123;path&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下一步定义一个节点信息Map，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def binding = [</span><br><span class="line">        on_off    : true, // 节点信息的开关值</span><br><span class="line">        name      : &quot;节点信息的名字&quot;,</span><br><span class="line">        path      : &quot;节点的路径&quot;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>最后根据上面定义的模板和节点信息Map，输出格式化的字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def template = new StreamingTemplateEngine().createTemplate(&quot;描述依赖模板&quot;)</span><br><span class="line">String response = template.make(&quot;节点信息Map&quot;)</span><br></pre></td></tr></table></figure>
+<p>模板引擎的make函数返回就是已经填好内容的格式化字符串，根据输出的字符串就可以输出到依赖描述文件。</p>
+<p>现在在业务工程执行当前的任务，就可以动态生成依赖描述文件。</p>
+<p>下一篇我们将结合这两篇的内容做一个仓库源码依赖插件。</p>
 
       
     </div>
@@ -424,6 +417,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/依赖管理器/" rel="tag"># 依赖管理器</a>
+          
+        </div>
+      
 
       
         
@@ -433,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/21/关于Dalvik，我们该知道些什么？/" rel="next" title="关于Dalvik，我们该知道些什么？">
-                <i class="fa fa-chevron-left"></i> 关于Dalvik，我们该知道些什么？
+              <a href="/2018/05/03/源码依赖管理器（一）/" rel="next" title="仓库源码依赖管理器（一）">
+                <i class="fa fa-chevron-left"></i> 仓库源码依赖管理器（一）
               </a>
             
           </div>
@@ -442,6 +441,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/04/仓库源码依赖管理器（三）/" rel="prev" title="仓库源码依赖管理器（三）">
+                仓库源码依赖管理器（三） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,7 +530,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -538,7 +541,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -614,7 +617,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-jacky"></i>
   </span>
@@ -632,6 +635,8 @@
     NexT.Mist
   </a>
 </div>
+
+<p>Mainland China hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
 
 
         

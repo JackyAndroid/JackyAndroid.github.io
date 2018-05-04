@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android Framework," />
 
 
 
@@ -90,14 +90,16 @@
 
 
 <meta name="description" content="安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。">
+<meta name="keywords" content="Android Framework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Framework是怎么启动的？">
 <meta property="og:url" content="http://yoursite.com/2017/02/03/Android-Framework是怎么启动的？/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20151222223320604">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-30T02:35:45.168Z">
+<meta property="og:updated_time" content="2018-05-04T03:34:41.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Framework是怎么启动的？">
 <meta name="twitter:description" content="安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。">
@@ -389,7 +391,7 @@
 <h3 id="1-启动各种系统服务线程"><a href="#1-启动各种系统服务线程" class="headerlink" title="1.启动各种系统服务线程"></a>1.启动各种系统服务线程</h3><p>SystemServer进程在Android运行环境中扮演了“神经中枢”的作用，APK应用中能够直接交互的大部分系统服务都在该进程中运行，常见的有WindowManagerServer（Wms）、ActivityManagerService（Ams）、PackageManagerServer（Pms），这些系统服务都是以一个线程的方式存在于SystemServer进程中。</p>
 <h3 id="2-启动第一个Activity"><a href="#2-启动第一个Activity" class="headerlink" title="2.启动第一个Activity"></a>2.启动第一个Activity</h3><p>当以上服务线程都启动后，其中Ams服务是systemReady（）调用完成最后启动的，在Ams的systemReady（）函数的最后一段代码则发出了启动任务队列中最上面一个Activity消息。</p>
 <p>在Ams的startHomeActivityLocked（）中，系统发出了一个category字段包含CATEGORY_HOME的intent，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">intent.setComponent(mTopComponent);</div><div class="line"><span class="keyword">if</span>(mFactoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL)&#123;</div><div class="line">intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">intent.setComponent(mTopComponent);</span><br><span class="line"><span class="keyword">if</span>(mFactoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL)&#123;</span><br><span class="line">intent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
 <p>到此第一个Activity就启动了。</p>
 <p><strong><em>如有问题请留言，转载请注明出处。</em></strong></p>
@@ -436,6 +438,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-Framework/" rel="tag"># Android Framework</a>
+          
+        </div>
       
 
       
@@ -553,7 +561,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -564,7 +572,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="疑难杂症," />
 
 
 
@@ -90,13 +90,15 @@
 
 
 <meta name="description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
+<meta name="keywords" content="疑难杂症">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
 <meta property="og:url" content="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-26T13:34:54.567Z">
+<meta property="og:updated_time" content="2018-05-04T03:35:13.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
 <meta name="twitter:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
@@ -365,12 +367,12 @@
 <ol>
 <li><code>collect{variant}MultiDexComponents task</code>，这个任务会根据manifest把所有应用组件（application, activities, services, receivers, providers）的名字写到一个文本文件。因此，如果你没有把其中的组件注册到manifest，那就不会被包含到主Dex里，也会有一些不注册的class也会被包含进去，比如注解。查看下CreateManifestKeepList.groovy 的源码就可以看到完整的包含列表。这个任务输出的文件是 manifest_keep.txt，路径为：app/build/intermediates/multi-dex。</li>
 <li><code>shrink{variant}MultiDexComponents task</code>，这个任务会掉起ProGuard程序创建一个压缩过的Jar文件，这个文件里只包含manifest_keep.txt里的class，这个任务输出的文件是componentClasses.jar</li>
-<li><code>create{variant}MainDexClassList task</code>，这个任务会解析componentClasses.jar文件，为每一个类文件计算直接的引用层级，具体实现请查看<a href="https://android.googlesource.com/platform/dalvik/+/master/dx/src/com/android/multidex/ClassReferenceListBuilder.java" target="_blank" rel="external">链接</a>。因此，如果你应用有一个注册的组件包含类X的变量，类X也会被包含进主Dex里面。这个任务输出的文件为：maindexlist.txt，包含主Dex里面所有的类。</li>
+<li><code>create{variant}MainDexClassList task</code>，这个任务会解析componentClasses.jar文件，为每一个类文件计算直接的引用层级，具体实现请查看<a href="https://android.googlesource.com/platform/dalvik/+/master/dx/src/com/android/multidex/ClassReferenceListBuilder.java" target="_blank" rel="noopener">链接</a>。因此，如果你应用有一个注册的组件包含类X的变量，类X也会被包含进主Dex里面。这个任务输出的文件为：maindexlist.txt，包含主Dex里面所有的类。</li>
 </ol>
 <p><strong>如果最低版本是21会发生什么？</strong><br>如果最低版本是21上面所有的任务都不会执行，也不会有主Dex列表的计算。这是因为在应用安装期间所有的dex文件都会被ART转换为一个.oat文件。</p>
 <p>所以如果这些类的引用超过了65536，构建的时候就会抛出这个<code>Too many classes in --main-dex-list, main dex capacity exceeded</code> 错误</p>
-<p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8" target="_blank" rel="external">Google Issue Tracker</a></p>
-<p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded" target="_blank" rel="external">Too many classes in –main-dex-list, main dex capacity exceeded
+<p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8" target="_blank" rel="noopener">Google Issue Tracker</a></p>
+<p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded" target="_blank" rel="noopener">Too many classes in –main-dex-list, main dex capacity exceeded
 </a></p>
 <p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
 
@@ -414,6 +416,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/疑难杂症/" rel="tag"># 疑难杂症</a>
+          
+        </div>
       
 
       
@@ -522,7 +530,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -533,7 +541,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

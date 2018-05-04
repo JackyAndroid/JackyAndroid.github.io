@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android Framework," />
 
 
 
@@ -90,14 +90,16 @@
 
 
 <meta name="description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
+<meta name="keywords" content="Android Framework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Context 到底是什么？">
 <meta property="og:url" content="http://yoursite.com/2017/02/03/Android-Context-到底是什么？/index.html">
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201203/1/0_1330607569Vj4c.gif">
 <meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2017-11-30T02:35:02.472Z">
+<meta property="og:updated_time" content="2018-05-04T03:34:44.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Context 到底是什么？">
 <meta name="twitter:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
@@ -383,16 +385,16 @@
 </ul>
 <p>其中attach（）方法仅在Framework进程启动时调用，应用程序运行时不会调用到该方法。</p>
 <h3 id="Application对应的Context"><a href="#Application对应的Context" class="headerlink" title="Application对应的Context"></a>Application对应的Context</h3><p>程序第一次启动时，会辗转调用到makeApplication（）方法。具体代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(<span class="keyword">this</span>,<span class="keyword">null</span>,mActivityThread);</div><div class="line">....</div><div class="line">appContext.setOuterContext(app);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</span><br><span class="line">appContext.init(<span class="keyword">this</span>,<span class="keyword">null</span>,mActivityThread);</span><br><span class="line">....</span><br><span class="line">appContext.setOuterContext(app);</span><br></pre></td></tr></table></figure>
 <h3 id="Activity对应的Context"><a href="#Activity对应的Context" class="headerlink" title="Activity对应的Context"></a>Activity对应的Context</h3><p>启动Activity时，Ams会通过IPC调用到ActivityThread的scheduleLaunchActivity（）方法，该方法包含两种参数。一种是ActivityInfo，这是一个实现了Parcelable接口的数据类，意味着该对象是Ams创建的，并通过IPC传递到ActivityThread；另一种是其他的一些参数。</p>
 <p>scheduleLaunchActivity（）方法中会根据以上两种参数构造一个本地ActivityRecord数据类，ActivityThread内部会为每一个Activity创建一个ActivityRecord对象，并使用这些数据对象来管理Activity。</p>
 <p>然后会调用handleLaunchActivity（），再调用performLaunchActivity（），该方法中创建ContextImpl的代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(r.packageInfo,r.token,<span class="keyword">this</span>);</div><div class="line">appContext.setOuterContext(activity);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</span><br><span class="line">appContext.init(r.packageInfo,r.token,<span class="keyword">this</span>);</span><br><span class="line">appContext.setOuterContext(activity);</span><br></pre></td></tr></table></figure>
 <p>在performLaunchActivity（）开始执行时，会为r.packageInfo变量赋值。r.packageInfo对象的PackageInfo对象和Application对应的packageInfo对象是同一个。</p>
 <h3 id="Service对应的Context"><a href="#Service对应的Context" class="headerlink" title="Service对应的Context"></a>Service对应的Context</h3><p>启动Service时，Ams会通过IPC调用到ActivityThread的scheduleCreateService（）方法，该方法也包含两种参数。第一种是ServiceInfo，这是实现了一个Parcelable接口的数据类，该对象由AmS创建，并通过IPC传递到ActivityThread内部；第二种是其他参数。</p>
 <p>在scheduleCreateService（）方法中，会使用以上两种参数构造一个CreateServiceData的数据对象，ActivityThread会为其所包含的每一个Service创建该数据对象，并通过这些对象来管理Service。</p>
 <p>然后在执行handleCreateService（）方法，创建ContextImpl对象代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</div><div class="line">appContext.init(packageInfo,<span class="keyword">null</span>,<span class="keyword">this</span>);</div><div class="line">...</div><div class="line">appContext.setOuterContext(service);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ContextImpl appContext = <span class="keyword">new</span> ContextImpl();</span><br><span class="line">appContext.init(packageInfo,<span class="keyword">null</span>,<span class="keyword">this</span>);</span><br><span class="line">...</span><br><span class="line">appContext.setOuterContext(service);</span><br></pre></td></tr></table></figure>
 <p>Service对应的Context对象内部的mPackageInfo与Activity、Application中是完全相同的。</p>
 <h2 id="这几个Context之间的关系"><a href="#这几个Context之间的关系" class="headerlink" title="这几个Context之间的关系"></a>这几个Context之间的关系</h2><p>从以上可以看出，创建Context对象的过程基本上是相同的，不同的仅仅是针对Application、Activity、Service使用了不同的数据对象。</p>
 <p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
@@ -440,6 +442,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-Framework/" rel="tag"># Android Framework</a>
+          
+        </div>
       
 
       
@@ -557,7 +565,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -568,7 +576,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="设计模式," />
+  <meta name="keywords" content="依赖管理器," />
 
 
 
@@ -89,20 +89,18 @@
 
 
 
-<meta name="description" content="什么情况下需要单例模式？ 一些类提供公共功能供别人调用，本身不会处理业务逻辑 类会被许多类和线程调用">
-<meta name="keywords" content="设计模式">
+<meta name="description" content="如何动态替换依赖？">
+<meta name="keywords" content="依赖管理器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 设计模式-单例模式">
-<meta property="og:url" content="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/index.html">
+<meta property="og:title" content="仓库源码依赖管理器（三）">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/仓库源码依赖管理器（三）/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="什么情况下需要单例模式？ 一些类提供公共功能供别人调用，本身不会处理业务逻辑 类会被许多类和线程调用">
+<meta property="og:description" content="如何动态替换依赖？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2018-05-04T03:35:26.657Z">
+<meta property="og:updated_time" content="2018-05-04T06:18:53.551Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 设计模式-单例模式">
-<meta name="twitter:description" content="什么情况下需要单例模式？ 一些类提供公共功能供别人调用，本身不会处理业务逻辑 类会被许多类和线程调用">
-<meta name="twitter:image" content="http://www.jackywang.tech/images/gongzh.png">
+<meta name="twitter:title" content="仓库源码依赖管理器（三）">
+<meta name="twitter:description" content="如何动态替换依赖？">
 
 
 
@@ -130,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（三）/"/>
 
 
 
 
 
-  <title> Android 设计模式-单例模式 | 墨镜猫 </title>
+  <title> 仓库源码依赖管理器（三） | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/Android-设计模式-单例模式/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（三）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -307,7 +305,7 @@
             
             
               
-                Android 设计模式-单例模式
+                仓库源码依赖管理器（三）
               
             
           </h2>
@@ -322,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T17:35:12+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-04T11:34:06+08:00">
+                2018-05-04
               </time>
             
 
@@ -358,24 +356,18 @@
       
 
       
-        <h3 id="什么情况下需要单例模式？"><a href="#什么情况下需要单例模式？" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
-<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
-<li><strong>类会被许多类和线程调用</strong><a id="more"></a>
-</li>
-</ul>
-<h1 id="Android-设计模式-单例模式"><a href="#Android-设计模式-单例模式" class="headerlink" title="Android 设计模式-单例模式"></a>Android 设计模式-单例模式</h1><h3 id="什么情况下需要单例模式？-1"><a href="#什么情况下需要单例模式？-1" class="headerlink" title="什么情况下需要单例模式？"></a>什么情况下需要单例模式？</h3><ul>
-<li><strong>一些类提供公共功能供别人调用，本身不会处理业务逻辑</strong></li>
-<li><strong>类会被许多类和线程调用</strong></li>
-</ul>
-<hr>
-<h3 id="设计单例模式"><a href="#设计单例模式" class="headerlink" title="设计单例模式"></a>设计单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mSingleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的做法在多线程的时候会出现问题，比如有两个线程同时调用getInstance(),这时会new两个对象出来。</p>
-<h3 id="单例模式改进1"><a href="#单例模式改进1" class="headerlink" title="单例模式改进1"></a>单例模式改进1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton mSingleton;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">synchronized</span>(Singleton.class)&#123;</span><br><span class="line">    <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">     mSingleton = <span class="keyword">new</span> Singleton();\\A</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mSingleton;</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种方式还是会有问题，就是高并发情况下多线程去抢夺锁，假如有几百个线程，其中有一个运气比较差，这个线程就会出现一直去getInstance，资源一直返回不回去，UI也不会得到更新。</p>
-<h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton mSingleton;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;\\A</span><br><span class="line">    <span class="keyword">synchronized</span>(Singleton.class)&#123;\\C</span><br><span class="line">     <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)</span><br><span class="line">      mSingleton = <span class="keyword">new</span> Singleton();\\B</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mSingleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
-<h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+        <p>如何动态替换依赖？<br><a id="more"></a><br>前两篇我们说了下如何定义依赖描述文件，如何动态生成描述文件，那有了这些信息，我们该怎么去动态替换依赖？</p>
+<p>如果要把线上依赖替换为本地Project依赖，先要把本地Project include进当前业务工程。在这之前先加载依赖描述文件进内存，如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> shell = <span class="keyword">new</span> GroovyShell(<span class="keyword">this</span>.getClass().getClassLoader())</span><br><span class="line">shell.evaluate(<span class="keyword">new</span> File(<span class="string">"依赖描述文件路径"</span>))</span><br></pre></td></tr></table></figure>
+<p><strong>注：在依赖描述文件里，记得引用DSL使用的类，例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import xxx.Module</span><br><span class="line">@groovy.transform.BaseScript Module module</span><br></pre></td></tr></table></figure>
+<p>然后循环迭代依赖描述 List，根据描述信息include相应的工程，如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> projectName = <span class="string">":模块名字"</span></span><br><span class="line">settings.include(projectName)</span><br><span class="line">settings.project(projectName).projectDir = <span class="keyword">new</span> File(<span class="string">"模块本地路径"</span>)</span><br></pre></td></tr></table></figure>
+<p>到这一步，需要包含的Project已经包含了进来，在AS工程栏就可以看到包括进来的模块了。</p>
+<p>需要替换的模块已经包含进来了，下一步就是根据依赖描述配置信息替换线上依赖，基本思路如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">project.afterEvaluate &#123;</span><br><span class="line">    <span class="comment">//寻找当前节点</span></span><br><span class="line">    <span class="keyword">def</span> currentItem = modules.find &#123;</span><br><span class="line">        project.name == it.name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (currentItem == <span class="literal">null</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 寻找子节点</span></span><br><span class="line">    List&lt;String&gt; seeds = currentItem.seeds</span><br><span class="line">    <span class="keyword">if</span> (seeds == <span class="literal">null</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 迭代子节点</span></span><br><span class="line">    seeds.each &#123; seedName -&gt;</span><br><span class="line">        <span class="comment">// 寻找子节点对象</span></span><br><span class="line">        <span class="keyword">def</span> seed = modules.find &#123;</span><br><span class="line">            it.name == seedName</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (seed == <span class="literal">null</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> (seed.on_off) &#123;</span><br><span class="line">            <span class="comment">// 根据模块名字和group去除线上依赖</span></span><br><span class="line">            Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;()</span><br><span class="line">            map.put(<span class="string">"module"</span>, seed.name)</span><br><span class="line">            map.put(<span class="string">"group"</span>, <span class="string">"xxx"</span>)</span><br><span class="line">            project.configurations.compile.exclude(map)</span><br><span class="line">            <span class="comment">// 添加本地Project依赖</span></span><br><span class="line">            project.dependencies.add(<span class="string">"api"</span>, project.dependencies.project([<span class="string">path:</span> <span class="string">":"</span> + seed.name]))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在线上依赖已经替换为本地模块，在代码里点击相应模块的引用已经自动跳转到本地。</p>
+<p>仓库源码依赖管理器基本的功能已经完成了，如果需要调试模块的本地代码，只需要在源码依赖描述里把相应模块开关打开即可，是不是很方便？</p>
 
       
     </div>
@@ -420,7 +412,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+            <a href="/tags/依赖管理器/" rel="tag"># 依赖管理器</a>
           
         </div>
       
@@ -433,8 +425,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/03/东半球最好的TV桌面开源项目/" rel="next" title="东半球最好的TV桌面开源项目">
-                <i class="fa fa-chevron-left"></i> 东半球最好的TV桌面开源项目
+              <a href="/2018/05/04/仓库源码依赖管理器（二）/" rel="next" title="仓库源码依赖管理器（二）">
+                <i class="fa fa-chevron-left"></i> 仓库源码依赖管理器（二）
               </a>
             
           </div>
@@ -442,10 +434,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/03/我眼中的Android-Framework/" rel="prev" title="我眼中的Android Framework">
-                我眼中的Android Framework <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -517,17 +505,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -612,22 +591,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下需要单例模式？"><span class="nav-number">1.</span> <span class="nav-text">什么情况下需要单例模式？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-设计模式-单例模式"><span class="nav-number"></span> <span class="nav-text">Android 设计模式-单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下需要单例模式？-1"><span class="nav-number">1.</span> <span class="nav-text">什么情况下需要单例模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计单例模式"><span class="nav-number">2.</span> <span class="nav-text">设计单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式改进1"><span class="nav-number">3.</span> <span class="nav-text">单例模式改进1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式改进2"><span class="nav-number">4.</span> <span class="nav-text">单例模式改进2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><span class="nav-number">5.</span> <span class="nav-text">但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
