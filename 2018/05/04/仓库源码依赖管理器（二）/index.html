@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="如何动态生成依赖描述？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-04T06:18:59.606Z">
+<meta property="og:updated_time" content="2018-05-07T02:26:12.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="仓库源码依赖管理器（二）">
 <meta name="twitter:description" content="如何动态生成依赖描述？">
@@ -374,7 +374,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def template = new StreamingTemplateEngine().createTemplate(&quot;描述依赖模板&quot;)</span><br><span class="line">String response = template.make(&quot;节点信息Map&quot;)</span><br></pre></td></tr></table></figure>
 <p>模板引擎的make函数返回就是已经填好内容的格式化字符串，根据输出的字符串就可以输出到依赖描述文件。</p>
 <p>现在在业务工程执行当前的任务，就可以动态生成依赖描述文件。</p>
-<p>下一篇我们将结合这两篇的内容做一个仓库源码依赖插件。</p>
+<p>下一篇我们将结合这两篇的内容说下如何动态替换依赖。</p>
+<p><a href="http://www.jackywang.tech/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/" target="_blank" rel="noopener">仓库源码依赖管理器（三）</a></p>
 
       
     </div>
