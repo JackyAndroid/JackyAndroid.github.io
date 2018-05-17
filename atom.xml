@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-07T02:22:58.253Z</updated>
+  <updated>2018-05-17T11:57:58.204Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux 文件I/O</title>
+    <link href="http://yoursite.com/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/"/>
+    <id>http://yoursite.com/2018/05/16/Linux 文件/</id>
+    <published>2018-05-16T13:11:41.000Z</published>
+    <updated>2018-05-17T11:57:58.204Z</updated>
+    
+    <content type="html"><![CDATA[<p>文件如何进行读写？<br><a id="more"></a></p><blockquote><p> 读书笔记，Linux 系统编程 第二章 文件I/O</p></blockquote><p>Unix 系统主要是通过文件表示的，因此这些章节会设计Unix系统的核心。</p><p>在对文件进行读写操作之前，首先需要打开文件。内核会为每个进程维护一个打开文件的列表，该列表就是文件表。文件表示由一些非负整数进行索引，这些非负整数称为文件描述符。列表的每一项是一个打开文件的信息，包括指向该文件索引节点内存拷贝的指针以及关联的元数据，如文件位置指针和访问模式。用户空间和内核空间都使用文件描述符作为唯一cookies，打开文件会返回文件描述符，后续操作都把文件描述符作为基本参数。</p><p>文件描述符使用C 语言的int类型表示。每个Linux 进程能开发的文件数是有上限的，文件描述符的范围从0开始，到上限值减一，默认情况下，上限值为1024，也可以对它进行配置，最大为1048576。因为负数不是合法的文件描述符，所以当函数出错不能返回有效的文件描述符时，通常会返回-1。</p><p>通常，每个进程至少包含三个文件描述符：0、1、2，除非显式关闭这些描述符。0表示标准输入、1表示标准输出、2表示标准错误。一般而言，stdin是连接到终端的输入设备（通常是键盘），而stdout和stderr是终端的屏幕。用户可以重定向这些文件描述符，甚至可以通过管道把一个程序的输出作为另一个程序的输入。shell正是通过这种方式实现重定向和管道的。</p><p>实际上，文件描述符也可以访问设备文件、管道、快速用户空间互斥、先进先出缓冲区和套接字。遵循一切皆文件的理念，几乎任何能够读写的东西都可以通过文件描述符来访问。</p><p>默认情况下，子进程会维护一份父进程的文件表副本。在副本中，打开文件列表和其访问模式、当前文件位置以及其他元数据，都和父进程维护的文件表相同，但是存在一点区别：当子进程关闭一个文件时，不会影响到父进程的文件表。虽然一般情况下子进程会自己持有一份文件表，但是子进程和父进程也可以共享文件表。</p><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p><strong>系统调用open</strong><br>如果系统调用open执行成功，会返回文件描述符，指向路径名 name 所指定的文件。文件位置即文件的起始位置（0），文件打开方式是根据参数flags值来确定。</p><p>flags 参数是由一个或多个标志位的按位或组合。支持三种访问模式：O_RDONLY、O_WRONLY 或 O_RDWR，这三种模式分别表示为只读、只写或读写。</p><p>flags 参数还可以和以下的值进行按位或运算，修改打开文件的行为；</p><p>O_APPEND</p><p>文件以追加模式打开。也就是说，在每次写操作之前，将会更新文件位置指针，指向文件末尾。即使有另一个进程也在向该文件写数据，以追加模式打开的进程在最后一次写操作时，还是会更新文件位置指针，指向文件末尾。</p><p>O_ASYNC 这个标志位只适用于FIFO、管道、socket和终端，不适用于普通文件。</p><p>O_CLOEXEC  执行时关闭 标志位。在执行新的进程时，文件会自动关闭。</p><p>O_CREAT 当参数name指定的文件不存在时，内核自动创建。</p><p>O_DIRECT 打开文件用于直接I/O</p><p>O_DIRECTORY 如果参数name不是目录，open调用会失败。</p><p>O_EXCL 当和标志位O_CREAT一起使用时，如果参数name指定的文件已经存在，会导致open调用失败，用于防止创建文件时出现竞争。</p><p>O_LARGEFILE 文件偏移使用64位整数表示，可以支持大于2GB文件。</p><p>O_NOATIME 在读文件时，不会更新该文件的最后访问时间。可以避免为了更新每个文件的索引节点而导致的大量写操作。<br>等等…</p><p><strong>新建文件所有者</strong></p><p>确定新建文件的所有者很简单：文件所有者的uid即创建该文件的进程的有效uid。</p><p><strong>creat函数</strong></p><p>因为有些参数组合经常使用，因为专门有个系统调用提供这个功能：int creat(const char *name, mode_t mode); 这个函数名creat少了个e。UNIX之父Ken Thompson开玩笑说他在UNIX设计中感到最遗憾的就是漏掉了这个字母。</p><p><strong>返回值和错误码</strong></p><p>系统调用open和creat在成功时都会返回文件描述符。出错时，返回-1，并把errno设置成相应的错误值。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文件如何进行读写？&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Android Pins 工程结构</title>
@@ -399,26 +419,6 @@
     
     
       <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>东半球最好的TV桌面开源项目</title>
-    <link href="http://yoursite.com/2017/02/03/%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84TV%E6%A1%8C%E9%9D%A2%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
-    <id>http://yoursite.com/2017/02/03/东半球最好的TV桌面开源项目/</id>
-    <published>2017-02-03T09:14:46.000Z</published>
-    <updated>2018-05-04T03:35:44.653Z</updated>
-    
-    <content type="html"><![CDATA[<p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。<br><a id="more"></a></p><h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a href="https://github.com/JackyAndroid" target="_blank" rel="noopener">https://github.com/JackyAndroid</a></p><p>CSDN: <a href="http://blog.csdn.net/rain_butterfly" target="_blank" rel="noopener">http://blog.csdn.net/rain_butterfly</a></p><p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p><hr><h1 id="AndroidTVLauncher"><a href="#AndroidTVLauncher" class="headerlink" title="AndroidTVLauncher"></a>AndroidTVLauncher</h1><p><img src="http://img.blog.csdn.net/20160914141146439" alt="这里写图片描述"></p><p>这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。</p><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>CatLauncher(Leanback风格) 目前功能已基本稳定，后续会跟进官方Leanback库的进展，Compatible桌面理论上不再维护</p><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><blockquote><ul><li>Leanback风格</li><li>图片展示</li><li>视频直播（节操播放器-基于ijkplayer）</li><li>媒体详情</li><li>第三方应用列表</li><li>桌面特殊功能</li></ul></blockquote><h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="http://img.blog.csdn.net/20160914141236454" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141253290" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141304978" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141318267" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141351260" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141402120" alt="这里写图片描述"></p><p><img src="http://img.blog.csdn.net/20160914141411939" alt="这里写图片描述"></p><h3 id="下一步的改进"><a href="#下一步的改进" class="headerlink" title="下一步的改进"></a>下一步的改进</h3><blockquote><ul><li>跟进官方Leanback库新功能</li></ul></blockquote><h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><p>Apache License, Version 2.0</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这是一个TV 桌面，包含了一个Leanback 桌面（最低版本是17）和一个普通桌面（最低版本是15），Leanback桌面是基于Leanback库开发符合Android TV官方交互规范。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="开源项目" scheme="http://yoursite.com/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
     
   </entry>
   

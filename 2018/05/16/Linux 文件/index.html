@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="虚拟机," />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -89,21 +89,18 @@
 
 
 
-<meta name="description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
-<meta name="keywords" content="虚拟机">
+<meta name="description" content="文件如何进行读写？">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Dalvik，我们该知道些什么？">
-<meta property="og:url" content="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/index.html">
+<meta property="og:title" content="Linux 文件I&#x2F;O">
+<meta property="og:url" content="http://yoursite.com/2018/05/16/Linux 文件/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
+<meta property="og:description" content="文件如何进行读写？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.stack.imgur.com/1kLrB.png">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2018-05-04T03:34:53.557Z">
+<meta property="og:updated_time" content="2018-05-17T11:57:58.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于Dalvik，我们该知道些什么？">
-<meta name="twitter:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
-<meta name="twitter:image" content="https://i.stack.imgur.com/1kLrB.png">
+<meta name="twitter:title" content="Linux 文件I&#x2F;O">
+<meta name="twitter:description" content="文件如何进行读写？">
 
 
 
@@ -131,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/16/Linux 文件/"/>
 
 
 
 
 
-  <title> 关于Dalvik，我们该知道些什么？ | 墨镜猫 </title>
+  <title> Linux 文件I/O | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -284,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/21/关于Dalvik，我们该知道些什么？/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/Linux 文件/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -308,7 +305,7 @@
             
             
               
-                关于Dalvik，我们该知道些什么？
+                Linux 文件I/O
               
             
           </h2>
@@ -323,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T20:51:54+08:00">
-                2017-08-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-16T21:11:41+08:00">
+                2018-05-16
               </time>
             
 
@@ -359,64 +356,35 @@
       
 
       
-        <p>Dalvik和JVM的区别<br>Dex文件的结构<br>Dalvik如何加载Class<br><a id="more"></a></p>
-<h2 id="Dalvik和JVM的区别"><a href="#Dalvik和JVM的区别" class="headerlink" title="Dalvik和JVM的区别"></a>Dalvik和JVM的区别</h2><p>Dalvik和JVM最主要区别是它们分别具有不同的类文件格式和指令集。Dalvik使用的是dex（Dalvik Executable）格式的类文件，而Java虚拟机使用的是class格式的类文件。</p>
-<p>Dalvik的指令是基于寄存器的，而JVM的指令是基于堆栈的，因此Dalvik需要更多的指令空间。这样的区别其实各有优劣，JVM需要占用更多的CPU时间，而Dalvik的数据缓冲更容易失效。</p>
-<h2 id="Dex文件结构"><a href="#Dex文件结构" class="headerlink" title="Dex文件结构"></a>Dex文件结构</h2><p>先看一张Class文件和Dex文件对比图：<br><img src="https://i.stack.imgur.com/1kLrB.png" alt=""></p>
-<p>Dex这么设计可以使文件更紧凑，减少拢余，还可以共享资源，进而减少文件大小。</p>
-<p>各个字段含义如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">数据名称</th>
-<th style="text-align:left">解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">header</td>
-<td style="text-align:left">Dex文件头部，记录整个Dex文件的相关属性</td>
-</tr>
-<tr>
-<td style="text-align:left">string_ids</td>
-<td style="text-align:left">字符串数据索引，记录了每个字符串在数据区的偏移量</td>
-</tr>
-<tr>
-<td style="text-align:left">type_ids</td>
-<td style="text-align:left">类似数据索引，记录了每个类型的字符串索引</td>
-</tr>
-<tr>
-<td style="text-align:left">proto_ids</td>
-<td style="text-align:left">原型数据索引，记录了方法声明的字符串，返回类型字符串，参数列表</td>
-</tr>
-<tr>
-<td style="text-align:left">field_ids</td>
-<td style="text-align:left">字段数据索引，记录了所属类、类型以及方法名</td>
-</tr>
-<tr>
-<td style="text-align:left">method_ids</td>
-<td style="text-align:left">类方法索引，记录方法所属类名、方法声明以及方法名等信息</td>
-</tr>
-<tr>
-<td style="text-align:left">class_defs</td>
-<td style="text-align:left">类定义数据索引，记录指定类各类信息，包括接口，超类，类数据偏移量</td>
-</tr>
-<tr>
-<td style="text-align:left">data</td>
-<td style="text-align:left">数据区，保存了各个类的真实数据</td>
-</tr>
-<tr>
-<td style="text-align:left">link_data</td>
-<td style="text-align:left">链接数据区</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Dalvik如何加载Class"><a href="#Dalvik如何加载Class" class="headerlink" title="Dalvik如何加载Class"></a>Dalvik如何加载Class</h2><h3 id="解析Dex"><a href="#解析Dex" class="headerlink" title="解析Dex"></a>解析Dex</h3><p>加载之前需要有一个解析过程，Dex文件大体可以分为三大部分：头部、索引、数据。通过头部可以找到索引的数目、位置和数据的起始位置。然后，Dalvik会调用dexFileParse函数对它进行分析，分析的结果放到DexFile数据结构中。</p>
-<h3 id="加载Dex"><a href="#加载Dex" class="headerlink" title="加载Dex"></a>加载Dex</h3><p>存储的数据结构如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Object &#123;</span><br><span class="line">    ClassObject* clazz;  <span class="comment">// 类型对象</span></span><br><span class="line">    Lock lock;           <span class="comment">// 锁对象</span></span><br><span class="line">&#125; Object;</span><br></pre></td></tr></table></figure>
-<p>clazz指向ClassObject对象，里面还包含一个Lock对象。如果其它线程想要获取它的锁，只有等当前线程释放掉才可以。</p>
-<p>从Dex数据区读取过程中，会在内存中分配几个内存区域，用于存放directMethod、virtualMethod、sfield、ifield。等得到索引后，加载实际是由loadClassFromDex完成，它首先会先读取class的具体信息，再加载directMethod、virtualMethod、sfield、ifield，然后会为ClassObject数据结构分配内存，并读取Dex文件相关信息。等加载完成后，将加载的class放入哈希表中方便下次快速查找。</p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+        <p>文件如何进行读写？<br><a id="more"></a></p>
+<blockquote>
+<p> 读书笔记，Linux 系统编程 第二章 文件I/O</p>
+</blockquote>
+<p>Unix 系统主要是通过文件表示的，因此这些章节会设计Unix系统的核心。</p>
+<p>在对文件进行读写操作之前，首先需要打开文件。内核会为每个进程维护一个打开文件的列表，该列表就是文件表。文件表示由一些非负整数进行索引，这些非负整数称为文件描述符。列表的每一项是一个打开文件的信息，包括指向该文件索引节点内存拷贝的指针以及关联的元数据，如文件位置指针和访问模式。用户空间和内核空间都使用文件描述符作为唯一cookies，打开文件会返回文件描述符，后续操作都把文件描述符作为基本参数。</p>
+<p>文件描述符使用C 语言的int类型表示。每个Linux 进程能开发的文件数是有上限的，文件描述符的范围从0开始，到上限值减一，默认情况下，上限值为1024，也可以对它进行配置，最大为1048576。因为负数不是合法的文件描述符，所以当函数出错不能返回有效的文件描述符时，通常会返回-1。</p>
+<p>通常，每个进程至少包含三个文件描述符：0、1、2，除非显式关闭这些描述符。0表示标准输入、1表示标准输出、2表示标准错误。一般而言，stdin是连接到终端的输入设备（通常是键盘），而stdout和stderr是终端的屏幕。用户可以重定向这些文件描述符，甚至可以通过管道把一个程序的输出作为另一个程序的输入。shell正是通过这种方式实现重定向和管道的。</p>
+<p>实际上，文件描述符也可以访问设备文件、管道、快速用户空间互斥、先进先出缓冲区和套接字。遵循一切皆文件的理念，几乎任何能够读写的东西都可以通过文件描述符来访问。</p>
+<p>默认情况下，子进程会维护一份父进程的文件表副本。在副本中，打开文件列表和其访问模式、当前文件位置以及其他元数据，都和父进程维护的文件表相同，但是存在一点区别：当子进程关闭一个文件时，不会影响到父进程的文件表。虽然一般情况下子进程会自己持有一份文件表，但是子进程和父进程也可以共享文件表。</p>
+<h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p><strong>系统调用open</strong><br>如果系统调用open执行成功，会返回文件描述符，指向路径名 name 所指定的文件。文件位置即文件的起始位置（0），文件打开方式是根据参数flags值来确定。</p>
+<p>flags 参数是由一个或多个标志位的按位或组合。支持三种访问模式：O_RDONLY、O_WRONLY 或 O_RDWR，这三种模式分别表示为只读、只写或读写。</p>
+<p>flags 参数还可以和以下的值进行按位或运算，修改打开文件的行为；</p>
+<p>O_APPEND</p>
+<p>文件以追加模式打开。也就是说，在每次写操作之前，将会更新文件位置指针，指向文件末尾。即使有另一个进程也在向该文件写数据，以追加模式打开的进程在最后一次写操作时，还是会更新文件位置指针，指向文件末尾。</p>
+<p>O_ASYNC 这个标志位只适用于FIFO、管道、socket和终端，不适用于普通文件。</p>
+<p>O_CLOEXEC  执行时关闭 标志位。在执行新的进程时，文件会自动关闭。</p>
+<p>O_CREAT 当参数name指定的文件不存在时，内核自动创建。</p>
+<p>O_DIRECT 打开文件用于直接I/O</p>
+<p>O_DIRECTORY 如果参数name不是目录，open调用会失败。</p>
+<p>O_EXCL 当和标志位O_CREAT一起使用时，如果参数name指定的文件已经存在，会导致open调用失败，用于防止创建文件时出现竞争。</p>
+<p>O_LARGEFILE 文件偏移使用64位整数表示，可以支持大于2GB文件。</p>
+<p>O_NOATIME 在读文件时，不会更新该文件的最后访问时间。可以避免为了更新每个文件的索引节点而导致的大量写操作。<br>等等…</p>
+<p><strong>新建文件所有者</strong></p>
+<p>确定新建文件的所有者很简单：文件所有者的uid即创建该文件的进程的有效uid。</p>
+<p><strong>creat函数</strong></p>
+<p>因为有些参数组合经常使用，因为专门有个系统调用提供这个功能：int creat(const char *name, mode_t mode); 这个函数名creat少了个e。UNIX之父Ken Thompson开玩笑说他在UNIX设计中感到最遗憾的就是漏掉了这个字母。</p>
+<p><strong>返回值和错误码</strong></p>
+<p>系统调用open和creat在成功时都会返回文件描述符。出错时，返回-1，并把errno设置成相应的错误值。</p>
 
       
     </div>
@@ -461,7 +429,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -474,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/" rel="next" title="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
-                <i class="fa fa-chevron-left"></i> Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？
+              <a href="/2018/05/06/Android Pins 工程结构/" rel="next" title="Android Pins 工程结构">
+                <i class="fa fa-chevron-left"></i> Android Pins 工程结构
               </a>
             
           </div>
@@ -483,10 +451,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/11/Android业务中间层该如何设计？/" rel="prev" title="Android业务中间层该如何设计？">
-                Android业务中间层该如何设计？ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -663,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dalvik和JVM的区别"><span class="nav-number">1.</span> <span class="nav-text">Dalvik和JVM的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dex文件结构"><span class="nav-number">2.</span> <span class="nav-text">Dex文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dalvik如何加载Class"><span class="nav-number">3.</span> <span class="nav-text">Dalvik如何加载Class</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析Dex"><span class="nav-number">3.1.</span> <span class="nav-text">解析Dex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载Dex"><span class="nav-number">3.2.</span> <span class="nav-text">加载Dex</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件"><span class="nav-number">1.</span> <span class="nav-text">打开文件</span></a></li></ol></div>
             
 
           </div>
