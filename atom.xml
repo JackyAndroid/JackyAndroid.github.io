@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-30T12:16:32.084Z</updated>
+  <updated>2018-10-30T12:18:22.040Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2018/10/30/%E5%8A%A0%E5%9B%BA/"/>
     <id>http://yoursite.com/2018/10/30/加固/</id>
     <published>2018-10-30T11:50:07.000Z</published>
-    <updated>2018-10-30T12:16:32.084Z</updated>
+    <updated>2018-10-30T12:18:22.040Z</updated>
     
-    <content type="html"><![CDATA[<p>加固需要什么样的知识？</p><a id="more"></a><h3 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h3><p>近期有机会研究了下加固技术，发现涉及的知识面非常广泛，专门记录下。</p><p>加固技术通常按代来分。</p><p>第一代就是我们通常可见的混淆，把代码转换为a b c d 这样的字符，这样做的目的就是增加阅读难度，看到的代码和实际的代码结构是有区别的，但是这样关键源码还是可以获取到的。</p><p>后来，想着能不能对代码进行加密，在运行时在解密，这样就有了第二代技术，就是针对Dex的加密或者变形，让破坏者得到的是坏掉的文件或者加密过的文件，相当于在第一代的时候，我们是把钱撕成几段，但是还是可以被别人拼成完好的钱的，后来我们就把钱锁到了保险柜里面，这样比第一代安全了些。</p><p>这个时候的关键就是该把保险柜的钥匙放在哪？加密算法如果放在Java层面还是容易被人反编拿到，放在C层看起来好像是安全了些，但是其他人还是可以试探性的获取相应的密钥，就像你是把钥匙放在门口的垫子下面，还是交给保姆，交给保姆也没办法保证熟人花言巧语把钥匙骗过来，对吧。但是相比把钱直接摆在外边已经安全了很多。</p><p>第二代的通用做法就是加壳，简单的理解就是打包的时候放进去的是加密的Dex文件，在运行的时候在动态解密，再用classloader动态加载，达到加密的目的。</p>]]></content>
+    <content type="html"><![CDATA[<p>加固需要什么样的知识？</p><a id="more"></a><h3 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h3><p>近期有机会研究了下加固技术，发现涉及的知识面非常广泛，专门记录下。</p><p>加固技术通常按代来分。</p><p>第一代就是我们通常可见的混淆，把代码转换为a b c d 这样的字符，这样做的目的就是增加阅读难度，看到的代码和实际的代码结构是有区别的，但是这样关键源码还是可以获取到的。</p><p>后来，想着能不能对代码进行加密，在运行时在解密，这样就有了第二代技术，就是针对Dex的加密或者变形，让破坏者得到的是坏掉的文件或者加密过的文件，相当于在第一代的时候，我们是把钱撕成几段，但是还是可以被别人拼成完好的钱的，后来我们就把钱锁到了保险柜里面，这样比第一代安全了些。</p><p>这个时候的关键就是该把保险柜的钥匙放在哪？加密算法如果放在Java层面还是容易被人反编拿到，放在C层看起来好像是安全了些，但是其他人还是可以试探性的获取相应的密钥，就像你是把钥匙放在门口的垫子下面，还是交给保姆，交给保姆也没办法保证熟人花言巧语把钥匙骗过来，对吧。但是相比把钱直接摆在外边已经安全了很多。</p><p>第二代的通用做法就是加壳，简单的理解就是打包的时候放进去的是加密的Dex文件，在运行的时候在动态解密，再用classloader动态加载，达到加密的目的。</p><p>持续更新。。。</p>]]></content>
     
     <summary type="html">
     
@@ -41,9 +41,9 @@
     <link href="http://yoursite.com/2018/09/10/Linux-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"/>
     <id>http://yoursite.com/2018/09/10/Linux-I-O-多路复用/</id>
     <published>2018-09-10T12:32:57.000Z</published>
-    <updated>2018-09-10T12:49:59.284Z</updated>
+    <updated>2018-10-30T12:18:43.768Z</updated>
     
-    <content type="html"><![CDATA[<p>神秘的多路复用，我们看看在系统层级是怎么实现的？<br><a id="more"></a></p><blockquote><p> 读书笔记，Linux 系统编程第二章，I/O 多路复用</p></blockquote><p>Linux 提供了三种I/O多路复用方案：select、poll和epoll。</p><h3 id="select"><a href="#select" class="headerlink" title="select()"></a>select()</h3>]]></content>
+    <content type="html"><![CDATA[<p>神秘的多路复用，我们看看在系统层级是怎么实现的？<br><a id="more"></a></p><blockquote><p> 读书笔记，Linux 系统编程第二章，I/O 多路复用</p></blockquote><p>Linux 提供了三种I/O多路复用方案：select、poll和epoll。</p><h3 id="select"><a href="#select" class="headerlink" title="select()"></a>select()</h3><p>更新中。。。</p>]]></content>
     
     <summary type="html">
     
