@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="安全," />
 
 
 
@@ -89,16 +89,18 @@
 
 
 
-<meta name="description" content="求知若渴，大智若愚">
-<meta property="og:type" content="website">
-<meta property="og:title" content="墨镜猫">
-<meta property="og:url" content="http://yoursite.com/tags/源码分析/index.html">
+<meta name="description" content="加固需要什么样的知识？">
+<meta name="keywords" content="安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="加固">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/加固/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="求知若渴，大智若愚">
+<meta property="og:description" content="加固需要什么样的知识？">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-30T12:16:32.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="墨镜猫">
-<meta name="twitter:description" content="求知若渴，大智若愚">
+<meta name="twitter:title" content="加固">
+<meta name="twitter:description" content="加固需要什么样的知识？">
 
 
 
@@ -126,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/源码分析/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/30/加固/"/>
 
 
 
 
 
-  <title> 标签: 源码分析 | 墨镜猫 </title>
+  <title> 加固 | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -167,7 +169,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,46 +271,204 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        源码分析
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/加固/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jacky">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="墨镜猫">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="墨镜猫" src="">
+    </span>
+  </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                加固
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T19:50:07+08:00">
+                2018-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>加固需要什么样的知识？</p>
+<a id="more"></a>
+<h3 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h3><p>近期有机会研究了下加固技术，发现涉及的知识面非常广泛，专门记录下。</p>
+<p>加固技术通常按代来分。</p>
+<p>第一代就是我们通常可见的混淆，把代码转换为a b c d 这样的字符，这样做的目的就是增加阅读难度，看到的代码和实际的代码结构是有区别的，但是这样关键源码还是可以获取到的。</p>
+<p>后来，想着能不能对代码进行加密，在运行时在解密，这样就有了第二代技术，就是针对Dex的加密或者变形，让破坏者得到的是坏掉的文件或者加密过的文件，相当于在第一代的时候，我们是把钱撕成几段，但是还是可以被别人拼成完好的钱的，后来我们就把钱锁到了保险柜里面，这样比第一代安全了些。</p>
+<p>这个时候的关键就是该把保险柜的钥匙放在哪？加密算法如果放在Java层面还是容易被人反编拿到，放在C层看起来好像是安全了些，但是其他人还是可以试探性的获取相应的密钥，就像你是把钥匙放在门口的垫子下面，还是交给保姆，交给保姆也没办法保证熟人花言巧语把钥匙骗过来，对吧。但是相比把钱直接摆在外边已经安全了很多。</p>
+<p>第二代的通用做法就是加壳，简单的理解就是打包的时候放进去的是加密的Dex文件，在运行的时候在动态解密，再用classloader动态加载，达到加密的目的。</p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2018/05/22/IntelliJ IDE 搜索引用如何实现？/" itemprop="url">
-              
-                <span itemprop="name">IntelliJ IDEA 引用搜索原理</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>用心做好的内容</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-22T10:43:56+08:00"
-              content="2018-05-22" >
-          05-22
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安全/" rel="tag"># 安全</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/10/Linux-I-O-多路复用/" rel="next" title="Linux I/O 多路复用">
+                <i class="fa fa-chevron-left"></i> Linux I/O 多路复用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
           
           </div>
@@ -316,6 +476,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODA1Ni80NjMx"></div>
+    
+  </div>
+
 
         </div>
         
@@ -335,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -421,6 +596,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#加固"><span class="nav-number">1.</span> <span class="nav-text">加固</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -522,6 +713,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
