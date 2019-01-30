@@ -97,12 +97,12 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="关于Kotlin在项目中的实践经验，及在Android平台的编译原理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/01/30/Kotlin-实践及原理/pictures/image-20181128195638290.png">
-<meta property="og:updated_time" content="2019-01-30T03:14:38.600Z">
+<meta property="og:image" content="http://yoursite.com/2019/01/30/Kotlin-实践及原理/Kotlin-实践及原理/image-20181128195638290.png">
+<meta property="og:updated_time" content="2019-01-30T03:28:36.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin 实践及原理">
 <meta name="twitter:description" content="关于Kotlin在项目中的实践经验，及在Android平台的编译原理">
-<meta name="twitter:image" content="http://yoursite.com/2019/01/30/Kotlin-实践及原理/pictures/image-20181128195638290.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/30/Kotlin-实践及原理/Kotlin-实践及原理/image-20181128195638290.png">
 
 
 
@@ -455,7 +455,7 @@
 <p>kotlin整个都是开源的，可以从github clone下来，地址：<a href="https://github.com/JetBrains/kotlin" target="_blank" rel="noopener">https://github.com/JetBrains/kotlin</a></p>
 <p>整个工程很庞大，源代码大概有四百多万行，可以使用 IntelliJ IDEA查看整个工程，具体操作可以看github 项目主页的建议。</p>
 <p><strong>编译流程图：</strong></p>
-<p><img src="pictures/image-20181128195638290.png" alt="image-20181128195638290"></p>
+<p><img src="Kotlin-实践及原理/image-20181128195638290.png" alt="image-20181128195638290"></p>
 <p>kotlin的maven id 为kotlin-gradle-plugin，我们做下全局搜索，发现路径为：root/libraries/tools/kotlin-gradle-plugin</p>
 <p>每个插件都会有入口类，我们在module配置时都会添加：apply plugin: ‘kotlin-android’，kotlin-android代表的就是配置入口类文件的名字，所以我们看下下kotlin-android.properties文件内容，如下：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation-<span class="class"><span class="keyword">class</span>=<span class="title">org</span>.<span class="title">jetbrains</span>.<span class="title">kotlin</span>.<span class="title">gradle</span>.<span class="title">plugin</span>.<span class="title">KotlinAndroidPluginWrapper</span></span></span><br></pre></td></tr></table></figure>
