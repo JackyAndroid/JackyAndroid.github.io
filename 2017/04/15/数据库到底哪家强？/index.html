@@ -97,15 +97,15 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png">
-<meta property="og:image" content="http://greenrobot.org/wordpress/wp-content/uploads/greenDAO-vs-OrmLite-vs-ActiveAndroid.png">
-<meta property="og:image" content="http://www.2cto.com/uploadfile/Collfiles/20160811/201608111004341068.png">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2018-05-04T03:37:35.560Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1tkjgszj30hs08m76f.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1tm0wqej30se0h70t3.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fzr1tmt6tyj30cb0ct3ys.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1ttiti8j30yg0h8gpf.jpg">
+<meta property="og:updated_time" content="2019-02-01T09:31:48.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库到底哪家强？">
 <meta name="twitter:description" content="目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？">
-<meta name="twitter:image" content="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1tkjgszj30hs08m76f.jpg">
 
 
 
@@ -414,8 +414,8 @@
 <li>greenDAO 支持 protocol buffer(protobuf) 协议数据的直接存储，如果你通过 protobuf 协议与服务器交互，将不需要任何的映射。</li>
 <li>数据加密</li>
 </ul>
-<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967486139797.png" alt=""></p>
-<p><img src="http://greenrobot.org/wordpress/wp-content/uploads/greenDAO-vs-OrmLite-vs-ActiveAndroid.png" alt=""></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1tkjgszj30hs08m76f.jpg" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1tm0wqej30se0h70t3.jpg" alt=""></p>
 <p>DaoMaster保存了sqlitedatebase对象以及操作DAO classes。其提供了一些创建和删除table的静态方法，其内部类OpenHelper和DevOpenHelper实现了SQLiteOpenHelper并创建数据库的框架。</p>
 <p>DaoMaster除了具有创建表和删除表的两个功能外，还有两个内部类，分别为OpenHelper和DevOpenHelper，而DevOpenHelper继承自OpenHelper，而OpenHelper继承自SQLiteOpenHelper，而重写的onCreate()方法中调用了createAllTables(db,false)；方法来创建数据表，而createAllTables()方法中是通过调用UserDao静态方法来创建表的UserDao.createTable(db, ifNotExists)；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Creates the underlying database table. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">createTable</span><span class="params">(SQLiteDatabase db, <span class="keyword">boolean</span> ifNotExists)</span> </span>&#123;</span><br><span class="line">    String constraint = ifNotExists? <span class="string">"IF NOT EXISTS "</span>: <span class="string">""</span>;</span><br><span class="line">    db.execSQL(<span class="string">"CREATE TABLE "</span> + constraint + <span class="string">"\\"</span>NOTE\\<span class="string">" ("</span> + <span class="comment">//</span></span><br><span class="line">            <span class="string">"\\"</span>_id\\<span class="string">" INTEGER PRIMARY KEY AUTOINCREMENT ,"</span> + <span class="comment">// 0: id</span></span><br><span class="line">            <span class="string">"\\"</span>TEXT\\<span class="string">" TEXT NOT NULL ,"</span> + <span class="comment">// 1: text</span></span><br><span class="line">            <span class="string">"\\"</span>COMMENT\\<span class="string">" TEXT,"</span> + <span class="comment">// 2: comment</span></span><br><span class="line">            <span class="string">"\\"</span>DATE\\<span class="string">" INTEGER);"</span>); <span class="comment">// 3: date</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Drops the underlying database table. */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dropTable</span><span class="params">(SQLiteDatabase db, <span class="keyword">boolean</span> ifExists)</span> </span>&#123;</span><br><span class="line">    String sql = <span class="string">"DROP TABLE "</span> + (ifExists ? <span class="string">"IF EXISTS "</span> : <span class="string">""</span>) + <span class="string">"\\"</span>NOTE\\<span class="string">""</span>;</span><br><span class="line">    db.execSQL(sql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -437,7 +437,7 @@
 <h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><p>上手成本</p>
 <h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>ORM类型框架在易用性上面做的比原生Sql提升了很多，而且在性能上GreenDao在某些方面甚至比原生的还要出色，比较适合大部分项目的开发工作。</p>
 <h2 id="Realm"><a href="#Realm" class="headerlink" title="Realm"></a><a href="https://realm.io/news/realm-for-android/" target="_blank" rel="noopener">Realm</a></h2><p>Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎，在某些方面有自己独特的优势。</p>
-<p>GreenDao vs Realm<br><img src="http://www.2cto.com/uploadfile/Collfiles/20160811/201608111004341068.png" alt=""></p>
+<p>GreenDao vs Realm<br><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fzr1tmt6tyj30cb0ct3ys.jpg" alt=""></p>
 <h4 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h4><p>增：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Realm realm=Realm.getDefaultInstance();</span><br><span class="line"></span><br><span class="line">realm.beginTransaction();</span><br><span class="line">User user = realm.createObject(User.class); <span class="comment">// Create a new object</span></span><br><span class="line">user.setName(<span class="string">"John"</span>);</span><br><span class="line">user.setEmail(<span class="string">"john@corporation.com"</span>);</span><br><span class="line">realm.commitTransaction();</span><br></pre></td></tr></table></figure>
 <p>删：</p>
@@ -454,7 +454,7 @@
 <li>线程限制，如果在UI线程获取到了当前Realm对象，在异步线程中使用当前Realm对象进行操作，就会抛出异常。</li>
 </ul>
 <h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>如果数据量没有达到SQLite的性能瓶颈的话，建议选择基于SQLite的数据库，如果不喜欢编写原生Sql语句就牺牲一点性能去适应业务快速迭代。<br>这些框架同时存在都有其道理，性能有优势兼容性和稳定性不能保证，易用性很好必然就不能做太多的定制化操作，各取所需，对于一般的业务GreenDao便是一个比较好的方案。</p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1ttiti8j30yg0h8gpf.jpg" alt=""></p>
 
       
     </div>

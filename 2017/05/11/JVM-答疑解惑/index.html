@@ -97,14 +97,14 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif">
-<meta property="og:image" content="https://gavinzhang1.gitbooks.io/java-jvm-us/content/201208212311249241.png">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2018-05-04T03:35:32.876Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1w4agejj30mj0dctbm.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1w5opy1j30d70b2dha.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1wjrobkj30yg0h8gpf.jpg">
+<meta property="og:updated_time" content="2019-02-01T09:31:48.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 答疑解惑">
 <meta name="twitter:description" content="JVM是什么？平常接触的东西都存在哪里？类如何加载？怎么运行？清洁工怎么工作？">
-<meta name="twitter:image" content="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1w4agejj30mj0dctbm.jpg">
 
 
 
@@ -364,8 +364,8 @@
 <a id="more"></a>
 <h2 id="JVM是什么？"><a href="#JVM是什么？" class="headerlink" title="JVM是什么？"></a>JVM是什么？</h2><p>Java 虚拟机屏蔽了与具体操作系统平台相关的信息,使得 Java 语言编译程序只需生成在 Java 虚拟机上运行的目标代码(字节码),就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时,实际上最终还是把字节码解释成具体平台上的机器指令执行。</p>
 <p>Java 虚拟机就像一个熟悉多个国家语言的导游，你只要向他说出自己的语言，他就能带着你在多个国家无障碍的玩耍。比如说，你说“我要吃肉夹馍”，无论到了哪个国家，你只需要和导游说这句话就可以，寻找和本地人交流导游就会帮你办好，最后结果是相同的：吃的都是肉夹馍。</p>
-<p>可以参考如下Java技术体系图：<br><img src="http://wiki.jikexueyuan.com/project/java-vm/images/jvmstructure.gif" alt=""></p>
-<h2 id="平常接触的东西都存在哪里？"><a href="#平常接触的东西都存在哪里？" class="headerlink" title="平常接触的东西都存在哪里？"></a>平常接触的东西都存在哪里？</h2><p>先看一下Java虚拟机运行时数据区：<br><img src="https://gavinzhang1.gitbooks.io/java-jvm-us/content/201208212311249241.png" alt=""></p>
+<p>可以参考如下Java技术体系图：<br><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1w4agejj30mj0dctbm.jpg" alt=""></p>
+<h2 id="平常接触的东西都存在哪里？"><a href="#平常接触的东西都存在哪里？" class="headerlink" title="平常接触的东西都存在哪里？"></a>平常接触的东西都存在哪里？</h2><p>先看一下Java虚拟机运行时数据区：<br><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1w5opy1j30d70b2dha.jpg" alt=""></p>
 <h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>程序计数器：是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。每个线程都有自己的独立的程序计数器。</p>
 <p>如果线程正在执行的是Java方法，那么这个计数器的值就是正在执行的虚拟机字节码指令的地址；如果正在执行的是Native方法，这个计数器值为空（undefined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
 <h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>线程私有的，它的生命周期与线程相同。虚拟机栈描述的是Java方法执行的内存模型：每个方法执行的同时都会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。<br>局部变量表存放了编译期可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和returnAddress类型（指向了一条字节码指令的地址）。<br>其中64位长度的long和double类型的数据会占用2个局部变量空间（slot），其余的数据类型占1个。局部变量表所需的内存空间在编译期间分配完成，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。<br>如果线程请求栈的深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；无法申请到内存抛出OutOfMemoryError异常。</p>
@@ -408,7 +408,7 @@
 <p><strong>哪些内存需要回收？</strong><br>引用计数算法、根搜索算法</p>
 <p><strong>什么时候回收？</strong><br>标记—清除算法、标记—整理算法</p>
 <p><strong>如何回收？</strong><br>分代收集、垃圾收集器（不同厂商有不同实现）</p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1wjrobkj30yg0h8gpf.jpg" alt=""></p>
 
       
     </div>

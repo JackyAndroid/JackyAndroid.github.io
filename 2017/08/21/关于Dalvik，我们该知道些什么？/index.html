@@ -97,13 +97,13 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.stack.imgur.com/1kLrB.png">
-<meta property="og:image" content="http://www.jackywang.tech/images/gongzh.png">
-<meta property="og:updated_time" content="2018-10-30T11:48:52.454Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1zkh9c2j30gs0ea7a9.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1zuthb4j30yg0h8gpf.jpg">
+<meta property="og:updated_time" content="2019-02-01T09:31:48.742Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Dalvik，我们该知道些什么？">
 <meta name="twitter:description" content="Dalvik和JVM的区别Dex文件的结构Dalvik如何加载Class">
-<meta name="twitter:image" content="https://i.stack.imgur.com/1kLrB.png">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1zkh9c2j30gs0ea7a9.jpg">
 
 
 
@@ -362,7 +362,7 @@
         <p>Dalvik和JVM的区别<br>Dex文件的结构<br>Dalvik如何加载Class<br><a id="more"></a></p>
 <h2 id="Dalvik和JVM的区别"><a href="#Dalvik和JVM的区别" class="headerlink" title="Dalvik和JVM的区别"></a>Dalvik和JVM的区别</h2><p>Dalvik和JVM最主要区别是它们分别具有不同的类文件格式和指令集。Dalvik使用的是dex（Dalvik Executable）格式的类文件，而Java虚拟机使用的是class格式的类文件。</p>
 <p>Dalvik的指令是基于寄存器的，而JVM的指令是基于堆栈的，因此Dalvik需要更多的指令空间。这样的区别其实各有优劣，JVM需要占用更多的CPU时间，而Dalvik的数据缓冲更容易失效。</p>
-<h2 id="Dex文件结构"><a href="#Dex文件结构" class="headerlink" title="Dex文件结构"></a>Dex文件结构</h2><p>先看一张Class文件和Dex文件对比图：<br><img src="https://i.stack.imgur.com/1kLrB.png" alt=""></p>
+<h2 id="Dex文件结构"><a href="#Dex文件结构" class="headerlink" title="Dex文件结构"></a>Dex文件结构</h2><p>先看一张Class文件和Dex文件对比图：<br><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1zkh9c2j30gs0ea7a9.jpg" alt=""></p>
 <p>Dex这么设计可以使文件更紧凑，减少拢余，还可以共享资源，进而减少文件大小。</p>
 <p>各个字段含义如下：</p>
 <table>
@@ -416,7 +416,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Object &#123;</span><br><span class="line">    ClassObject* clazz;  <span class="comment">// 类型对象</span></span><br><span class="line">    Lock lock;           <span class="comment">// 锁对象</span></span><br><span class="line">&#125; Object;</span><br></pre></td></tr></table></figure>
 <p>clazz指向ClassObject对象，里面还包含一个Lock对象。如果其它线程想要获取它的锁，只有等当前线程释放掉才可以。</p>
 <p>从Dex数据区读取过程中，会在内存中分配几个内存区域，用于存放directMethod、virtualMethod、sfield、ifield。等得到索引后，加载实际是由loadClassFromDex完成，它首先会先读取class的具体信息，再加载directMethod、virtualMethod、sfield、ifield，然后会为ClassObject数据结构分配内存，并读取Dex文件相关信息。等加载完成后，将加载的class放入哈希表中方便下次快速查找。</p>
-<p><img src="http://www.jackywang.tech/images/gongzh.png" alt=""></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzr1zuthb4j30yg0h8gpf.jpg" alt=""></p>
 
       
     </div>
