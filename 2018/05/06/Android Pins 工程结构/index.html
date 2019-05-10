@@ -97,13 +97,13 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="Pins 工程结构能解决什么问题？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fzr2brm25kj30h00ty762.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr2d9366kj30zc0jc16b.jpg">
-<meta property="og:updated_time" content="2019-02-01T09:44:30.676Z">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195725.png">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200106.png">
+<meta property="og:updated_time" content="2019-05-10T12:01:16.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Pins 工程结构">
 <meta name="twitter:description" content="Pins 工程结构能解决什么问题？">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fzr2brm25kj30h00ty762.jpg">
+<meta name="twitter:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195725.png">
 
 
 
@@ -361,11 +361,11 @@
       
         <p>Pins 工程结构能解决什么问题？<br><a id="more"></a><br>近期我们听到一些团队在做工程化方面的事情，其中都提到了Pins 工程结构，最先提出这个概念的是微信团队：<a href="https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw" target="_blank" rel="noopener">微信Android模块化架构重构实践</a>，在后来看到美团外卖也做了这个事情：<a href="https://tech.meituan.com/meituan_food_delivery_android_architecture_evolution.html" target="_blank" rel="noopener">美团外卖Android平台化架构演进实践</a>。</p>
 <p><strong>那Pins工程结构是什么？</strong></p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fzr2brm25kj30h00ty762.jpg" alt="p_project"></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195725.png" alt=""></p>
 <p>上面这张图就是Pins工程结构。</p>
 <p><strong>那有什么用？或者能解决什么问题？</strong></p>
 <p>如果你的产品有多条业务线，每一期产品有上百个需求，各个业务线业务之间有非常多的交集。比如，一个业务线引用了五个业务线，其他业务线也是类似的引用，依次类推，相互引用不重复的话为5的5次方等于3125，如果业务线增长这个复杂度也是呈几何数增长，那我们在现有的工程环境下如何做呢？简单的方法就是都放在同一个Gradle Module 里面相互引用，各个业务线之间用包名做区分，但是各个包之间也是可以相互引用，久而久之就会发现，代码变成了一锅粥…变成一锅粥的后果也是显然的，不能独立拆分，代码合并非常容易冲突浪费时间等等，各种后果。下图是微信业务之间的引用情况，实际情况可能比这更糟糕。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr2d9366kj30zc0jc16b.jpg" alt="pins_ref"></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200106.png" alt=""></p>
 <p>Pins结构就较好的解决了上面的问题，各个业务线之间都是一个Pins模块，模块之间<strong>根据规定引用该引用的</strong>，这样业务线之间的代码边界就会比较清楚。</p>
 <p>接下来我们看下如何实现，这里只提供下简单思路。</p>
 <p><strong>业务构建改造</strong></p>

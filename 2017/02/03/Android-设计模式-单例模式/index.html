@@ -97,12 +97,12 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="什么情况下需要单例模式？ 一些类提供公共功能供别人调用，本身不会处理业务逻辑 类会被许多类和线程调用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1xyd9eoj30yg0h8gpf.jpg">
-<meta property="og:updated_time" content="2019-02-01T09:31:48.707Z">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png">
+<meta property="og:updated_time" content="2019-05-10T12:01:40.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 设计模式-单例模式">
 <meta name="twitter:description" content="什么情况下需要单例模式？ 一些类提供公共功能供别人调用，本身不会处理业务逻辑 类会被许多类和线程调用">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1xyd9eoj30yg0h8gpf.jpg">
+<meta name="twitter:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png">
 
 
 
@@ -375,7 +375,7 @@
 <h3 id="单例模式改进2"><a href="#单例模式改进2" class="headerlink" title="单例模式改进2"></a>单例模式改进2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton mSingleton;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;\\A</span><br><span class="line">    <span class="keyword">synchronized</span>(Singleton.class)&#123;\\C</span><br><span class="line">     <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)</span><br><span class="line">      mSingleton = <span class="keyword">new</span> Singleton();\\B</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mSingleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注：volatile是防止cpu进行指令重排序，防止代码顺序被更改。<br>这种方式比较好的地方在于第一次创建实例时候就会同步所有的线程，以后再获取实例就会直接返回。</p>
 <h3 id="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"><a href="#但是看代码好像还是有人会有疑问，为什么需要两次判断为null？" class="headerlink" title="但是看代码好像还是有人会有疑问，为什么需要两次判断为null？"></a>但是看代码好像还是有人会有疑问，为什么需要两次判断为null？</h3><p>其实这个意义在于防止多个线程同时进入第一个if内，比如说线程A执行到A行，线程B执行到B行，线程B还没有返回。当线程A执行到C行，这时线程B初始化实例完毕，如果没有里面的再一次判断就会生成两个实例！所以两次的判断null还是有意义的。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzr1xyd9eoj30yg0h8gpf.jpg" alt=""></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png" alt=""></p>
 
       
     </div>

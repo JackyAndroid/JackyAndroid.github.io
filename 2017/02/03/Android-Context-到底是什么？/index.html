@@ -97,13 +97,13 @@
 <meta property="og:site_name" content="墨镜猫">
 <meta property="og:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fzr1zwzzewj30hr0ciglo.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzr2037qw0j30yg0h8gpf.jpg">
-<meta property="og:updated_time" content="2019-02-01T09:31:48.746Z">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200217.png">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png">
+<meta property="og:updated_time" content="2019-05-10T12:02:37.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Context 到底是什么？">
 <meta name="twitter:description" content="一个Context意味着一个场景，一个场景就是我们和软件进行交互的一个过程。比如和妹纸约会的月下小桥，比如当你使用微信的时候，场景包括聊天界面、通讯录、朋友圈，以及背后的一些数据。">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fzr1zwzzewj30hr0ciglo.jpg">
+<meta name="twitter:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200217.png">
 
 
 
@@ -369,7 +369,7 @@
 <li>一个Activity就是一个场景（Context），一个Service也是一个场景，所以，应用程序中有多少个Activity或者Service就会有多少个Context对象，也就是有多少个场景。</li>
 <li>getResource（）等方法返回的是同一个全局对象。</li>
 </ul>
-<h2 id="Context-继承关系是怎么样的呢？"><a href="#Context-继承关系是怎么样的呢？" class="headerlink" title="Context 继承关系是怎么样的呢？"></a>Context 继承关系是怎么样的呢？</h2><p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fzr1zwzzewj30hr0ciglo.jpg" alt="Context类及其子类的继承关系"></p>
+<h2 id="Context-继承关系是怎么样的呢？"><a href="#Context-继承关系是怎么样的呢？" class="headerlink" title="Context 继承关系是怎么样的呢？"></a>Context 继承关系是怎么样的呢？</h2><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200217.png" alt=""></p>
 <p>Context类本身是一个纯abstract类。为了使用方便又定义了Context包装类-ContextWrapper，穿上了一身装备显得也比较强大，ContextWrapper构造函数中必须包含一个真正的Context引用，同时ContextWrapper中有attachBaseContext（）用于给ContextWrapper对象中指定真正的Context对象。</p>
 <p>ContextThemeWrapper内部包含了与主题相关的接口，这里的主题就是指在AndroidManifest.xml中通过android：theme为Application或者Activity指定的主题。</p>
 <p>只有Activity才需要主题，Service默默的后台工作者不需要穿的那么鲜艳，所以Service直接继承于ContextWrapper。</p>
@@ -400,7 +400,7 @@
 <p>一个应用程序包含的Context个数应该为：Context个数 = Service个数+Activity个数+1，最后的1是Application类本身也会对应一个Context对象。</p>
 <p>应用程序中包含多个ContextImpl对象，而内部变量mPackageInfo却指向同一个PackageInfo对象，这种设计结构一般意味着ContextImpl是一种轻量级类，而PackageInfo是一个重量级类。事实上确实是这样，ContextImpl中的大多数进行包操作的重量级函数实际上都是转向了mPackageInfo对象相应的方法，也就是事实上调用了同一个PackageInfo对象。</p>
 <p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzr2037qw0j30yg0h8gpf.jpg" alt=""></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png" alt=""></p>
 
       
     </div>
