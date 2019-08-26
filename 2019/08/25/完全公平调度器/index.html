@@ -89,18 +89,18 @@
 
 
 
-<meta name="description" content="Linux 系统编程 第六章高级进程管理 完全公平调度器学习笔记">
+<meta name="description" content="读书笔记，Linux 系统编程 第六章高级进程管理">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="完全公平调度器">
 <meta property="og:url" content="http://yoursite.com/2019/08/25/完全公平调度器/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="Linux 系统编程 第六章高级进程管理 完全公平调度器学习笔记">
+<meta property="og:description" content="读书笔记，Linux 系统编程 第六章高级进程管理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-25T12:46:44.288Z">
+<meta property="og:updated_time" content="2019-08-26T11:20:51.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="完全公平调度器">
-<meta name="twitter:description" content="Linux 系统编程 第六章高级进程管理 完全公平调度器学习笔记">
+<meta name="twitter:description" content="读书笔记，Linux 系统编程 第六章高级进程管理">
 
 
 
@@ -356,7 +356,7 @@
       
 
       
-        <p>Linux 系统编程 第六章高级进程管理 完全公平调度器学习笔记</p>
+        <p>读书笔记，Linux 系统编程 第六章高级进程管理</p>
 <a id="more"></a>
 <h3 id="完全公平调度器"><a href="#完全公平调度器" class="headerlink" title="完全公平调度器"></a>完全公平调度器</h3><p>Linux调度器为完全公平调度器，简称为CFS。和最近华为鸿蒙提出的确定时延调度相反。</p>
 <p>完全公平调度器和传统的Unix调度器有很大的区别。在大多数Unix系统中，包括引入CFS之前的Linux系统，在进程调度中存在两个基本的基于进程的因素：优先级和时间片。在传统的进程调度器中，会给每个就绪进程分配一个时间片。进程可能会一直运行直到消耗完分配给它的时间片。调度器会给每个进程分配优先级。进程调度器会先调度优先级高的进程，再调度优先级低的进程。这个调度算法非常简单，而且对于早期的基于时间片共享的Unix系统效果良好。但对于交互和公平性的系统而言，如现代计算机的桌面和移动设备，该算法就有些差强人意了。</p>
