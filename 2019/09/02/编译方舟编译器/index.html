@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="疑难杂症,">
+  <meta name="keywords" content="编译器,">
 
 
 
@@ -89,20 +89,22 @@
 
 
 
-<meta name="description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
-<meta name="keywords" content="疑难杂症">
+<meta name="description" content="环境： Mac OS Parallels Desktop 安装Ubuntu 16.04 安装基础包： 12345678sudo apt-get -y install openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x1">
+<meta name="keywords" content="编译器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
-<meta property="og:url" content="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/index.html">
+<meta property="og:title" content="编译方舟编译器.md">
+<meta property="og:url" content="http://yoursite.com/2019/09/02/编译方舟编译器/index.html">
 <meta property="og:site_name" content="墨镜猫">
-<meta property="og:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
+<meta property="og:description" content="环境： Mac OS Parallels Desktop 安装Ubuntu 16.04 安装基础包： 12345678sudo apt-get -y install openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png">
-<meta property="og:updated_time" content="2019-05-10T12:07:31.840Z">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200509.png">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200558.png">
+<meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200627.png">
+<meta property="og:updated_time" content="2019-09-02T12:06:41.026Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？">
-<meta name="twitter:description" content="主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。">
-<meta name="twitter:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png">
+<meta name="twitter:title" content="编译方舟编译器.md">
+<meta name="twitter:description" content="环境： Mac OS Parallels Desktop 安装Ubuntu 16.04 安装基础包： 12345678sudo apt-get -y install openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x1">
+<meta name="twitter:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200509.png">
 
 
 
@@ -130,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/02/编译方舟编译器/">
 
 
 
 
 
-  <title> Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？ | 墨镜猫 </title>
+  <title> 编译方舟编译器.md | 墨镜猫 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +285,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-主Dex引用太多怎么办？/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/02/编译方舟编译器/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
@@ -307,7 +309,7 @@
             
             
               
-                Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？
+                编译方舟编译器.md
               
             
           </h2>
@@ -322,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-14T18:27:59+08:00">
-                2017-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-02T19:47:29+08:00">
+                2019-09-02
               </time>
             
 
@@ -358,24 +360,43 @@
       
 
       
-        <p>主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。</p>
-<a id="more"></a>
+        <p><strong>环境：</strong></p>
+<p>Mac OS</p>
+<p>Parallels Desktop 安装Ubuntu 16.04</p>
+<p><strong>安装基础包：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get -y install openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev</span><br><span class="line"></span><br><span class="line"> libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils</span><br><span class="line"></span><br><span class="line"> xsltproc unzip lib32z1-dev qemu g++-multilib gcc-multilib python3-paramiko python-paramiko python-jenkins </span><br><span class="line"></span><br><span class="line"> python-requests python-xlwt libglib2.0-dev libpixman-1-dev linux-libc-dev:i386</span><br></pre></td></tr></table></figure>
 
-<p>在Lollipop之前的设备上，主Dex仅仅被Framework加载。为了支持multi-dex，应用必须明确的让类加载器去加载二级Dex文件（这就是为什么要调用MultiDex#install）</p>
-<p>那就是说应用的主Dex应该包含所有的即将被加载器访问的类，如果你的应用的代码试着在类加载器加载之前，去引用二级Dex里面的class就会抛出Class Not Found异常。</p>
-<p><strong>那什么样的类会被包含在主Dex里面？</strong></p>
-<p>会有三个顺序执行的任务将会决定哪个类应该被包含在主Dex里。</p>
-<ol>
-<li><code>collect{variant}MultiDexComponents task</code>，这个任务会根据manifest把所有应用组件（application, activities, services, receivers, providers）的名字写到一个文本文件。因此，如果你没有把其中的组件注册到manifest，那就不会被包含到主Dex里，也会有一些不注册的class也会被包含进去，比如注解。查看下CreateManifestKeepList.groovy 的源码就可以看到完整的包含列表。这个任务输出的文件是 manifest_keep.txt，路径为：app/build/intermediates/multi-dex。</li>
-<li><code>shrink{variant}MultiDexComponents task</code>，这个任务会掉起ProGuard程序创建一个压缩过的Jar文件，这个文件里只包含manifest_keep.txt里的class，这个任务输出的文件是componentClasses.jar</li>
-<li><code>create{variant}MainDexClassList task</code>，这个任务会解析componentClasses.jar文件，为每一个类文件计算直接的引用层级，具体实现请查看<a href="https://android.googlesource.com/platform/dalvik/+/master/dx/src/com/android/multidex/ClassReferenceListBuilder.java" target="_blank" rel="noopener">链接</a>。因此，如果你应用有一个注册的组件包含类X的变量，类X也会被包含进主Dex里面。这个任务输出的文件为：maindexlist.txt，包含主Dex里面所有的类。</li>
-</ol>
-<p><strong>如果最低版本是21会发生什么？</strong><br>如果最低版本是21上面所有的任务都不会执行，也不会有主Dex列表的计算。这是因为在应用安装期间所有的dex文件都会被ART转换为一个.oat文件。</p>
-<p>所以如果这些类的引用超过了65536，构建的时候就会抛出这个<code>Too many classes in --main-dex-list, main dex capacity exceeded</code> 错误</p>
-<p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8" target="_blank" rel="noopener">Google Issue Tracker</a></p>
-<p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded" target="_blank" rel="noopener">Too many classes in –main-dex-list, main dex capacity exceeded
-</a></p>
-<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get -y install gcc-5-aarch64-linux-gnu g++-5-aarch64-linux-gnu</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载源码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git clone https://code.opensource.huaweicloud.com/HarmonyOS/OpenArkCompiler.git</span><br></pre></td></tr></table></figure>
+
+<p><strong>llvm和clang的下载及配置：</strong></p>
+<p>下载llvm：<a href="http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz" target="_blank" rel="noopener"><strong>http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz</strong></a>，解压放到：OpenArkCompiler/tools目录下。</p>
+<p>打开OpenArkCompiler/build/config/BUILDCONFIG.gn，配置GN_C_COMPILER、GN_CXX_COMPILER、GN_AR路径，解压后文件夹为clang+llvm..，记得修改为和下面命名一致，或修改下方的路径命名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GN_C_COMPILER = &quot;$&#123;MAPLE_ROOT&#125;/tools/clang_llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang&quot;</span><br><span class="line"></span><br><span class="line">GN_CXX_COMPILER = &quot;$&#123;MAPLE_ROOT&#125;/tools/clang_llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++&quot;</span><br><span class="line"></span><br><span class="line">GN_AR = &quot;$&#123;MAPLE_ROOT&#125;/tools/clang_llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-ar&quot;</span><br></pre></td></tr></table></figure>
+
+<p>配置MAPLE_ROOT，MAPLE_ROOT初始化使用的是GN_INSTALL_PREFIX，也就是配置GN_INSTALL_PREFIX即可，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">declare_args() &#123;</span><br><span class="line"></span><br><span class="line">  GN_INSTALL_PREFIX = &quot;/home/parallels/Workspace/OpenArkCompiler&quot;</span><br><span class="line"></span><br><span class="line">  GN_BUILD_TYPE = &quot;&quot;</span><br><span class="line"></span><br><span class="line">  HOST_ARCH = 64</span><br><span class="line"></span><br><span class="line">  MIR_JAVA = 1</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载和配置Ninja、GN：</strong></p>
+<p>从<a href="https://github.com/ninja-build/ninja/releases" target="_blank" rel="noopener"><strong>https://github.com/ninja-build/ninja/releases</strong></a>下载Ninja v1.9.0，在tools下新建目录ninja_1.9.0，解压到当前目录，保证执行文件在此目录。</p>
+<p>下载gn：<a href="https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn" target="_blank" rel="noopener"><strong>https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn</strong></a>，在tools下新建目录gn，将下载的gn可执行文件放到gn目录之下。</p>
+<p>编辑OpenArkCompiler/Makefile文件，将GN和NINJA两个变量配置为GN和Ninja可执行程序所在路径，相对路径名称一定要对应上。示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GN := $&#123;MAPLE_ROOT&#125;/tools/gn/gn</span><br><span class="line"></span><br><span class="line">NINJA := $&#123;MAPLE_ROOT&#125;/tools/ninja_1.9.0/ninja</span><br></pre></td></tr></table></figure>
+
+<p><strong>在OpenArkCompiler目录之下依次执行以下命令：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">source build/envsetup.sh</span><br><span class="line"></span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p><code>source build/envsetup.sh</code> 命令为初始化环境</p>
+<p><code>make</code> 编译OpenArkCompiler的Release版本</p>
+<p>编译成功会出现以下提示：</p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200509.png" alt></p>
+<p>编译完成之后，在OpenArkCompiler/out/bin目录之下，会有如下几个文件：</p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200558.png" alt></p>
+<p>其中的maple即为编译器可执行文件，执行–help，如下提示：</p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200627.png" alt></p>
+<p>执行编译器即可由源代码生成中间代码（IR）。</p>
 
       
     </div>
@@ -420,7 +441,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/疑难杂症/" rel="tag"># 疑难杂症</a>
+            <a href="/tags/编译器/" rel="tag"># 编译器</a>
           
         </div>
       
@@ -433,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/12/Hello Kotlin/" rel="next" title="Hello Kotlin">
-                <i class="fa fa-chevron-left"></i> Hello Kotlin
+              <a href="/2019/08/26/Kotlin-语法分析过程/" rel="next" title="Kotlin 语法分析过程">
+                <i class="fa fa-chevron-left"></i> Kotlin 语法分析过程
               </a>
             
           </div>
@@ -442,10 +463,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/21/关于Dalvik，我们该知道些什么？/" rel="prev" title="关于Dalvik，我们该知道些什么？">
-                关于Dalvik，我们该知道些什么？ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

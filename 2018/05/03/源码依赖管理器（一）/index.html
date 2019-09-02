@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,23 +66,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="依赖管理器," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml" />
+  <meta name="keywords" content="依赖管理器,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/03/源码依赖管理器（一）/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/03/源码依赖管理器（一）/">
 
 
 
@@ -177,7 +177,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">墨镜猫</span>
       <span class="logo-line-after"><i></i></span>
@@ -206,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -216,7 +216,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -226,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -236,7 +236,7 @@
         <li class="menu-item menu-item-plan">
           <a href="/plan" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             年度计划
           </a>
@@ -246,7 +246,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br>
             
             订阅本站
           </a>
@@ -285,14 +285,14 @@
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
-    <meta itemprop="description" content="">
+    <meta itemprop="description" content>
     <meta itemprop="image" content="/images/avatar.jpg">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="墨镜猫">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="墨镜猫" src="">
+      <img style="display:none;" itemprop="url image" alt="墨镜猫" src>
     </span>
   </span>
 
@@ -356,22 +356,28 @@
       
 
       
-        <p>这一篇我们先看下如何定义依赖描述。<br><a id="more"></a><br>如果我们平常经常维护主工程的基础仓库，经常会遇到修改仓库后无法很好的验证修改的效果，要么是把仓库工程作为单独的git submodule嵌入到业务工程，或者是简单粗暴，直接把线上依赖注释掉，添加本地仓库的路径。</p>
+        <p>这一篇我们先看下如何定义依赖描述。</p>
+<a id="more"></a>
+<p>如果我们平常经常维护主工程的基础仓库，经常会遇到修改仓库后无法很好的验证修改的效果，要么是把仓库工程作为单独的git submodule嵌入到业务工程，或者是简单粗暴，直接把线上依赖注释掉，添加本地仓库的路径。</p>
 <p>那么有没有一种好的方法，可以做到本地源码依赖和线上依赖无缝切换。</p>
 <p>了解过iOS开发的都知道，iOS依赖是直接下载依赖仓库的源码，本地依赖直接编译，依赖管理器叫CocoaPods，Android 平台是通过Gradle 从 Maven 或者JCenter 下载二进制文件。那在Android 平台上如何实现依赖仓库源码文件？</p>
 <p>依赖管理器大概由几部分组成，依赖描述文件、发布规范等。依赖描述文件各个依赖管理器采用的格式都有所不同，Json 、 XML 、DSL 等等。各种表达方式各有各的优点，Json XML 结构工程表达比较丰富，但是可读性较差，当工程有几十个依赖项Json XML 简直无法直视，DSL虽然在工程结构表达上较弱，但在可读性理解上优点非常明显，cocoapods 就采用了这种表达方式，非常优美，如下。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span>, <span class="string">'8.0'</span></span><br><span class="line">use_frameworks!</span><br><span class="line"></span><br><span class="line">target <span class="string">'MyApp'</span> <span class="keyword">do</span></span><br><span class="line">  pod <span class="string">'AFNetworking'</span>, <span class="string">'~&gt; 2.6'</span></span><br><span class="line">  pod <span class="string">'ORStackView'</span>, <span class="string">'~&gt; 3.0'</span></span><br><span class="line">  pod <span class="string">'SwiftyJSON'</span>, <span class="string">'~&gt; 2.3'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
 <p>看着这种依赖关系描述，心情也会舒畅好多。</p>
 <p>那么在Android 平台能不能实现类似的效果？Android 构建使用的是groovy语言，而且groovy对DSL支持的还不错，所以利用groovy DSL特性描述依赖关系就可以了，你以为它是一段描述，其实它是一个可执行脚本。</p>
 <p>我们需要一个模块的描述，包括开关、名字、路径等等，类似如下：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off <span class="literal">true</span></span><br><span class="line">    name <span class="string">"我是名字"</span></span><br><span class="line">    path <span class="string">"/path"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>ok，有了定义怎么实现？</p>
 <p>我们看上面的依赖描述，其实都是一个个函数调用，比如 module 就可以是一个函数，函数的参数是一个闭包，同理on_off、name等等也是函数调用，在函数后面的即为函数的参数。</p>
 <p>是不是很有意思？一句话就可以作为一个脚本执行。</p>
 <p>所以，我们需要定义我们依赖描述中要用到的函数，如下：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Module</span> &#123;</span></span><br><span class="line">    <span class="keyword">boolean</span> on_off</span><br><span class="line">    String name</span><br><span class="line">    String path</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> on_off(<span class="keyword">boolean</span> on_off) &#123;</span><br><span class="line">        <span class="keyword">this</span>.on_off = on_off</span><br><span class="line">        println(<span class="string">"module on_off:"</span> + on_off)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> name(String name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">        println(<span class="string">"module name:"</span> + name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> path(String path) &#123;</span><br><span class="line">        <span class="keyword">this</span>.path = path</span><br><span class="line">        println(<span class="string">"module path:"</span> + path)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Module module(<span class="meta">@DelegatesTo</span>(strategy = Closure.DELEGATE_FIRST, value = Module) Closure script) &#123;</span><br><span class="line">    script.resolveStrategy = Closure.DELEGATE_FIRST</span><br><span class="line">    Module module = <span class="keyword">new</span> Module()</span><br><span class="line">    script.delegate = module</span><br><span class="line">    script()</span><br><span class="line">    <span class="keyword">return</span> script.delegate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>名为module的函数接收一个闭包，闭包代理为Module类，闭包内的函数自动执行代理类函数调用，类和函数定义完成后，然后在控制台试验下（Android Studio -&gt; Tools -&gt; Groovy Console），在定义的类和函数下面写上如下的DSL生命，执行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off true</span><br><span class="line">    name &quot;我是名字&quot;</span><br><span class="line">    path &quot;我是路径&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>结果如下：<br>module on_off:true<br>module name:我是名字<br>module path:我是路径</p>
 <p>看来我们定义的DSL已经成功被解析。</p>
 <p>依赖描述已经定义完成，下一篇会说下如何动态生成依赖描述文件。</p>
@@ -398,13 +404,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay"/>
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay"/>
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -474,7 +480,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -520,9 +526,7 @@
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Jacky" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Jacky">
           <p class="site-author-name" itemprop="name">Jacky</p>
           <p class="site-description motion-element" itemprop="description">求知若渴，大智若愚</p>
         </div>
@@ -531,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -542,7 +546,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -615,7 +619,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

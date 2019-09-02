@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,23 +66,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="架构," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml" />
+  <meta name="keywords" content="架构,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0">
 
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/11/Android业务中间层该如何设计？/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/Android业务中间层该如何设计？/">
 
 
 
@@ -181,7 +181,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">墨镜猫</span>
       <span class="logo-line-after"><i></i></span>
@@ -210,7 +210,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -220,7 +220,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -230,7 +230,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -240,7 +240,7 @@
         <li class="menu-item menu-item-plan">
           <a href="/plan" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             年度计划
           </a>
@@ -250,7 +250,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br>
             
             订阅本站
           </a>
@@ -289,14 +289,14 @@
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
-    <meta itemprop="description" content="">
+    <meta itemprop="description" content>
     <meta itemprop="image" content="/images/avatar.jpg">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="墨镜猫">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="墨镜猫" src="">
+      <img style="display:none;" itemprop="url image" alt="墨镜猫" src>
     </span>
   </span>
 
@@ -360,10 +360,12 @@
       
 
       
-        <p>如果一个产品需要有多个业务线，各业务线之间如何协作才是最高效的？<br><a id="more"></a></p>
-<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200345.png" alt=""></p>
+        <p>如果一个产品需要有多个业务线，各业务线之间如何协作才是最高效的？</p>
+<a id="more"></a>
+
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200345.png" alt></p>
 <p>上图是比较常见的业务组装方式，如果需要添加某个业务，把相应的View直接写在Layout里，然后处理业务逻辑。但是如果业务模块多达几十个，散落的逻辑有几千行，这时该如何设计才能保证各业务的稳定和可扩展性？</p>
-<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200408.png" alt=""></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200408.png" alt></p>
 <p>公共业务应该是各个业务积木堆积组成，各个积木之间是黑盒状态，只能通过“窗口”向外提供服务，以及发布需求。中间层委托、代理信息的传递。</p>
 <p>中间层在Android平台该如何设计？</p>
 <ul>
@@ -374,10 +376,12 @@
 </ul>
 <p><strong>对外协议</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 委托协议</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> jacky</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> 对外暴露的协议</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2017/9/14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBusinessDelegate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">IBusinessDelegate <span class="title">setup</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">IBusinessDelegate <span class="title">setupBusiness1</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">IBusinessDelegate <span class="title">setupBusiness2</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">IBusinessDelegate <span class="title">setupBusiness3</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">IBusinessDelegate <span class="title">setupBusiness4</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">event1</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">event2</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>中间层实现</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 委托</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> jacky</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> v1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> 委托，隔离各业务间的耦合</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2017/9/14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessDelegate</span> <span class="keyword">extends</span> <span class="title">RelativeLayout</span> <span class="keyword">implements</span> <span class="title">IBusinessDelegate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> WeakReference&lt;Context&gt; mContextReference;</span><br><span class="line">    <span class="keyword">private</span> TimingChestContract.Presenter mTimingChestPresenter;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BusinessDelegate</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mContextReference = <span class="keyword">new</span> WeakReference&lt;&gt;(getContext());</span><br><span class="line">        removeAllViews();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ---- 动态加载挂件 Start ----</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TimingChestView chestView = <span class="keyword">new</span> TimingChestView(mContextReference.get());</span><br><span class="line">        mTimingChestPresenter = <span class="keyword">new</span> TimingChestPresenter(chestView, <span class="keyword">new</span> TimingChestModel());</span><br><span class="line">        chestView.setPresenter(mTimingChestPresenter);</span><br><span class="line">        LayoutParams params = <span class="keyword">new</span> LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);</span><br><span class="line">        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);</span><br><span class="line">        addView(chestView, params);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBusinessDelegate <span class="title">setupBusiness4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ---- 动态加载挂件 End ----</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ---- 接收事件 Start ----</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">event1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTimingChestPresenter.notify();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">event2</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ---- 接收事件 End ----</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ---- 生命周期 Start ----</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!EventBus.getDefault().isRegistered(<span class="keyword">this</span>)) &#123;</span><br><span class="line">            EventBus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTimingChestPresenter.onCreate();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTimingChestPresenter.onResume();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTimingChestPresenter.onPause();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        EventBus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (mTimingChestPresenter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTimingChestPresenter.onDestroy();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ---- 生命周期 End ----</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>委托作为中间层的呈现方式，动态加载业务积木，并感应外部环境变化反应到业务积木。通过这种方式，业务积木就有了很好的稳定性和扩展性。并辅以辅助手段，使委托变得异常强大。</p>
-<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png" alt=""></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png" alt></p>
 
       
     </div>
@@ -400,13 +404,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay"/>
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay"/>
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -476,7 +480,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -522,9 +526,7 @@
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Jacky" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Jacky">
           <p class="site-author-name" itemprop="name">Jacky</p>
           <p class="site-description motion-element" itemprop="description">求知若渴，大智若愚</p>
         </div>
@@ -533,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -544,7 +546,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -617,7 +619,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

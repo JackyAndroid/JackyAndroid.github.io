@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,23 +66,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="依赖管理器," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml" />
+  <meta name="keywords" content="依赖管理器,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.jpg?v=5.1.0">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（二）/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/仓库源码依赖管理器（二）/">
 
 
 
@@ -177,7 +177,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">墨镜猫</span>
       <span class="logo-line-after"><i></i></span>
@@ -206,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -216,7 +216,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -226,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -236,7 +236,7 @@
         <li class="menu-item menu-item-plan">
           <a href="/plan" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             年度计划
           </a>
@@ -246,7 +246,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-rss-square"></i> <br>
             
             订阅本站
           </a>
@@ -285,14 +285,14 @@
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Jacky">
-    <meta itemprop="description" content="">
+    <meta itemprop="description" content>
     <meta itemprop="image" content="/images/avatar.jpg">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="墨镜猫">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="墨镜猫" src="">
+      <img style="display:none;" itemprop="url image" alt="墨镜猫" src>
     </span>
   </span>
 
@@ -356,22 +356,29 @@
       
 
       
-        <p>如何动态生成依赖描述？<br><a id="more"></a></p>
+        <p>如何动态生成依赖描述？</p>
+<a id="more"></a>
+
 <p>上一篇我们定义了依赖描述的基本格式，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off true</span><br><span class="line">    name &quot;我是名字&quot;</span><br><span class="line">    path &quot;/path&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>如果我们想做的更通用，能让其他业务工程方便的接入仓库源码依赖，那每一次接入的时候都要编写大量的依赖描述，而且每一次依赖变了，都需要手动修改描述文件。那可不可以动态生成依赖描述？</p>
 <p>我们都知道有一个androidDependencies任务，执行任务会把工程的依赖在控制台输出，如果我们实现类似的任务，可以扫描出当前的依赖关系，然后根据我们的依赖描述定义输出为DSL文件就可以解决了。</p>
 <p>我们在任务执行期间可以拿到project config 信息，然后根据第一级的依赖信息生成节点依赖信息，然后递归查找当前节点的子节点，最后就可以生成类似树状的依赖关系，基本思路如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">project.configurations.each &#123; config -&gt;</span><br><span class="line">    // 这里可以添加些异常检查</span><br><span class="line">    config.resolvedConfiguration.firstLevelModuleDependencies.each &#123; dep -&gt;</span><br><span class="line">        def generateModuleDep</span><br><span class="line">        generateModuleDep = &#123; resolvedDep -&gt;</span><br><span class="line">            // 这里可以根据 resolvedDep moduleGroup moduleName 等信息生成当前依赖信息</span><br><span class="line">            resolvedDep.children.each &#123; childResolvedDep -&gt;</span><br><span class="line">                if (resolvedDep in childResolvedDep.getParents()) &#123;</span><br><span class="line">                    // 子节点递归扫描依赖</span><br><span class="line">                    generateModuleDep(childResolvedDep)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        generateModuleDep(dep)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>节点的信息可以按照实际情况存储到相应的数据结构中，我这里是把节点的对象直接存到List中。</p>
 <p>现在我们已经获取到各个节点的信息了，那我们怎么把节点信息导出为文件呢？</p>
 <p>groovy 支持使用模板生成字符串，生成文件当然也是可以的。</p>
 <p>先定义一个依赖描述模板，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module &#123;</span><br><span class="line">    on_off $&#123;on_off&#125;</span><br><span class="line">    name $&#123;name&#125;</span><br><span class="line">    path $&#123;path&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>下一步定义一个节点信息Map，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def binding = [</span><br><span class="line">        on_off    : true, // 节点信息的开关值</span><br><span class="line">        name      : &quot;节点信息的名字&quot;,</span><br><span class="line">        path      : &quot;节点的路径&quot;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
 <p>最后根据上面定义的模板和节点信息Map，输出格式化的字符串。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def template = new StreamingTemplateEngine().createTemplate(&quot;描述依赖模板&quot;)</span><br><span class="line">String response = template.make(&quot;节点信息Map&quot;)</span><br></pre></td></tr></table></figure>
+
 <p>模板引擎的make函数返回就是已经填好内容的格式化字符串，根据输出的字符串就可以输出到依赖描述文件。</p>
 <p>现在在业务工程执行当前的任务，就可以动态生成依赖描述文件。</p>
 <p>下一篇我们将结合这两篇的内容说下如何动态替换依赖。</p>
@@ -398,13 +405,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay"/>
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="Jacky WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay"/>
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Jacky Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -474,7 +481,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -520,9 +527,7 @@
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Jacky" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Jacky">
           <p class="site-author-name" itemprop="name">Jacky</p>
           <p class="site-description motion-element" itemprop="description">求知若渴，大智若愚</p>
         </div>
@@ -531,7 +536,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -542,7 +547,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -615,7 +620,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>
