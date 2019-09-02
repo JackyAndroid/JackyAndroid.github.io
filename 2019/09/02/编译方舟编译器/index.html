@@ -100,7 +100,7 @@
 <meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200509.png">
 <meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200558.png">
 <meta property="og:image" content="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190902200627.png">
-<meta property="og:updated_time" content="2019-09-02T12:17:48.967Z">
+<meta property="og:updated_time" content="2019-09-02T12:19:31.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编译方舟编译器">
 <meta name="twitter:description" content="编译方舟编译器步骤">
@@ -384,7 +384,7 @@
 
 <p><strong>下载和配置Ninja、GN：</strong></p>
 <p>从<a href="https://github.com/ninja-build/ninja/releases" target="_blank" rel="noopener"><strong>https://github.com/ninja-build/ninja/releases</strong></a>下载Ninja v1.9.0，在tools下新建目录ninja_1.9.0，解压到当前目录，保证执行文件在此目录。</p>
-<p>下载gn：<a href="https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn" target="_blank" rel="noopener"><strong>https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn</strong></a>，在tools下新建目录gn，将下载的gn可执行文件放到gn目录之下。</p>
+<p>下载gn，地址：<a href="https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn" target="_blank" rel="noopener"><strong>https://archive.softwareheritage.org/browse/content/sha1_git:2dc0d5b26caef44f467de8120b26f8aad8b878be/raw/?filename=gn</strong></a>，在tools下新建目录gn，将下载的gn可执行文件放到gn目录之下。</p>
 <p>编辑OpenArkCompiler/Makefile文件，将GN和NINJA两个变量配置为GN和Ninja可执行程序所在路径，相对路径名称一定要对应上。示例如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GN := $&#123;MAPLE_ROOT&#125;/tools/gn/gn</span><br><span class="line"></span><br><span class="line">NINJA := $&#123;MAPLE_ROOT&#125;/tools/ninja_1.9.0/ninja</span><br></pre></td></tr></table></figure>
 
