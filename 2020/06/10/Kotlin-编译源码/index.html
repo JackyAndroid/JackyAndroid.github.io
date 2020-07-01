@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    完全公平调度器 |  墨镜猫
+    Kotlin 编译源码 |  墨镜猫
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -38,7 +38,7 @@ var _hmt = _hmt || [];
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-完全公平调度器" class="article article-type-post" itemscope
+  <article id="post-Kotlin-编译源码" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -46,7 +46,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  完全公平调度器
+  Kotlin 编译源码
 </h1>
   
 
@@ -55,8 +55,8 @@ var _hmt = _hmt || [];
 
     
     <div class="article-meta">
-      <a href="/2019/08/25/完全公平调度器/" class="article-date">
-  <time datetime="2019-08-25T12:03:12.000Z" itemprop="datePublished">2019-08-25</time>
+      <a href="/2020/06/10/Kotlin-编译源码/" class="article-date">
+  <time datetime="2020-06-10T12:50:11.000Z" itemprop="datePublished">2020-06-10</time>
 </a>
       
       
@@ -66,7 +66,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">849字</span>
+            <span class="post-count">0字</span>
         </span>
     </span>
 
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -86,8 +86,6 @@ var _hmt = _hmt || [];
 
     
     
-    <div class="tocbot"></div>
-
 
 
 
@@ -102,19 +100,7 @@ var _hmt = _hmt || [];
       
 
       
-      <p>读书笔记，Linux 系统编程 第六章高级进程管理</p>
-<a id="more"></a>
-
-<h3 id="完全公平调度器"><a href="#完全公平调度器" class="headerlink" title="完全公平调度器"></a>完全公平调度器</h3><p>Linux调度器为完全公平调度器，简称为CFS。和最近华为鸿蒙提出的确定时延调度相反。</p>
-<p>完全公平调度器和传统的Unix调度器有很大的区别。在大多数Unix系统中，包括引入CFS之前的Linux系统，在进程调度中存在两个基本的基于进程的因素：优先级和时间片。在传统的进程调度器中，会给每个就绪进程分配一个时间片。进程可能会一直运行直到消耗完分配给它的时间片。调度器会给每个进程分配优先级。进程调度器会先调度优先级高的进程，再调度优先级低的进程。这个调度算法非常简单，而且对于早期的基于时间片共享的Unix系统效果良好。但对于交互和公平性的系统而言，如现代计算机的桌面和移动设备，该算法就有些差强人意了。</p>
-<p>完全公平调度器引入了一种不同的算法，成为公平调度，它消除了时间片作为处理器分配单元，而是给每个进程分配了处理器的分配比例。</p>
-<p>算法逻辑如下：CFS最初给N个进程分别分配1/N的处理器时间。然后CFS通过优先级（nice值）权衡每个进程的比例，调整分配。默认的优先级为0，权值是1，则比例不变。优先级的值设置的越小（优先级越高），权值就越高，就增加给该进程的处理器比例值；优先级的值设置的越高（优先级越低），权值越低，就减少分配给该进程的比例值。</p>
-<p>通过这种方式，CFS就基于权值分配给了每个进程处理器比例。要确定每个进程真正的执行时间，CFS需要把比例划分为一个固定周期，这个周期叫目标延迟，表示系统的调度延迟。</p>
-<p>举个例子：假设目标延迟设置为20ms，有两个优先级相同的进程，那每个进程分配到的时间就是10ms。这样CFS就会先执行一个进程运行10ms，再执行另一个进程运行10ms，不断反复。</p>
-<p>如果当前有200个进程怎么办，延迟如果是20ms，那每个进程只能分配到100微秒。这样大部分时间就会浪费在切换进程的上下文，CFS引入最小粒度解决这个问题。</p>
-<p>“最小粒度”是指任意进程运行时间的基准值。所有进程，不管分配到处理器的时间比例是多少，都会至少运行最小粒度的时间。这种机制可以保证不会大部分时间浪费在进程切换上。</p>
-<p>通过给进程分配处理器资源比例，而不是固定的时间片，CFS可以实现公平性。CFS也支持可配置的时间延迟。CFS中，进程按配额运行，时间片是根据系统可运行的进程数动态变化的，解决了传统调度器对于交互进程和IO约束性进程所面临的很多问题。</p>
-
+      
       
       <!-- reward -->
       
@@ -183,15 +169,13 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/08/25/完全公平调度器/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/06/10/Kotlin-编译源码/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
 
     </footer>
 
@@ -201,19 +185,10 @@ var _hmt = _hmt || [];
   
   <nav class="article-nav">
     
-      <a href="/2020/06/10/Kotlin-编译源码/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Kotlin 编译源码
-          
-        </div>
-      </a>
     
-    
-      <a href="/2019/05/05/ApkBus开发者千人大会演讲记录/" class="article-nav-link">
+      <a href="/2019/08/25/完全公平调度器/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">ApkBus开发者千人大会演讲记录</div>
+        <div class="article-nav-title">完全公平调度器</div>
       </a>
     
   </nav>
