@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="求知若渴，大智若愚" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    谷歌安卓浏览器项目 |  墨镜猫
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?4d2cf2a50db9e9dfe60dd6d53ea17529";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-谷歌安卓浏览器开源项目" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  谷歌安卓浏览器项目
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/02/03/%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" class="article-date">
+  <time datetime="2017-02-03T09:49:37.000Z" itemprop="datePublished">2017-02-03</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">957字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">4分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <ul>
+<li>谷歌浏览器安卓版源码项目</li>
+<li>本项目是世界级的安卓架构</li>
+<li>理清本项目业务逻辑完全可以胜任国内一线公司工程师</li>
+<li>本项目会长期跟进并升级谷歌浏览器内核版本，欢迎star<span id="more"></span></li>
+</ul>
+<h3 id="欢迎在GitHub或者CSDN上关注我"><a href="#欢迎在GitHub或者CSDN上关注我" class="headerlink" title="欢迎在GitHub或者CSDN上关注我"></a>欢迎在GitHub或者CSDN上关注我</h3><p>GitHub: <a target="_blank" rel="noopener" href="https://github.com/JackyAndroid">https://github.com/JackyAndroid</a></p>
+<p>CSDN: <a target="_blank" rel="noopener" href="http://blog.csdn.net/rain_butterfly">http://blog.csdn.net/rain_butterfly</a></p>
+<hr>
+<h1 id="AndroidChromium"><a href="#AndroidChromium" class="headerlink" title="AndroidChromium"></a>AndroidChromium</h1><h4 id="AndroidChromium源码地址"><a href="#AndroidChromium源码地址" class="headerlink" title="AndroidChromium源码地址"></a><a target="_blank" rel="noopener" href="https://github.com/JackyAndroid/AndroidChromium">AndroidChromium源码地址</a></h4><p><strong>如果使用的是AndroidStudio 2.0以上版本且开启instant run功能，建议关闭后再进行调试（instant run会修改首先启动的Application导致chrome provider context 引用错误导致crash）</strong></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>谷歌浏览器安卓版源码项目</li>
+<li>本项目是世界级的安卓架构</li>
+<li>理清本项目业务逻辑完全可以胜任国内一线公司工程师</li>
+<li>本项目会长期跟进并升级谷歌浏览器内核版本，欢迎star</li>
+</ul>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510194842.png"></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510194919.png"></p>
+<hr>
+<h3 id="以下是升级chrome内核注意事项，如不是相关人员可以忽略"><a href="#以下是升级chrome内核注意事项，如不是相关人员可以忽略" class="headerlink" title="以下是升级chrome内核注意事项，如不是相关人员可以忽略"></a>以下是升级chrome内核注意事项，如不是相关人员可以忽略</h3><hr>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>参考<a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md">官方</a>及其他教程编译通过chromium源码，并能生成chrome.apk</p>
+<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>使用AndroidStudio开发环境调试Chromium Android UI层。</p>
+<h3 id="构建思路"><a href="#构建思路" class="headerlink" title="构建思路"></a>构建思路</h3><ol>
+<li>   采用Android Studio作为开发环境，从Chromium for Android抽取chrome模块的源码，加入Android project。</li>
+<li>   native代码在chromium环境中build，作为so加入Android project</li>
+<li>   基础模块(base, content, net等)在chromium环境build为jar包，加入Android project</li>
+<li>   content, chrome, ui等模块的资源文件加入Android library project</li>
+</ol>
+<h3 id="资源文件为什么不能直接都添加到Android-project呢？"><a href="#资源文件为什么不能直接都添加到Android-project呢？" class="headerlink" title="资源文件为什么不能直接都添加到Android project呢？"></a>资源文件为什么不能直接都添加到Android project呢？</h3><p>因为命名空间的原因，比如content模块的资源的命名空间为org.chromium.content, chrome模块的资源的命名空间为		org.chromium.chrome，所以需要建立不同的Android library project, 指定不同的包名。</p>
+<h3 id="本项目和源码目录对应关系"><a href="#本项目和源码目录对应关系" class="headerlink" title="本项目和源码目录对应关系"></a>本项目和源码目录对应关系</h3><p>app&#x2F;libs ———– chromium&#x2F;src&#x2F;out&#x2F;Release&#x2F;lib.java</p>
+<p>app&#x2F;src&#x2F;main&#x2F;aidl ———– chromium&#x2F;src&#x2F;chrome&#x2F;android&#x2F;java&#x2F;src&#x2F;android&#x2F;support&#x2F;customtabs&#x2F;*.aidl</p>
+<p>app&#x2F;src&#x2F;main&#x2F;assets ———– chromium&#x2F;src&#x2F;out&#x2F;Release&#x2F;assets&#x2F;chrome_public_apk</p>
+<p>app&#x2F;src&#x2F;main&#x2F;java ———— chromium&#x2F;src&#x2F;chrome&#x2F;android&#x2F;java&#x2F;src</p>
+<p>app&#x2F;src&#x2F;main&#x2F;jniLibs ———– chromium&#x2F;src&#x2F;out&#x2F;Release&#x2F;chrome_public_apk&#x2F;libs</p>
+<p>app&#x2F;src&#x2F;main&#x2F;res（app module 初始化资源）</p>
+<p>libraries&#x2F;androidmedia_res ———– chromium&#x2F;src&#x2F;third_party&#x2F;android_media&#x2F;java&#x2F;res</p>
+<p>libraries&#x2F;chrome_res ———– chromium&#x2F;src&#x2F;chrome&#x2F;android&#x2F;java&#x2F;res &amp; chromium&#x2F;src&#x2F;chrome&#x2F;android&#x2F;java&#x2F;res_chromium</p>
+<p>libraries&#x2F;content_res ———– chromium&#x2F;src&#x2F;content&#x2F;public&#x2F;android&#x2F;java&#x2F;res</p>
+<p>libraries&#x2F;datausagechart_res ——— chromium&#x2F;src&#x2F;third_party&#x2F;android_data_chart&#x2F;java&#x2F;res</p>
+<p>libraries&#x2F;ui_res ———- chromium&#x2F;src&#x2F;ui&#x2F;android&#x2F;java&#x2F;res</p>
+<h3 id="建议-amp-注意事项"><a href="#建议-amp-注意事项" class="headerlink" title="建议&amp;注意事项"></a>建议&amp;注意事项</h3><ol start="2">
+<li>   pak和dat等文件需要加入到assets目录，而且不能压缩</li>
+<li>   aidl文件加入到main&#x2F;aidl下，android studio会自动处理</li>
+<li>目前构建的chromium版本是48.0.2554.0，内核为官方版本</li>
+<li>因为某些java文件是通过C文件编译生成，只存在chromium&#x2F;src&#x2F;out  目录下。如果按以上对应关系升级版本缺失文件，请到out&#x2F;目录下去搜索，根据命名空间添加相应文件。还有一些临时生成的xml资源文件也需要从out&#x2F;目录下去拷贝到相应的资源模块。</li>
+<li>如果使用的是AndroidStudio 2.0以上版本且开启instant run功能，建议关闭后再进行调试（instant run会修改首先启动的Application导致chrome provider context 引用错误导致crash）</li>
+</ol>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>本项目灵感来自于365browser</p>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><pre><code>Copyright 2016 Jacky Wang&lt;jacky.android@foxmail.com&gt;
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2017/02/03/%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" rel="tag">开源项目</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2017/02/03/Android%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%8C%96-%E5%A4%9A%E6%A8%A1%E5%9D%97%E5%8C%BA%E5%88%86%E7%BC%96%E8%AF%91/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Android模块化与组件化--多模块区分编译
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Android Framework是怎么启动的？</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'QnHj0Y22U48vM0X91psVhPAs-gzGzoHsz',
+        app_key: 'JfgN4x2OzKoORkuQBTUGOpyP',
+        path: window.location.pathname,
+        notify: 'true',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '评论',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2017-2023
+        Jacky
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="墨镜猫"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/plan">年度计划</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>所有的相遇，都是久别重逢</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['理想，就是做一件不可能的事', '除了走好脚下的路，也要记得仰望星辰', '在宇宙角度，文明的兴灭都是正常现象，你我这一生连尘埃都算不上'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=379785&auto=0&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>

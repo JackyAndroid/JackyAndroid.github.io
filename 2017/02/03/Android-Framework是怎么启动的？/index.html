@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="求知若渴，大智若愚" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Android Framework是怎么启动的？ |  墨镜猫
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?4d2cf2a50db9e9dfe60dd6d53ea17529";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-Android-Framework是怎么启动的？" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Android Framework是怎么启动的？
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/" class="article-date">
+  <time datetime="2017-02-03T09:47:48.000Z" itemprop="datePublished">2017-02-03</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
+<span id="more"></span>
+
+<h2 id="Android-Framework运行环境是怎样的？"><a href="#Android-Framework运行环境是怎样的？" class="headerlink" title="Android Framework运行环境是怎样的？"></a>Android Framework运行环境是怎样的？</h2><p>安卓系统启动过程其实是建立一套系统运行需要的环境，就像建立一个国家首先需要一些物质基础，比如公路、工厂、建筑。</p>
+<p>Framework运行环境如下图：</p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200252.png"></p>
+<p>安卓系统中运行的第一个Dalvik虚拟机叫做zygote，这个的意思是“卵”，那有什么卵用呢？听这个词的意思就知道是孵化的意思，接下来所有的Dalvik虚拟机进程都是这个“卵”孵化出来的。</p>
+<p>zygote进程中包含两个主要模块，分别如下：</p>
+<ul>
+<li>Socket服务端。任务是用于接收启动新的Dalvik进程的命令。</li>
+<li>Framework共享类及共享资源。当zygote进程启动后会加载一些共享的类及资源，就像营养液一样，供其他的细胞吸收。其中共享类是在preload-classes文件中被定义的，共享资源是在preload-resources中被定义的。其他Dalvik进程是被zygote卵进程孵化出来的，所以这些类和资源加载后，新的Dalvik进程就可以直接使用这些类和资源就达到了共享目的，就像一个细胞分裂成两个，共享一些基因和营养。</li>
+</ul>
+<p>zygote进程对应的程序是app_process,该程序在system&#x2F;bin目录下。</p>
+<p>zygote孵化出的第一个Dalvik进程是SystemServer，该进程对应的程序依然是app_process,因为该进程是从app_process中孵化出来的。</p>
+<p>SystemServer中创建了一个Socket客户端（生产线经理），之后所有的Dalvik进程都将通过该Socket客户端间接被启动，Ams负责管理这个客户端。如果需要启动新的APK进程时，Ams会通过该Socket客户端向zygote进程的Socket服务端（生产线工人）发送一个启动命令，然后zygote会孵化出新的进程（产品生产成型）。</p>
+<p>这样的架构有两个特点：</p>
+<ul>
+<li>每一个进程都是一个Dalvik虚拟机，Dalvik虚拟机是一种类似于java虚拟机的程序。</li>
+<li>zygote进程会预先装载共享类和共享资源，提供营养液和基因，这些类和资源其实就是SDK中定义的大部分类和资源。当通过zygote孵化出新进程后，新的APK只需要去加载APK自身包含的类和资源，这样多个APK就可以共享Framework资源了。</li>
+</ul>
+<h2 id="和Dalvik虚拟机关系比较好的可执行程序有哪些？"><a href="#和Dalvik虚拟机关系比较好的可执行程序有哪些？" class="headerlink" title="和Dalvik虚拟机关系比较好的可执行程序有哪些？"></a>和Dalvik虚拟机关系比较好的可执行程序有哪些？</h2><h3 id="1-dalvikvm"><a href="#1-dalvikvm" class="headerlink" title="1.dalvikvm"></a>1.dalvikvm</h3><p>java程序运行时都是由一个虚拟机来解释java字节码，将这些字节码翻译成本地CPU指令码然后执行。dalvikvm的作用就是创建一个虚拟机并执行参数中指定的java类。</p>
+<h3 id="2-dvz"><a href="#2-dvz" class="headerlink" title="2.dvz"></a>2.dvz</h3><p>dvz的作用是从zygote进程中孵化出一个新的进程，新进程其实就是一个Dalvik虚拟机。该进程与dalvikvm启动的虚拟机相比，区别是该进程中已经预装了Framework的大部分类和资源。</p>
+<h3 id="3-app-process"><a href="#3-app-process" class="headerlink" title="3.app_process"></a>3.app_process</h3><p>Framework在启动时需要加载运行两个特定java类，一个是ZygoteInit.java，一个是SystemServer.java。为了方便使用，系统才提供了一个app_process进程，该进程会自动运行这两个类，app_process其实就是使用dalvikvm启动ZygoteInit.java，启动后会加载Framework中得大部分类和资源。</p>
+<h2 id="Zygote是如何启动的？"><a href="#Zygote是如何启动的？" class="headerlink" title="Zygote是如何启动的？"></a>Zygote是如何启动的？</h2><h3 id="1-在init-rc中配置Zygote启动参数"><a href="#1-在init-rc中配置Zygote启动参数" class="headerlink" title="1.在init.rc中配置Zygote启动参数"></a>1.在init.rc中配置Zygote启动参数</h3><h3 id="2-启动Socket服务端口"><a href="#2-启动Socket服务端口" class="headerlink" title="2.启动Socket服务端口"></a>2.启动Socket服务端口</h3><p>当Zygote服务从app_process开始启动后，会启动一个Dalvik虚拟机，虚拟机第一个执行的java类就是ZygoteInit.java，该类第一个重要的工作就是启动一个Socket服务端口，该Socket端口用于接收启动新进程的命令。</p>
+<h3 id="3-加载preload-classes"><a href="#3-加载preload-classes" class="headerlink" title="3.加载preload-classes"></a>3.加载preload-classes</h3><p>在Zygote类的main（）函数中，创建完Socket服务端后还不能立即孵化出新的进程，因为这个“卵”还没有必须的“基因”，这个“基因”就是指预装的Framework大部分类及资源。</p>
+<h3 id="4-加载preload-resources"><a href="#4-加载preload-resources" class="headerlink" title="4.加载preload-resources"></a>4.加载preload-resources</h3><p>preload-resources包含两类资源，一类是drawable资源，一类是color资源。加载这些资源是在preloadResource（）函数中完成的，该函数调用preloadDrawable（）和preloadColorStateLists（）加载这两类资源，原理就是把这些资源读出来放到一个全局变量中，只要该类对象不被销毁，这些全局变量就会一直保存。</p>
+<h3 id="5-使用fork启动新的进程"><a href="#5-使用fork启动新的进程" class="headerlink" title="5.使用fork启动新的进程"></a>5.使用fork启动新的进程</h3><p>fork是Linux系统的一个系统调用，作用就是复制当前进程产生一个新的进程，相当于生物的克隆。除了进程id不同，新进程将拥有和原始进程完全相同的进程信息。进程的信息包括该进程所打开的文件描述符列表、所分配的内存等。当新进程被创建后，两个进程将共享已经分配的内存空间，如果其中一个需要向内存中写入数据时，操作系统才复制一份目标地址空间，并将要写的数据写入到新的地址中。这种“仅当写的时候才复制”的机制可以最大限度的在多个进程中共享物理内存。</p>
+<h4 id="举个栗子："><a href="#举个栗子：" class="headerlink" title="举个栗子："></a>举个栗子：</h4><p>去乌镇见一下习大大和去乌镇吃一次丁磊的猪肉，这是两个进程，但是两个进程中的很多任务是相同的，先订机票，做地铁到机场，做几小时飞机过去。到了之后不同的就是见习大大和吃猪肉。如果可以先雇一个秘书进程让它订机票、做地铁、做飞机，到乌镇。然后秘书在复制出两个秘书，一个去见习大大，一个去吃猪肉，好处是节省了大量内存。</p>
+<p>Zygote进程就是本例中的“秘书进程”，那些“订机票、做地铁、乘飞机”就是Zygote进程中加载的preload-classes类的功能。</p>
+<p>这样新的进程就脱离的Zygote进程的孵化成为一个真正的应用进程。</p>
+<h2 id="SystemServer-进程是如何启动的？"><a href="#SystemServer-进程是如何启动的？" class="headerlink" title="SystemServer 进程是如何启动的？"></a>SystemServer 进程是如何启动的？</h2><p>SystemServer进程是Zygote孵化出的第一个进程，然后再配置SystemServer进程的环境。</p>
+<h3 id="1-启动各种系统服务线程"><a href="#1-启动各种系统服务线程" class="headerlink" title="1.启动各种系统服务线程"></a>1.启动各种系统服务线程</h3><p>SystemServer进程在Android运行环境中扮演了“神经中枢”的作用，APK应用中能够直接交互的大部分系统服务都在该进程中运行，常见的有WindowManagerServer（Wms）、ActivityManagerService（Ams）、PackageManagerServer（Pms），这些系统服务都是以一个线程的方式存在于SystemServer进程中。</p>
+<h3 id="2-启动第一个Activity"><a href="#2-启动第一个Activity" class="headerlink" title="2.启动第一个Activity"></a>2.启动第一个Activity</h3><p>当以上服务线程都启动后，其中Ams服务是systemReady（）调用完成最后启动的，在Ams的systemReady（）函数的最后一段代码则发出了启动任务队列中最上面一个Activity消息。</p>
+<p>在Ams的startHomeActivityLocked（）中，系统发出了一个category字段包含CATEGORY_HOME的intent，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">intent.setComponent(mTopComponent);</span><br><span class="line"><span class="keyword">if</span>(mFactoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL)&#123;</span><br><span class="line">intent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只要应用声明自己能够响应该Intent，那么就可以被认为是Home程序。当系统中有多个程序能够响应该Intent时，系统会弹出一个对话框，让用户选择启动哪个程序，也允许用户记住该选择。</p>
+<p>到此第一个Activity就启动了。</p>
+<p><em><strong>如有问题请留言，转载请注明出处。</strong></em></p>
+<p><strong>备注：以上部分思想来自于《Android内核剖析》</strong></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png"></p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2017/02/03/Android-Framework%E6%98%AF%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Framework/" rel="tag">Android Framework</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2017/02/03/%E8%B0%B7%E6%AD%8C%E5%AE%89%E5%8D%93%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            谷歌安卓浏览器项目
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/02/03/Android-%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Android 一个窗口是怎么创建出来的？</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'QnHj0Y22U48vM0X91psVhPAs-gzGzoHsz',
+        app_key: 'JfgN4x2OzKoORkuQBTUGOpyP',
+        path: window.location.pathname,
+        notify: 'true',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '评论',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2017-2023
+        Jacky
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="墨镜猫"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/plan">年度计划</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>所有的相遇，都是久别重逢</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['理想，就是做一件不可能的事', '除了走好脚下的路，也要记得仰望星辰', '在宇宙角度，文明的兴灭都是正常现象，你我这一生连尘埃都算不上'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=379785&auto=0&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>

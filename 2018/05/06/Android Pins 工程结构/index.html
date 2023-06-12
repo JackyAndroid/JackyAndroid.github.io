@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="求知若渴，大智若愚" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Android Pins 工程结构 |  墨镜猫
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?4d2cf2a50db9e9dfe60dd6d53ea17529";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="alternate" href="/atom.xml" title="墨镜猫" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-Android Pins 工程结构" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Android Pins 工程结构
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="article-date">
+  <time datetime="2018-05-06T01:47:21.000Z" itemprop="datePublished">2018-05-06</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>Pins 工程结构能解决什么问题？</p>
+<span id="more"></span>
+<p>近期我们听到一些团队在做工程化方面的事情，其中都提到了Pins 工程结构，最先提出这个概念的是微信团队：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw">微信Android模块化架构重构实践</a>，在后来看到美团外卖也做了这个事情：<a target="_blank" rel="noopener" href="https://tech.meituan.com/meituan_food_delivery_android_architecture_evolution.html">美团外卖Android平台化架构演进实践</a>。</p>
+<p><strong>那Pins工程结构是什么？</strong></p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195725.png"></p>
+<p>上面这张图就是Pins工程结构。</p>
+<p><strong>那有什么用？或者能解决什么问题？</strong></p>
+<p>如果你的产品有多条业务线，每一期产品有上百个需求，各个业务线业务之间有非常多的交集。比如，一个业务线引用了五个业务线，其他业务线也是类似的引用，依次类推，相互引用不重复的话为5的5次方等于3125，如果业务线增长这个复杂度也是呈几何数增长，那我们在现有的工程环境下如何做呢？简单的方法就是都放在同一个Gradle Module 里面相互引用，各个业务线之间用包名做区分，但是各个包之间也是可以相互引用，久而久之就会发现，代码变成了一锅粥…变成一锅粥的后果也是显然的，不能独立拆分，代码合并非常容易冲突浪费时间等等，各种后果。下图是微信业务之间的引用情况，实际情况可能比这更糟糕。</p>
+<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200106.png"></p>
+<p>Pins结构就较好的解决了上面的问题，各个业务线之间都是一个Pins模块，模块之间<strong>根据规定引用该引用的</strong>，这样业务线之间的代码边界就会比较清楚。</p>
+<p>接下来我们看下如何实现，这里只提供下简单思路。</p>
+<p><strong>业务构建改造</strong></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        <span class="keyword">def</span> dirs = [<span class="string">&#x27;p_widget&#x27;</span>, <span class="string">&#x27;p_theme&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;p_shop&#x27;</span>, <span class="string">&#x27;p_shopcart&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;p_submit_order&#x27;</span>,<span class="string">&#x27;p_multperson&#x27;</span>,<span class="string">&#x27;p_again_order&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;p_location&#x27;</span>, <span class="string">&#x27;p_log&#x27;</span>,<span class="string">&#x27;p_ugc&#x27;</span>,<span class="string">&#x27;p_im&#x27;</span>,<span class="string">&#x27;p_share&#x27;</span>]</span><br><span class="line">        dirs.each &#123; dir -&gt;</span><br><span class="line">            java.srcDir(<span class="string">&quot;src/$dir/java&quot;</span>)</span><br><span class="line">            res.srcDir(<span class="string">&quot;src/$dir/res&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的示例就简单实现了Pins结构，指定各模块到路径到srcDir，p_shop、p_shopcart等Pins模块构建时会合并到主工程。上面只是一个简单示例，实际情况可以做很多动态化控制，比如动态生成以及扫描当前路径下的Pins模块、根据配置动态合成Pins模块等等。下面是一个稍微复杂的例子。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> src_dir = <span class="keyword">new</span> File(projectDir, <span class="string">&#x27;src&#x27;</span>)</span><br><span class="line"><span class="comment">// 扫描当前模块下的Pins模块，并生成List</span></span><br><span class="line"><span class="keyword">def</span> p_module_names =</span><br><span class="line">            src_dir</span><br><span class="line">                    .list()</span><br><span class="line">                    .toList()</span><br><span class="line">                    .stream()</span><br><span class="line">                    .filter(</span><br><span class="line">                    <span class="keyword">new</span> Predicate&lt;String&gt;() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="type">boolean</span> test(String name) &#123;</span><br><span class="line">                            <span class="keyword">return</span> name == <span class="string">&#x27;main&#x27;</span> || (name.startsWith(<span class="string">&#x27;p_&#x27;</span>) &amp;&amp; <span class="keyword">new</span> File(src_dir, name).isDirectory())</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .collect(Collectors.toList())</span><br><span class="line"><span class="comment">// 把生成的List合成为srcDir格式</span></span><br><span class="line"><span class="keyword">def</span> p_src_dirs =</span><br><span class="line">            p_module_names</span><br><span class="line">                    .stream()</span><br><span class="line">                    .map(</span><br><span class="line">                    <span class="keyword">new</span> Function() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        Object apply(Object module) &#123;</span><br><span class="line">                            <span class="keyword">return</span> [<span class="string">&#x27;src&#x27;</span>, module, <span class="string">&#x27;java&#x27;</span>].join(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .collect(Collectors.toList())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> p_res_dirs =</span><br><span class="line">            p_module_names</span><br><span class="line">                    .stream()</span><br><span class="line">                    .map(</span><br><span class="line">                    <span class="keyword">new</span> Function() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        Object apply(Object module) &#123;</span><br><span class="line">                            <span class="keyword">return</span> [<span class="string">&#x27;src&#x27;</span>, module, <span class="string">&#x27;res&#x27;</span>].join(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .collect(Collectors.toList())</span><br><span class="line"><span class="comment">// 指定路径</span></span><br><span class="line">sourceSets &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            manifest.srcFile <span class="string">&quot;src/main/AndroidManifest.xml&quot;</span></span><br><span class="line">            java.srcDirs = p_src_dirs</span><br><span class="line">            res.srcDirs = p_res_dirs</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>代码边界检查</strong></p>
+<p>上面只是表面上把代码进行了分割，但是各Pins模块还是可以引用到其他模块的代码，一般的操作是根据模块的配置，在<strong>编译期</strong>做代码检查，检查是否引用了不该引用的模块。</p>
+<p>那如何定义项目的配置，这个配置可以是文本文件、DSL等等，微信通过project.properties来指定编译依赖关系。</p>
+<p>这里简单用groovy格式文件举例：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">task code_check &#123;</span><br><span class="line">    doLast &#123;</span><br><span class="line">        <span class="comment">// 加载pins模块依赖文件</span></span><br><span class="line">        <span class="keyword">def</span> dependenciesFile = <span class="keyword">new</span> File(projectDir, <span class="string">&#x27;src/p_module1/dependencies.groovy&#x27;</span>)</span><br><span class="line">        <span class="keyword">def</span> ref = <span class="literal">null</span></span><br><span class="line">        dependenciesFile.readLines().each &#123;</span><br><span class="line">            ref = it</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 扫描pins模块内部源文件</span></span><br><span class="line">        File javaDir = <span class="keyword">new</span> File(projectDir, <span class="string">&#x27;src/p_module1/java&#x27;</span>)</span><br><span class="line">        Files.walkFileTree(javaDir.toPath(), <span class="keyword">new</span> FileVisitor&lt;Path&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            FileVisitResult visitFile(Path file, BasicFileAttributes attrs) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                file.readLines().each &#123;</span><br><span class="line">                    <span class="keyword">if</span> (it.endsWith(ref)) &#123;</span><br><span class="line">                        System.err.println(<span class="string">&quot;p_module1模块引用了不能引用的模块！&quot;</span>)</span><br><span class="line">                        <span class="keyword">return</span> FileVisitResult.TERMINATE</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            FileVisitResult visitFileFailed(Path file, IOException exc) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            FileVisitResult postVisitDirectory(Path dir, IOException exc) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义一个任务，先从p_module1的dependencies文件里读出不能包含的模块，然后检索p_module1里面的文件是不是引用了这个模块，如果检查到就终止或抛出异常。</p>
+<p>这里只是列举了一个思路，实现也比较粗暴，直接匹配的字符串。</p>
+<p>当然，也可以做的比较完善，这些逻辑可以做在一个插件里，插件每次读取各个Pins模块的DSL配置（根据DSL的扩展性做更细粒度的依赖关系，比如只依赖另一个模块的某个包、某个类、某个资源等等），插件根据配置可以动态合成Pins，合成完Pins再做代码边界检查，边界检查可以用字符流匹配也可以用其他方式，提高字符流匹配准确性也可以做很多事情，比如匹配import行、类定义行、以及代码内的匹配（是真的字符串还是真的引用等等）。</p>
+<p>Pins 工程的基本思路就是这样。</p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag">工程化</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Linux 文件I/O
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">仓库源码依赖管理器（三）</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'QnHj0Y22U48vM0X91psVhPAs-gzGzoHsz',
+        app_key: 'JfgN4x2OzKoORkuQBTUGOpyP',
+        path: window.location.pathname,
+        notify: 'true',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '评论',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2017-2023
+        Jacky
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="墨镜猫"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/plan">年度计划</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>所有的相遇，都是久别重逢</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['理想，就是做一件不可能的事', '除了走好脚下的路，也要记得仰望星辰', '在宇宙角度，文明的兴灭都是正常现象，你我这一生连尘埃都算不上'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=379785&auto=0&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>
