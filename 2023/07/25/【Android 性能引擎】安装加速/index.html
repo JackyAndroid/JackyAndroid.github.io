@@ -41,7 +41,7 @@ var _hmt = _hmt || [];
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-【Android 性能引擎】文件碎片" class="article article-type-post" itemscope
+  <article id="post-【Android 性能引擎】安装加速" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -58,8 +58,8 @@ var _hmt = _hmt || [];
 
     
     <div class="article-meta">
-      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E6%96%87%E4%BB%B6%E7%A2%8E%E7%89%87/" class="article-date">
-  <time datetime="2023-07-25T11:24:49.000Z" itemprop="datePublished">2023-07-25</time>
+      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%AE%89%E8%A3%85%E5%8A%A0%E9%80%9F/" class="article-date">
+  <time datetime="2023-07-25T12:24:49.000Z" itemprop="datePublished">2023-07-25</time>
 </a>
       
       
@@ -69,7 +69,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">412字</span>
+            <span class="post-count">196字</span>
         </span>
     </span>
 
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -103,31 +103,16 @@ var _hmt = _hmt || [];
       
 
       
-      <p>整理碎片，提升整机性能。</p>
+      <p>提升App安装速度。</p>
 <span id="more"></span>
 
-<p>入口：</p>
-<p>PMS#performFstrimIfNeeded</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">performFstrimIfNeeded</span><span class="params">()</span> &#123;</span><br><span class="line">        PackageManagerServiceUtils.enforceSystemOrRoot(<span class="string">&quot;Only the system can request fstrim&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Before everything else, see whether we need to fstrim.</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">IStorageManager</span> <span class="variable">sm</span> <span class="operator">=</span> InstallLocationUtils.getStorageManager();</span><br><span class="line">            <span class="keyword">if</span> (sm != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="type">boolean</span> <span class="variable">doTrim</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">long</span> <span class="variable">interval</span> <span class="operator">=</span> android.provider.Settings.Global.getLong(</span><br><span class="line">                        mContext.getContentResolver(),</span><br><span class="line">                        android.provider.Settings.Global.FSTRIM_MANDATORY_INTERVAL,</span><br><span class="line">                        DEFAULT_MANDATORY_FSTRIM_INTERVAL);</span><br><span class="line">                <span class="keyword">if</span> (interval &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">final</span> <span class="type">long</span> <span class="variable">timeSinceLast</span> <span class="operator">=</span> System.currentTimeMillis() - sm.lastMaintenance();</span><br><span class="line">                    <span class="keyword">if</span> (timeSinceLast &gt; interval) &#123;</span><br><span class="line">                        doTrim = <span class="literal">true</span>;</span><br><span class="line">                        Slog.w(TAG, <span class="string">&quot;No disk maintenance in &quot;</span> + timeSinceLast</span><br><span class="line">                                + <span class="string">&quot;; running immediately&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (doTrim) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!isFirstBoot()) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (mDexOptHelper.isDexOptDialogShown()) &#123;</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                ActivityManager.getService().showBootMessage(</span><br><span class="line">                                        mContext.getResources().getString(</span><br><span class="line">                                                R.string.android_upgrading_fstrim), <span class="literal">true</span>);</span><br><span class="line">                            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    sm.runMaintenance();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Slog.e(TAG, <span class="string">&quot;storageManager service unavailable!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">            <span class="comment">// Can&#x27;t happen; StorageManagerService is local</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>方案：把dex文件优化流程延迟处理。</p>
+<p>效果：大型应用2-3s即可安装完毕。</p>
+<p>影响：dex文件未处理完成前启动应用，会略微影响启动速度。多次连续安装App安装时间可能会变长。</p>
+<p>关键代码：</p>
+<p>PackageDexOptimizer#performDexOpt</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DexOptResult</span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">performDexOpt</span><span class="params">(AndroidPackage pkg, <span class="meta">@NonNull</span> PackageStateInternal pkgSetting,</span></span><br><span class="line"><span class="params">            String[] instructionSets, CompilerStats.PackageStats packageStats,</span></span><br><span class="line"><span class="params">            PackageDexUsage.PackageUseInfo packageUseInfo, DexoptOptions options)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (PLATFORM_PACKAGE_NAME.equals(pkg.getPackageName())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;System server dexopting should be done via &quot;</span></span><br><span class="line">                    + <span class="string">&quot; DexManager and PackageDexOptimizer#dexoptSystemServerPath&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pkg.getUid() == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Dexopt for &quot;</span> + pkg.getPackageName()</span><br><span class="line">                    + <span class="string">&quot; has invalid uid.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!canOptimizePackage(pkg)) &#123;</span><br><span class="line">            <span class="keyword">return</span> DEX_OPT_SKIPPED;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">synchronized</span> (mInstallLock) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">long</span> <span class="variable">acquireTime</span> <span class="operator">=</span> acquireWakeLockLI(pkg.getUid());</span><br><span class="line">            <span class="keyword">try</span> &#123;<span class="comment">//此处可立即返回DEX_OPT_SKIPPED状态，并延迟处理performDexOptLI</span></span><br><span class="line">                <span class="keyword">return</span> performDexOptLI(pkg, pkgSetting, instructionSets,</span><br><span class="line">                        packageStats, packageUseInfo, options);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                releaseWakeLockLI(acquireTime);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>StorageManagerService#runIdleMaint</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">runIdleMaint</span><span class="params">(Runnable callback)</span> &#123;</span><br><span class="line">        enforcePermission(android.Manifest.permission.MOUNT_FORMAT_FILESYSTEMS);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// Block based checkpoint process runs fstrim. So, if checkpoint is in progress</span></span><br><span class="line">            <span class="comment">// (first boot after OTA), We skip idle maintenance and make sure the last</span></span><br><span class="line">            <span class="comment">// fstrim time is still updated. If file based checkpoints are used, we run</span></span><br><span class="line">            <span class="comment">// idle maintenance (GC + fstrim) regardless of checkpoint status.</span></span><br><span class="line">            <span class="keyword">if</span> (!needsCheckpoint() || !supportsBlockCheckpoint()) &#123;</span><br><span class="line">                mVold.runIdleMaint(mNeedGC, <span class="keyword">new</span> <span class="title class_">IVoldTaskListener</span>.Stub() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onStatus</span><span class="params">(<span class="type">int</span> status, PersistableBundle extras)</span> &#123;</span><br><span class="line">                        <span class="comment">// Not currently used</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFinished</span><span class="params">(<span class="type">int</span> status, PersistableBundle extras)</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (callback != <span class="literal">null</span>) &#123;</span><br><span class="line">                            BackgroundThread.getHandler().post(callback);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Slog.i(TAG, <span class="string">&quot;Skipping idle maintenance - block based checkpoint in progress&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            Slog.wtf(TAG, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>Android只在手机特定场景下触发磁盘整理，未兼容到其他设备。</p>
-<p>其他终端可在自定义场景内触发磁盘整理，提升性能，如：</p>
-<ol>
-<li>屏保场景</li>
-<li>系统升级场景</li>
-<li>开机场景</li>
-<li>恢复出厂场景</li>
-<li>App提供主动触发入口</li>
-</ol>
-<p>测试数据：</p>
-<p>IO读写影响：提升10~20%</p>
-<p>应用启动影响：提升5~10%</p>
-<p>测试环境：</p>
-<p>芯片：MTK9669</p>
-<p>备注：不同芯片测试数据差异较大。</p>
 
       
       <!-- reward -->
@@ -197,7 +182,7 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E6%96%87%E4%BB%B6%E7%A2%8E%E7%89%87/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%AE%89%E8%A3%85%E5%8A%A0%E9%80%9F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -213,19 +198,10 @@ var _hmt = _hmt || [];
   
   <nav class="article-nav">
     
-      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%AE%89%E8%A3%85%E5%8A%A0%E9%80%9F/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            【Android 性能引擎】文件碎片
-          
-        </div>
-      </a>
     
-    
-      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/" class="article-nav-link">
+      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E6%96%87%E4%BB%B6%E7%A2%8E%E7%89%87/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">【Android 性能引擎】硬件提频</div>
+        <div class="article-nav-title">【Android 性能引擎】文件碎片</div>
       </a>
     
   </nav>

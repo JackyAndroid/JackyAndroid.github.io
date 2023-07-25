@@ -6,7 +6,7 @@
   <link href="http://www.jackywang.tech/atom.xml" rel="self"/>
   
   <link href="http://www.jackywang.tech/"/>
-  <updated>2023-07-25T12:20:05.865Z</updated>
+  <updated>2023-07-25T12:48:02.297Z</updated>
   <id>http://www.jackywang.tech/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Android 性能引擎】文件碎片</title>
+    <link href="http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%AE%89%E8%A3%85%E5%8A%A0%E9%80%9F/"/>
+    <id>http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%AE%89%E8%A3%85%E5%8A%A0%E9%80%9F/</id>
+    <published>2023-07-25T12:24:49.000Z</published>
+    <updated>2023-07-25T12:48:02.297Z</updated>
+    
+    <content type="html"><![CDATA[<p>提升App安装速度。</p><span id="more"></span><p>方案：把dex文件优化流程延迟处理。</p><p>效果：大型应用2-3s即可安装完毕。</p><p>影响：dex文件未处理完成前启动应用，会略微影响启动速度。多次连续安装App安装时间可能会变长。</p><p>关键代码：</p><p>PackageDexOptimizer#performDexOpt</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DexOptResult</span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">performDexOpt</span><span class="params">(AndroidPackage pkg, <span class="meta">@NonNull</span> PackageStateInternal pkgSetting,</span></span><br><span class="line"><span class="params">            String[] instructionSets, CompilerStats.PackageStats packageStats,</span></span><br><span class="line"><span class="params">            PackageDexUsage.PackageUseInfo packageUseInfo, DexoptOptions options)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (PLATFORM_PACKAGE_NAME.equals(pkg.getPackageName())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;System server dexopting should be done via &quot;</span></span><br><span class="line">                    + <span class="string">&quot; DexManager and PackageDexOptimizer#dexoptSystemServerPath&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pkg.getUid() == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Dexopt for &quot;</span> + pkg.getPackageName()</span><br><span class="line">                    + <span class="string">&quot; has invalid uid.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!canOptimizePackage(pkg)) &#123;</span><br><span class="line">            <span class="keyword">return</span> DEX_OPT_SKIPPED;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">synchronized</span> (mInstallLock) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">long</span> <span class="variable">acquireTime</span> <span class="operator">=</span> acquireWakeLockLI(pkg.getUid());</span><br><span class="line">            <span class="keyword">try</span> &#123;<span class="comment">//此处可立即返回DEX_OPT_SKIPPED状态，并延迟处理performDexOptLI</span></span><br><span class="line">                <span class="keyword">return</span> performDexOptLI(pkg, pkgSetting, instructionSets,</span><br><span class="line">                        packageStats, packageUseInfo, options);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                releaseWakeLockLI(acquireTime);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;提升App安装速度。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>【Android 性能引擎】文件碎片</title>
@@ -74,7 +91,7 @@
     <published>2020-06-10T12:50:11.000Z</published>
     <updated>2020-07-01T12:58:35.313Z</updated>
     
-    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#x67;&#105;&#116;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;">&#x67;&#105;&#116;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
+    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x67;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
     
     
     <summary type="html">&lt;p&gt;编译Kotlin源码&lt;/p&gt;</summary>
@@ -368,25 +385,6 @@
     
     
     <category term="虚拟机" scheme="http://www.jackywang.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？</title>
-    <link href="http://www.jackywang.tech/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
-    <id>http://www.jackywang.tech/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/</id>
-    <published>2017-06-14T10:27:59.000Z</published>
-    <updated>2019-05-10T12:07:31.840Z</updated>
-    
-    <content type="html"><![CDATA[<p>主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。</p><span id="more"></span><p>在Lollipop之前的设备上，主Dex仅仅被Framework加载。为了支持multi-dex，应用必须明确的让类加载器去加载二级Dex文件（这就是为什么要调用MultiDex#install）</p><p>那就是说应用的主Dex应该包含所有的即将被加载器访问的类，如果你的应用的代码试着在类加载器加载之前，去引用二级Dex里面的class就会抛出Class Not Found异常。</p><p><strong>那什么样的类会被包含在主Dex里面？</strong></p><p>会有三个顺序执行的任务将会决定哪个类应该被包含在主Dex里。</p><ol><li><code>collect&#123;variant&#125;MultiDexComponents task</code>，这个任务会根据manifest把所有应用组件（application, activities, services, receivers, providers）的名字写到一个文本文件。因此，如果你没有把其中的组件注册到manifest，那就不会被包含到主Dex里，也会有一些不注册的class也会被包含进去，比如注解。查看下CreateManifestKeepList.groovy 的源码就可以看到完整的包含列表。这个任务输出的文件是 manifest_keep.txt，路径为：app&#x2F;build&#x2F;intermediates&#x2F;multi-dex。</li><li><code>shrink&#123;variant&#125;MultiDexComponents task</code>，这个任务会掉起ProGuard程序创建一个压缩过的Jar文件，这个文件里只包含manifest_keep.txt里的class，这个任务输出的文件是componentClasses.jar</li><li><code>create&#123;variant&#125;MainDexClassList task</code>，这个任务会解析componentClasses.jar文件，为每一个类文件计算直接的引用层级，具体实现请查看<a href="https://android.googlesource.com/platform/dalvik/+/master/dx/src/com/android/multidex/ClassReferenceListBuilder.java">链接</a>。因此，如果你应用有一个注册的组件包含类X的变量，类X也会被包含进主Dex里面。这个任务输出的文件为：maindexlist.txt，包含主Dex里面所有的类。</li></ol><p><strong>如果最低版本是21会发生什么？</strong><br>如果最低版本是21上面所有的任务都不会执行，也不会有主Dex列表的计算。这是因为在应用安装期间所有的dex文件都会被ART转换为一个.oat文件。</p><p>所以如果这些类的引用超过了65536，构建的时候就会抛出这个<code>Too many classes in --main-dex-list, main dex capacity exceeded</code> 错误</p><p><strong>那到底解决方案是什么？</strong><br>升级Gradle plugin的版本到2.2.0-alpha4以上，例：<code>classpath &#39;com.android.tools.build:gradle:2.2.0&#39;</code>，可以查看关于这个问题的<a href="https://issuetracker.google.com/issues/37097145#c8">Google Issue Tracker</a></p><p><strong>参考：</strong><a href="https://stackoverflow.com/questions/32721083/too-many-classes-in-main-dex-list-main-dex-capacity-exceeded">Too many classes in –main-dex-list, main dex capacity exceeded</a></p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png"></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;主 dex 里面会有 Application、Activity、Service、Receiver、Provider、Instrumentation、BackupAgent 和 Annotation。当这些类以及直接引用类比较多的时候，都要塞进主 dex ，就会引发 main dex capacity exceeded build error 。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="疑难杂症" scheme="http://www.jackywang.tech/tags/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/"/>
     
   </entry>
   
