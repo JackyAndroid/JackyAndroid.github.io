@@ -69,7 +69,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">261字</span>
+            <span class="post-count">290字</span>
         </span>
     </span>
 
@@ -105,10 +105,13 @@ var _hmt = _hmt || [];
       
 
       
-      <h4 id="【Android-性能引擎】硬件提频"><a href="#【Android-性能引擎】硬件提频" class="headerlink" title="【Android 性能引擎】硬件提频"></a>【Android 性能引擎】硬件提频</h4><p>动态修改硬件频率，提高机器性能。</p>
+      <p>动态修改硬件频率，提高机器性能。</p>
 <span id="more"></span>
 
-<h5 id="CPU提频"><a href="#CPU提频" class="headerlink" title="CPU提频"></a>CPU提频</h5><p>各字段解释如下：</p>
+<h5 id="CPU提频"><a href="#CPU提频" class="headerlink" title="CPU提频"></a>CPU提频</h5><p>cpufreq框架图：</p>
+<p>cpufreq framework会通过cpufreq core、cpufreq governors、cpufreq stats等模块，以sysfs的形式，向用户空间提供cpu frequency的查询、控制等接口。</p>
+<p><img src="https://p.ipic.vip/d8kp4j.jpg"></p>
+<p>各字段解释如下：</p>
 <p>cpuinfo_cur_freq: The current operating frequency of the cpu</p>
 <p>cpuinfo_max_freq: This file specifies the maximum operating frequency at which the processor can run (unit: kilohertz)</p>
 <p>cpuinfo_min_freq: This file specifies the minimum operating frequency at which the processor can run (unit: kilohertz)</p>
