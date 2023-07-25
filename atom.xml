@@ -6,7 +6,7 @@
   <link href="http://www.jackywang.tech/atom.xml" rel="self"/>
   
   <link href="http://www.jackywang.tech/"/>
-  <updated>2023-07-25T08:19:59.196Z</updated>
+  <updated>2023-07-25T08:32:11.576Z</updated>
   <id>http://www.jackywang.tech/</id>
   
   <author>
@@ -17,9 +17,26 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【Android 性能引擎】开篇</title>
+    <link href="http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%BC%80%E7%AF%87/"/>
+    <id>http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%BC%80%E7%AF%87/</id>
+    <published>2023-07-25T07:24:49.000Z</published>
+    <updated>2023-07-25T08:32:11.576Z</updated>
+    
+    <content type="html"><![CDATA[<p>开篇。</p><span id="more"></span><h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://p.ipic.vip/gzx197.jpg"></h5>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;开篇。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>【Android 性能引擎】硬件提频</title>
-    <link href="http://www.jackywang.tech/2023/07/25/%E3%80%90%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/"/>
-    <id>http://www.jackywang.tech/2023/07/25/%E3%80%90%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/</id>
+    <link href="http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/"/>
+    <id>http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/</id>
     <published>2023-07-25T07:24:49.000Z</published>
     <updated>2023-07-25T08:19:59.196Z</updated>
     
@@ -40,7 +57,7 @@
     <published>2020-06-10T12:50:11.000Z</published>
     <updated>2020-07-01T12:58:35.313Z</updated>
     
-    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
+    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#103;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#109;">&#103;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#109;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
     
     
     <summary type="html">&lt;p&gt;编译Kotlin源码&lt;/p&gt;</summary>
@@ -372,25 +389,6 @@
     
     
     <category term="kotlin" scheme="http://www.jackywang.tech/tags/kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM 答疑解惑</title>
-    <link href="http://www.jackywang.tech/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"/>
-    <id>http://www.jackywang.tech/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/</id>
-    <published>2017-05-11T09:40:00.000Z</published>
-    <updated>2019-05-10T12:06:12.533Z</updated>
-    
-    <content type="html"><![CDATA[<p>JVM是什么？<br>平常接触的东西都存在哪里？<br>类如何加载？<br>怎么运行？<br>清洁工怎么工作？</p><span id="more"></span><h2 id="JVM是什么？"><a href="#JVM是什么？" class="headerlink" title="JVM是什么？"></a>JVM是什么？</h2><p>Java 虚拟机屏蔽了与具体操作系统平台相关的信息,使得 Java 语言编译程序只需生成在 Java 虚拟机上运行的目标代码(字节码),就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时,实际上最终还是把字节码解释成具体平台上的机器指令执行。</p><p>Java 虚拟机就像一个熟悉多个国家语言的导游，你只要向他说出自己的语言，他就能带着你在多个国家无障碍的玩耍。比如说，你说“我要吃肉夹馍”，无论到了哪个国家，你只需要和导游说这句话就可以，寻找和本地人交流导游就会帮你办好，最后结果是相同的：吃的都是肉夹馍。</p><p>可以参考如下Java技术体系图：<br><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200527.png"></p><h2 id="平常接触的东西都存在哪里？"><a href="#平常接触的东西都存在哪里？" class="headerlink" title="平常接触的东西都存在哪里？"></a>平常接触的东西都存在哪里？</h2><p>先看一下Java虚拟机运行时数据区：<br><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510200546.png"></p><h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>程序计数器：是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。每个线程都有自己的独立的程序计数器。</p><p>如果线程正在执行的是Java方法，那么这个计数器的值就是正在执行的虚拟机字节码指令的地址；如果正在执行的是Native方法，这个计数器值为空（undefined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p><h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>线程私有的，它的生命周期与线程相同。虚拟机栈描述的是Java方法执行的内存模型：每个方法执行的同时都会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。<br>局部变量表存放了编译期可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和returnAddress类型（指向了一条字节码指令的地址）。<br>其中64位长度的long和double类型的数据会占用2个局部变量空间（slot），其余的数据类型占1个。局部变量表所需的内存空间在编译期间分配完成，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。<br>如果线程请求栈的深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；无法申请到内存抛出OutOfMemoryError异常。</p><h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>本地方法栈与虚拟机栈所发挥的作用是非常相似的，它们之间的区别不过是虚拟机栈为虚拟机执行java方法，而本地栈则为虚拟机使用到的Native方法服务。</p><h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>Java堆是线程共享的，在虚拟机启动时创建。此区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。<br>Java堆是垃圾收集器管理的主要区域，因此很多时候也被称作“GC堆”。由于现在收集器基本都采用分代收集算法，所以Java堆中还可以细分为：新生代和老年代；再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。<br>在实现时，既可以实现成固定大小的，也可以是可扩展的，不过当前主流的虚拟机都是按照可扩展来实现的（通过-Xmx和-Xms控制）。</p><h3 id="方法区（永久代）"><a href="#方法区（永久代）" class="headerlink" title="方法区（永久代）"></a>方法区（永久代）</h3><p>线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。<br>这区域的内存回收目标主要是针对常量池的回收和对类型的卸载！</p><h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>他是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息就是常量池，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p><h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>直接内存不是虚拟机运行时数据区的一部分。但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。<br>在JDK1.4中新加入了NIO类，引入了一种基于通道与缓存区（buffer）的I&#x2F;O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</p><h2 id="类如何加载？"><a href="#类如何加载？" class="headerlink" title="类如何加载？"></a>类如何加载？</h2><p>在加载阶段，虚拟机需要完成以下 3 件事情：</p><ol><li>通过一个类的全限定名来获取定义此类的二进制字节流。</li><li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li><li>在内存中生成一个代表这个类的 java. lang. Class 对象，作为方法区这个类的各种数据的访问入口。</li></ol><p>Class文件的获取方式：</p><ul><li>从 ZIP 包中读取，这很常见，最终成为日后 JAR、 EAR、 WAR 格式的基础。</li><li>从网络中获取，这种场景最典型的应用就是 Applet。</li><li>运行时计算生成，这种场景使用得最多的就是动态代理技术，在 java.lang.reflect.Proxy 中，就是用了 ProxyGenerator.generateProxyClass 来为特定接口生成形式为*$Proxy 的代理类的二进制字节流。由其他文件生成，典型场景是 JSP 应用，即由 JSP 文件生成对应的 Class 类。</li><li>从数据库中读取。</li></ul><p>一个非数组类的加载阶段（准确地说，是加载阶段中获取类的二进制字节流的动作）是开发人员可控性最强的。开发人员可以通过自定义的类加载器去控制字节流的获取方式（即重写一个类加载器的loadClass方法），这里以后可以找一些比较重要的类，分析里面所有的函数，从而知道这些东西怎么用。</p><p>对于数组类而言，情况就有所不同，数组类本身不通过类加载器创建，它是由 Java 虚拟机直接创建的。但数组类与类加载器仍然有很密切的关系，因为数组类的元素类型（ Element Type， 指的是数组去掉所有维度的类型）最终是要靠类加载器去创建，一个数组类（下面简称为 C） 创建过程就遵循以下规则：</p><ol><li>如果数组的组件类型（ Component Type， 指的是数组去掉一个维度的类型）是引用类型，那就递归采用本节中定义的加载过程去加载这个组件类型，数组 C 将在加载该组件类型的类加载器的类名称空间上被标识（这点很重要，在 7. 4 节会介绍到，一个类必须与类加载器一起确定唯一性）。</li><li>如果数组的组件类型不是引用类型（例如 int[] 数组）， Java 虚拟机将会把数组 C 标记为与引导类加载器关联。</li><li>数组类的可见性与它的组件可见性一致，如果组件类型不是引用类型，那数组类的可见性将默认设置为public</li></ol><p>加载阶段完成后，虚拟机外部的二进制字节流就按照虚拟机所需的格式存储在方法区之中，方法区怎么存储由JVM自己定义。然后在内存中实例化一个java.lang.Class类的对象（并没有明确规定是在Java堆中，对于HotSpot虚拟机而言，Class对象比较特殊，它虽然是对象，但是存放在方法区里面）。</p><p>加载阶段和连接阶段的部分内容（如一部分字节码文件格式验证动作）是交叉进行的，加载阶段尚未完成，连接阶段可能已经开始。</p><h2 id="怎么运行？"><a href="#怎么运行？" class="headerlink" title="怎么运行？"></a>怎么运行？</h2><h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>解析阶段是虚拟机将常量池中的符号引用转化为直接引用的过程。在 Class 类文件结构一文中已经比较过了符号引用和直接引用的区别和关联，这里不再赘述。前面说解析阶段可能开始于初始化之前，也可能在初始化之后开始，虚拟机会根据需要来判断，到底是在类被加载器加载时就对常量池中的符号引用进行解析（初始化之前），还是等到一个符号引用将要被使用前才去解析它（初始化之后）。</p><p>对同一个符号引用进行多次解析请求时很常见的事情，虚拟机实现可能会对第一次解析的结果进行缓存（在运行时常量池中记录直接引用，并把常量标示为已解析状态），从而避免解析动作重复进行。</p><p>解析动作主要针对类或接口、字段、类方法、接口方法四类符号引用进行，分别对应于常量池中的 CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info、CONSTANT_InterfaceMethodref_info 四种常量类型。</p><ol><li>类或接口的解析：判断所要转化成的直接引用是对数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li><li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li></ol><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>初始化是类加载过程的最后一步，到了此阶段，才真正开始执行类中定义的 Java 程序代码。在准备阶段，类变量已经被赋过一次系统要求的初始值，而在初始化阶段，则是根据程序员通过程序指定的主观计划去初始化类变量和其他资源，或者可以从另一个角度来表达：初始化阶段是执行类构造器()方法的过程。</p><h2 id="清洁工怎么工作？"><a href="#清洁工怎么工作？" class="headerlink" title="清洁工怎么工作？"></a>清洁工怎么工作？</h2><p>GC要完成3件事：</p><p><strong>哪些内存需要回收？</strong><br>引用计数算法、根搜索算法</p><p><strong>什么时候回收？</strong><br>标记—清除算法、标记—整理算法</p><p><strong>如何回收？</strong><br>分代收集、垃圾收集器（不同厂商有不同实现）</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png"></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;JVM是什么？&lt;br&gt;平常接触的东西都存在哪里？&lt;br&gt;类如何加载？&lt;br&gt;怎么运行？&lt;br&gt;清洁工怎么工作？&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="虚拟机" scheme="http://www.jackywang.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
   </entry>
   

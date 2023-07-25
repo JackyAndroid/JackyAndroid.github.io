@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Kotlin 编译源码 |  Jacky
+    【Android 性能引擎】开篇 |  Jacky
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -41,7 +41,7 @@ var _hmt = _hmt || [];
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-Kotlin-编译源码" class="article article-type-post" itemscope
+  <article id="post-【Android 性能引擎】开篇" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -49,7 +49,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Kotlin 编译源码
+  【Android 性能引擎】开篇
 </h1>
   
 
@@ -58,8 +58,8 @@ var _hmt = _hmt || [];
 
     
     <div class="article-meta">
-      <a href="/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/" class="article-date">
-  <time datetime="2020-06-10T12:50:11.000Z" itemprop="datePublished">2020-06-10</time>
+      <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%BC%80%E7%AF%87/" class="article-date">
+  <time datetime="2023-07-25T07:24:49.000Z" itemprop="datePublished">2023-07-25</time>
 </a>
       
       
@@ -69,7 +69,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">210字</span>
+            <span class="post-count">2字</span>
         </span>
     </span>
 
@@ -105,22 +105,10 @@ var _hmt = _hmt || [];
       
 
       
-      <p>编译Kotlin源码</p>
+      <p>开篇。</p>
 <span id="more"></span>
 
-<h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#103;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#109;">&#103;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#109;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p>
-<h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p>
-<p>1.6可使用brew安装，其他包可在官网下载：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure>
-
-<p>配置Java路径到工程根目录的gradle.properties文件，例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure>
-
-<h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p>
-<p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p>
-<p>sync完成如下，可以方便的跟踪代码走向了：</p>
-<p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>
-
+<h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://p.ipic.vip/gzx197.jpg"></h5>
       
       <!-- reward -->
       
@@ -189,15 +177,13 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://www.jackywang.tech/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://www.jackywang.tech/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E5%BC%80%E7%AF%87/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kotlin/" rel="tag">Kotlin</a></li></ul>
-
 
     </footer>
 
@@ -207,19 +193,10 @@ var _hmt = _hmt || [];
   
   <nav class="article-nav">
     
+    
       <a href="/2023/07/25/%E3%80%90Android%20%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            【Android 性能引擎】硬件提频
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2019/08/25/%E5%AE%8C%E5%85%A8%E5%85%AC%E5%B9%B3%E8%B0%83%E5%BA%A6%E5%99%A8/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">完全公平调度器</div>
+        <div class="article-nav-title">【Android 性能引擎】硬件提频</div>
       </a>
     
   </nav>
