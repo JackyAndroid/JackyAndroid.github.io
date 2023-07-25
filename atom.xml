@@ -3,11 +3,11 @@
   <title>墨镜猫</title>
   
   
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
+  <link href="http://jacky-ai.gitee.io/blog/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2020-07-01T12:58:35.313Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="http://jacky-ai.gitee.io/blog/"/>
+  <updated>2023-07-25T07:47:25.179Z</updated>
+  <id>http://jacky-ai.gitee.io/blog/</id>
   
   <author>
     <name>Jacky</name>
@@ -17,13 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【Android 性能引擎】硬件提频</title>
+    <link href="http://jacky-ai.gitee.io/blog/2023/07/25/%E3%80%90%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/"/>
+    <id>http://jacky-ai.gitee.io/blog/2023/07/25/%E3%80%90%E6%80%A7%E8%83%BD%E5%BC%95%E6%93%8E%E3%80%91%E7%A1%AC%E4%BB%B6%E6%8F%90%E9%A2%91/</id>
+    <published>2023-07-25T07:24:49.000Z</published>
+    <updated>2023-07-25T07:47:25.179Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="【Android-性能引擎】硬件提频"><a href="#【Android-性能引擎】硬件提频" class="headerlink" title="【Android 性能引擎】硬件提频"></a>【Android 性能引擎】硬件提频</h4><p>动态修改硬件频率，提高机器性能。</p><span id="more"></span><h5 id="CPU提频"><a href="#CPU提频" class="headerlink" title="CPU提频"></a>CPU提频</h5><p>各字段解释如下：</p><p>cpuinfo_cur_freq: The current operating frequency of the cpu</p><p>cpuinfo_max_freq: This file specifies the maximum operating frequency at which the processor can run (unit: kilohertz)</p><p>cpuinfo_min_freq: This file specifies the minimum operating frequency at which the processor can run (unit: kilohertz)</p><p>cpuinfo_transition_latency: This file defines the time required for the processor to switch between two different frequencies (unit: nanoseconds)</p><p>scaling_available_frequencies: list of all supported main frequencies (unit: kilohertz)</p><p>scaling_available_governors: This file shows all cpufreq governor types supported in the current kernel</p><p>scaling_cur_freq: The current CPU operating frequency determined by the governor and cpufreq cores. This frequency is the main frequency that the kernel thinks the CPU is currently running</p><p>scaling_driver: This file shows which cpufreq driver the CPU is using</p><p>scaling_governor: Through the echo command, the governor type of the current processor can be changed</p><p>scaling_max_freq: Display the upper and lower limits of the current policy (unit: kilohertz). It should be noted that when changing the cpu policy, you need to set scaling_max_freq first, and then scaling_min_freq</p><p>scaling_setspeed: If the user selects the “userspace” governor, then the main frequency of the cpu can be set to a specified value.</p><p>可修改调频器提高频率，例：echo performance &gt; &#x2F;sys&#x2F;devices&#x2F;system&#x2F;cpu&#x2F;cpu0&#x2F;cpufreq&#x2F;scaling_governor；调频器可选项和CPU厂商有关。</p>]]></content>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;【Android-性能引擎】硬件提频&quot;&gt;&lt;a href=&quot;#【Android-性能引擎】硬件提频&quot; class=&quot;headerlink&quot; title=&quot;【Android 性能引擎】硬件提频&quot;&gt;&lt;/a&gt;【Android 性能引擎】硬件提频&lt;/h4&gt;&lt;p&gt;动态修改硬件频率，提高机器性能。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>Kotlin 编译源码</title>
-    <link href="http://yoursite.com/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/"/>
-    <id>http://yoursite.com/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/"/>
+    <id>http://jacky-ai.gitee.io/blog/2020/06/10/Kotlin-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81/</id>
     <published>2020-06-10T12:50:11.000Z</published>
     <updated>2020-07-01T12:58:35.313Z</updated>
     
-    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
+    <content type="html"><![CDATA[<p>编译Kotlin源码</p><span id="more"></span><h3 id="Kotlin-编译源码"><a href="#Kotlin-编译源码" class="headerlink" title="Kotlin 编译源码"></a>Kotlin 编译源码</h3><h5 id="clone-kotlin-源码工程"><a href="#clone-kotlin-源码工程" class="headerlink" title="clone kotlin 源码工程"></a>clone kotlin 源码工程</h5><p>git clone <a href="mailto:&#103;&#x69;&#x74;&#64;&#x67;&#105;&#x74;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#x67;&#105;&#x74;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#x6d;</a>:JetBrains&#x2F;kotlin.git，工程较大 保证外网通畅</p><h5 id="配置Java环境"><a href="#配置Java环境" class="headerlink" title="配置Java环境"></a>配置Java环境</h5><p>下载安装 Java 1.6、1.7、1.8、9</p><p>1.6可使用brew安装，其他包可在官网下载：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/versions</span><br><span class="line">$ brew cask install java6</span><br></pre></td></tr></table></figure><p>配置Java路径到工程根目录的gradle.properties文件，例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_16=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/</span><br><span class="line">JDK_17=/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home</span><br><span class="line">JDK_18=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/</span><br><span class="line">JDK_9=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/</span><br></pre></td></tr></table></figure><h5 id="下载IDEA"><a href="#下载IDEA" class="headerlink" title="下载IDEA"></a>下载IDEA</h5><p>地址：<a href="https://www.jetbrains.com/idea/download/#section=mac">https://www.jetbrains.com/idea/download/#section=mac</a></p><p>打开工程，第一次下载依赖会耗时较长，取决于机器配置和网络</p><p>sync完成如下，可以方便的跟踪代码走向了：</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20200701205702.png"></p>]]></content>
     
     
     <summary type="html">&lt;p&gt;编译Kotlin源码&lt;/p&gt;</summary>
@@ -31,14 +48,14 @@
     
     
     
-    <category term="Kotlin" scheme="http://yoursite.com/tags/Kotlin/"/>
+    <category term="Kotlin" scheme="http://jacky-ai.gitee.io/blog/tags/Kotlin/"/>
     
   </entry>
   
   <entry>
     <title>完全公平调度器</title>
-    <link href="http://yoursite.com/2019/08/25/%E5%AE%8C%E5%85%A8%E5%85%AC%E5%B9%B3%E8%B0%83%E5%BA%A6%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/08/25/%E5%AE%8C%E5%85%A8%E5%85%AC%E5%B9%B3%E8%B0%83%E5%BA%A6%E5%99%A8/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2019/08/25/%E5%AE%8C%E5%85%A8%E5%85%AC%E5%B9%B3%E8%B0%83%E5%BA%A6%E5%99%A8/"/>
+    <id>http://jacky-ai.gitee.io/blog/2019/08/25/%E5%AE%8C%E5%85%A8%E5%85%AC%E5%B9%B3%E8%B0%83%E5%BA%A6%E5%99%A8/</id>
     <published>2019-08-25T12:03:12.000Z</published>
     <updated>2019-08-26T11:20:51.071Z</updated>
     
@@ -50,14 +67,14 @@
     
     
     
-    <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    <category term="Linux" scheme="http://jacky-ai.gitee.io/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>ApkBus开发者千人大会演讲记录</title>
-    <link href="http://yoursite.com/2019/05/05/ApkBus%E5%BC%80%E5%8F%91%E8%80%85%E5%8D%83%E4%BA%BA%E5%A4%A7%E4%BC%9A%E6%BC%94%E8%AE%B2%E8%AE%B0%E5%BD%95/"/>
-    <id>http://yoursite.com/2019/05/05/ApkBus%E5%BC%80%E5%8F%91%E8%80%85%E5%8D%83%E4%BA%BA%E5%A4%A7%E4%BC%9A%E6%BC%94%E8%AE%B2%E8%AE%B0%E5%BD%95/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2019/05/05/ApkBus%E5%BC%80%E5%8F%91%E8%80%85%E5%8D%83%E4%BA%BA%E5%A4%A7%E4%BC%9A%E6%BC%94%E8%AE%B2%E8%AE%B0%E5%BD%95/"/>
+    <id>http://jacky-ai.gitee.io/blog/2019/05/05/ApkBus%E5%BC%80%E5%8F%91%E8%80%85%E5%8D%83%E4%BA%BA%E5%A4%A7%E4%BC%9A%E6%BC%94%E8%AE%B2%E8%AE%B0%E5%BD%95/</id>
     <published>2019-05-05T12:01:25.000Z</published>
     <updated>2019-08-25T12:07:12.263Z</updated>
     
@@ -69,14 +86,14 @@
     
     
     
-    <category term="随记" scheme="http://yoursite.com/tags/%E9%9A%8F%E8%AE%B0/"/>
+    <category term="随记" scheme="http://jacky-ai.gitee.io/blog/tags/%E9%9A%8F%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Kotlin 实践及原理</title>
-    <link href="http://yoursite.com/2019/01/30/Kotlin-%E5%AE%9E%E8%B7%B5%E5%8F%8A%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2019/01/30/Kotlin-%E5%AE%9E%E8%B7%B5%E5%8F%8A%E5%8E%9F%E7%90%86/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2019/01/30/Kotlin-%E5%AE%9E%E8%B7%B5%E5%8F%8A%E5%8E%9F%E7%90%86/"/>
+    <id>http://jacky-ai.gitee.io/blog/2019/01/30/Kotlin-%E5%AE%9E%E8%B7%B5%E5%8F%8A%E5%8E%9F%E7%90%86/</id>
     <published>2019-01-30T02:59:25.000Z</published>
     <updated>2019-05-10T12:07:05.092Z</updated>
     
@@ -88,14 +105,14 @@
     
     
     
-    <category term="kotlin" scheme="http://yoursite.com/tags/kotlin/"/>
+    <category term="kotlin" scheme="http://jacky-ai.gitee.io/blog/tags/kotlin/"/>
     
   </entry>
   
   <entry>
     <title>加固</title>
-    <link href="http://yoursite.com/2018/10/30/%E5%8A%A0%E5%9B%BA/"/>
-    <id>http://yoursite.com/2018/10/30/%E5%8A%A0%E5%9B%BA/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/10/30/%E5%8A%A0%E5%9B%BA/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/10/30/%E5%8A%A0%E5%9B%BA/</id>
     <published>2018-10-30T11:50:07.000Z</published>
     <updated>2019-02-01T09:31:48.734Z</updated>
     
@@ -107,14 +124,14 @@
     
     
     
-    <category term="安全" scheme="http://yoursite.com/tags/%E5%AE%89%E5%85%A8/"/>
+    <category term="安全" scheme="http://jacky-ai.gitee.io/blog/tags/%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
   <entry>
     <title>Linux I/O 多路复用</title>
-    <link href="http://yoursite.com/2018/09/10/Linux-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"/>
-    <id>http://yoursite.com/2018/09/10/Linux-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/09/10/Linux-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/09/10/Linux-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</id>
     <published>2018-09-10T12:32:57.000Z</published>
     <updated>2019-02-01T09:31:48.747Z</updated>
     
@@ -126,14 +143,14 @@
     
     
     
-    <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    <category term="Linux" scheme="http://jacky-ai.gitee.io/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>IntelliJ IDEA 引用搜索原理</title>
-    <link href="http://yoursite.com/2018/05/22/IntelliJ%20IDE%20%E6%90%9C%E7%B4%A2%E5%BC%95%E7%94%A8%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F/"/>
-    <id>http://yoursite.com/2018/05/22/IntelliJ%20IDE%20%E6%90%9C%E7%B4%A2%E5%BC%95%E7%94%A8%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/22/IntelliJ%20IDE%20%E6%90%9C%E7%B4%A2%E5%BC%95%E7%94%A8%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/22/IntelliJ%20IDE%20%E6%90%9C%E7%B4%A2%E5%BC%95%E7%94%A8%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F/</id>
     <published>2018-05-22T02:43:56.000Z</published>
     <updated>2019-02-01T09:31:48.712Z</updated>
     
@@ -145,14 +162,14 @@
     
     
     
-    <category term="源码分析" scheme="http://yoursite.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    <category term="源码分析" scheme="http://jacky-ai.gitee.io/blog/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
   <entry>
     <title>Linux 文件I/O</title>
-    <link href="http://yoursite.com/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/"/>
-    <id>http://yoursite.com/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/16/Linux%20%E6%96%87%E4%BB%B6/</id>
     <published>2018-05-16T13:11:41.000Z</published>
     <updated>2019-02-01T09:31:48.737Z</updated>
     
@@ -164,14 +181,14 @@
     
     
     
-    <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    <category term="Linux" scheme="http://jacky-ai.gitee.io/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Android Pins 工程结构</title>
-    <link href="http://yoursite.com/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/"/>
-    <id>http://yoursite.com/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/06/Android%20Pins%20%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/</id>
     <published>2018-05-06T01:47:21.000Z</published>
     <updated>2019-05-10T12:01:16.925Z</updated>
     
@@ -183,14 +200,14 @@
     
     
     
-    <category term="工程化" scheme="http://yoursite.com/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    <category term="工程化" scheme="http://jacky-ai.gitee.io/blog/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>仓库源码依赖管理器（三）</title>
-    <link href="http://yoursite.com/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/"/>
-    <id>http://yoursite.com/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89/</id>
     <published>2018-05-04T03:34:06.000Z</published>
     <updated>2019-02-01T09:31:48.744Z</updated>
     
@@ -202,14 +219,14 @@
     
     
     
-    <category term="依赖管理器" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+    <category term="依赖管理器" scheme="http://jacky-ai.gitee.io/blog/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>仓库源码依赖管理器（二）</title>
-    <link href="http://yoursite.com/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
-    <id>http://yoursite.com/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%BA%8C%EF%BC%89/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/04/%E4%BB%93%E5%BA%93%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%BA%8C%EF%BC%89/</id>
     <published>2018-05-04T02:47:50.000Z</published>
     <updated>2019-02-01T09:31:48.682Z</updated>
     
@@ -221,14 +238,14 @@
     
     
     
-    <category term="依赖管理器" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+    <category term="依赖管理器" scheme="http://jacky-ai.gitee.io/blog/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>仓库源码依赖管理器（一）</title>
-    <link href="http://yoursite.com/2018/05/03/%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2018/05/03/%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%80%EF%BC%89/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/05/03/%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/05/03/%E6%BA%90%E7%A0%81%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E4%B8%80%EF%BC%89/</id>
     <published>2018-05-03T04:18:36.000Z</published>
     <updated>2019-02-01T09:31:48.738Z</updated>
     
@@ -240,14 +257,14 @@
     
     
     
-    <category term="依赖管理器" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+    <category term="依赖管理器" scheme="http://jacky-ai.gitee.io/blog/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>善变的架构</title>
-    <link href="http://yoursite.com/2018/03/08/%E5%96%84%E5%8F%98%E7%9A%84%E6%9E%B6%E6%9E%84/"/>
-    <id>http://yoursite.com/2018/03/08/%E5%96%84%E5%8F%98%E7%9A%84%E6%9E%B6%E6%9E%84/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2018/03/08/%E5%96%84%E5%8F%98%E7%9A%84%E6%9E%B6%E6%9E%84/"/>
+    <id>http://jacky-ai.gitee.io/blog/2018/03/08/%E5%96%84%E5%8F%98%E7%9A%84%E6%9E%B6%E6%9E%84/</id>
     <published>2018-03-08T12:14:49.000Z</published>
     <updated>2019-05-10T11:57:39.743Z</updated>
     
@@ -259,14 +276,14 @@
     
     
     
-    <category term="架构" scheme="http://yoursite.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="架构" scheme="http://jacky-ai.gitee.io/blog/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>容器框架Atlas原理解析</title>
-    <link href="http://yoursite.com/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"/>
-    <id>http://yoursite.com/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/12/17/%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6Atlas%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</id>
     <published>2017-12-17T10:03:03.000Z</published>
     <updated>2019-02-01T09:31:48.661Z</updated>
     
@@ -278,14 +295,14 @@
     
     
     
-    <category term="架构" scheme="http://yoursite.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="架构" scheme="http://jacky-ai.gitee.io/blog/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>Android业务中间层该如何设计？</title>
-    <link href="http://yoursite.com/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/"/>
-    <id>http://yoursite.com/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/10/11/Android%E4%B8%9A%E5%8A%A1%E4%B8%AD%E9%97%B4%E5%B1%82%E8%AF%A5%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F/</id>
     <published>2017-10-11T11:04:45.000Z</published>
     <updated>2019-05-10T12:04:30.809Z</updated>
     
@@ -297,14 +314,14 @@
     
     
     
-    <category term="架构" scheme="http://yoursite.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="架构" scheme="http://jacky-ai.gitee.io/blog/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>关于Dalvik，我们该知道些什么？</title>
-    <link href="http://yoursite.com/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
-    <id>http://yoursite.com/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/08/21/%E5%85%B3%E4%BA%8EDalvik%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E7%9F%A5%E9%81%93%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%9F/</id>
     <published>2017-08-21T12:51:54.000Z</published>
     <updated>2019-05-10T11:51:49.246Z</updated>
     
@@ -316,14 +333,14 @@
     
     
     
-    <category term="虚拟机" scheme="http://yoursite.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    <category term="虚拟机" scheme="http://jacky-ai.gitee.io/blog/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
   </entry>
   
   <entry>
     <title>Too many classes in --main-dex-list, main dex capacity exceeded | 主Dex引用太多怎么办？</title>
-    <link href="http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
-    <id>http://yoursite.com/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/06/14/Too-many-classes-in-main-dex-list-main-dex-capacity-exceeded-%E4%B8%BBDex%E5%BC%95%E7%94%A8%E5%A4%AA%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/</id>
     <published>2017-06-14T10:27:59.000Z</published>
     <updated>2019-05-10T12:07:31.840Z</updated>
     
@@ -335,14 +352,14 @@
     
     
     
-    <category term="疑难杂症" scheme="http://yoursite.com/tags/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/"/>
+    <category term="疑难杂症" scheme="http://jacky-ai.gitee.io/blog/tags/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/"/>
     
   </entry>
   
   <entry>
     <title>Hello Kotlin</title>
-    <link href="http://yoursite.com/2017/06/12/Hello%20Kotlin/"/>
-    <id>http://yoursite.com/2017/06/12/Hello%20Kotlin/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/06/12/Hello%20Kotlin/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/06/12/Hello%20Kotlin/</id>
     <published>2017-06-12T06:16:18.000Z</published>
     <updated>2019-05-10T12:04:56.180Z</updated>
     
@@ -354,14 +371,14 @@
     
     
     
-    <category term="kotlin" scheme="http://yoursite.com/tags/kotlin/"/>
+    <category term="kotlin" scheme="http://jacky-ai.gitee.io/blog/tags/kotlin/"/>
     
   </entry>
   
   <entry>
     <title>JVM 答疑解惑</title>
-    <link href="http://yoursite.com/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"/>
-    <id>http://yoursite.com/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/</id>
+    <link href="http://jacky-ai.gitee.io/blog/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"/>
+    <id>http://jacky-ai.gitee.io/blog/2017/05/11/JVM-%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/</id>
     <published>2017-05-11T09:40:00.000Z</published>
     <updated>2019-05-10T12:06:12.533Z</updated>
     
@@ -373,26 +390,7 @@
     
     
     
-    <category term="虚拟机" scheme="http://yoursite.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据库到底哪家强？</title>
-    <link href="http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/"/>
-    <id>http://yoursite.com/2017/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%B0%E5%BA%95%E5%93%AA%E5%AE%B6%E5%BC%BA%EF%BC%9F/</id>
-    <published>2017-04-15T06:24:26.000Z</published>
-    <updated>2019-05-10T11:59:41.132Z</updated>
-    
-    <content type="html"><![CDATA[<p>目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？</p><span id="more"></span><p>我们先看基于SQLite发展而来的框架，这方面主要分成两条发展路线，一条是Rx或者叫做对象映射（OM）路线，一条是对象关系映射（ORM）路线。</p><h2 id="Rx-x2F-对象映射路线"><a href="#Rx-x2F-对象映射路线" class="headerlink" title="Rx&#x2F;对象映射路线"></a>Rx&#x2F;对象映射路线</h2><p>代表数据库有<a href="https://github.com/square/sqlbrite">sqlbrite</a>、<a href="https://github.com/square/sqldelight">sqldelight</a>，这两个都是Square出品。</p><blockquote><p>SqlBrite和SqlDelight都是对象映射（OM，Object Mappers）而不是对象关系映射（ORM，Object&#x2F;Relational Mappers）。</p></blockquote><blockquote><p>ORM 其实并不是一个优秀的框架。很多平台的 ORM 实现都有性能和内存的问题。我们也不会编写ORM。 – JakeWharton</p></blockquote><p>上面这句话很好的说明了这两个框架的出发点，知道这些我们就容易理解了。</p><h3 id="SqlBrite"><a href="#SqlBrite" class="headerlink" title="SqlBrite"></a><a href="https://github.com/square/sqlbrite">SqlBrite</a></h3><blockquote><p>SqlBrite是对 Android 系统的 SQLiteOpenHelper 的封装，对SQL操作引入了响应式语义 （Rx）（用来在 RxJava 中使用）</p></blockquote><h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><ul><li>创建一个SqlBrite对象，该对象是该库的入口：<code>SqlBrite sqlBrite = SqlBrite.create();</code></li><li>提供一个 SQLiteOpenHelper实例和一个Scheduler实例来创建一个 BriteDatabase 对象：<code>BriteDatabase db = sqlBrite.wrapDatabaseHelper(openHelper, Schedulers.io());</code>，Scheduler 是指定执行查询的操作的线程，由于查询数据库是不建议在 UI 线程中执行的，所以一般指定 Schedulers.io() 。</li><li>BriteDatabase.createQuery方法和SQLiteDatabase.rawQuery方法相比，多了一个table(s)表参数，用于监听数据变更。当我们订阅subscribe返回的Observable的时候，立刻执行需要的查询语句。</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Observable</span> <span class="variable">users</span> <span class="operator">=</span> db.createQuery(<span class="string">&quot;users&quot;</span>, <span class="string">&quot;SELECT * FROM users&quot;</span>);</span><br><span class="line">users.subscribe(<span class="keyword">new</span> <span class="title class_">Action1</span>() &#123;</span><br><span class="line">  <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">call</span><span class="params">(Query query)</span> &#123;</span><br><span class="line">    <span class="type">Cursor</span> <span class="variable">cursor</span> <span class="operator">=</span> query.run();</span><br><span class="line">    <span class="comment">// TODO parse data...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>在保证性能和复杂扩展性的同时，利用Rxjava操作Sql在易用性上有部分提高。</p><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>还需要编写Sql语句，复杂性还是较高。</p><h3 id="SqlDelight"><a href="#SqlDelight" class="headerlink" title="SqlDelight"></a><a href="https://github.com/square/sqldelight">SqlDelight</a></h3><blockquote><p>SqlDelight通过从 SQL 语句来生成 JAVA 模型代码。这样的好处是，所有 SQL 语句都位于同一个位置，通过查看 SQL 语句可以清楚的了解需要实现的功能和数据库的结构,也便于管理以及java类访问。</p></blockquote><h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><p>需要把 SQL 语句放到对应的 .sq 文件中，默认目录为和 main 目录下的 java 代码同级，例如<br>src&#x2F;main&#x2F;sqldelight&#x2F;com&#x2F;example&#x2F;HockeyPlayer.sq ，其中 com&#x2F;example&#x2F; 为对应 java 对象的包名字。 在该 .sq 文件中一般第一个语句是创建表的语句：</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> hockey_player (</span><br><span class="line">  _id <span class="type">INTEGER</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY AUTOINCREMENT,</span><br><span class="line">  number <span class="type">INTEGER</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  name TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 其他的语句通过标识符来引用。在生成的 Java 对象中会包含</span></span><br><span class="line"><span class="comment">-- 一个该标识符的常亮引用这个语句。</span></span><br><span class="line">select_by_name:</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> hockey_player</span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> ?;</span><br></pre></td></tr></table></figure><p>上面的 SQL 语句会生成一个 HockeyPlayerModel Java 接口。该接口内有两个嵌套类分别把 Cursor 映射为 Java 对象以及把 Java 对象转换为 ContentValues 好插入数据库</p><h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul><li>所有的SQL statement都存在.sq文件中，便于管理</li><li>可以自由的使用普通SQLite的同时帮助你处理了程式化的代码</li></ul><h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>需要编写原生sql</p><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>SqlBrite方便在 RxJava 中使用 Sql 操作，并且额外添加了对数据库表数据更新通知的机制，当你对数据表进行操作的时候，其他订阅者可以在数据发生变化的时候收到通知。然后可以用 RxJava 的方式来操作数据。只是一个 SQLiteOpenHelper 的轻量级封装，并不关心你的对象是如何实现的，也不关心你的数据库。SqlBrite也不支持对象映射和类型安全的查询，SqlBrite 不是一个 ORM 框架，也不是一个类型安全的查询框架。不会提供类似Gson中对象序列化的功能，也不会提供数据库迁移的功能。</p><p>SqlDelight 的做法是从 SQL 语句来生成 JAVA 模型代码。 这样的好处是，所有 SQL 语句都位于同一个位置。SqlDelight 添加了对 SQL 语句的编译时验证、表名字和列名字的代码自动完成功能。让编写 SQL 语句更加快捷。在编译的时候，根据 SQL 语句生成 Java 模型接口和 builder 来把数据行和 Java 对象实现转换。SqlDelight 不会做很重的功能（比如数据懒加载、缓存 、级联删除 等 ORM 框架内常见的功能）。</p><h2 id="对象关系映射（ORM）路线"><a href="#对象关系映射（ORM）路线" class="headerlink" title="对象关系映射（ORM）路线"></a>对象关系映射（ORM）路线</h2><p>这部分框架在易用性上和性能上都做了很多工作，易用性上基本达到极致，在性能上接近原生Sql，这里举几个有代表性的项目。</p><h3 id="OrmLite"><a href="#OrmLite" class="headerlink" title="OrmLite"></a><a href="https://github.com/j256/ormlite-android">OrmLite</a></h3><blockquote><p>OrmLite - Lightweight Object Relational Mapping (ORM) Java Package</p></blockquote><h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><ul><li>使用注解方式标示字段，如数据库、表等</li><li>运行时使用反射获取相应字段拼接sql去执行</li></ul><h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><p>在易用性上相比原生sql有较大提高</p><h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><p>性能上有损失</p><h3 id="greenDAO"><a href="#greenDAO" class="headerlink" title="greenDAO"></a><a href="https://github.com/greenrobot/greenDAO">greenDAO</a></h3><blockquote><p>greenDAO is an open source Android ORM making development for SQLite databases fun again.</p></blockquote><h4 id="基本原理、特点"><a href="#基本原理、特点" class="headerlink" title="基本原理、特点"></a>基本原理、特点</h4><ul><li>使用注解方式标示字段</li><li>在编译期生成本地sql</li><li>greenDAO 支持 protocol buffer(protobuf) 协议数据的直接存储，如果你通过 protobuf 协议与服务器交互，将不需要任何的映射。</li><li>数据加密</li></ul><h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195758.png"></p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195818.png"></p><p>DaoMaster保存了sqlitedatebase对象以及操作DAO classes。其提供了一些创建和删除table的静态方法，其内部类OpenHelper和DevOpenHelper实现了SQLiteOpenHelper并创建数据库的框架。</p><p>DaoMaster除了具有创建表和删除表的两个功能外，还有两个内部类，分别为OpenHelper和DevOpenHelper，而DevOpenHelper继承自OpenHelper，而OpenHelper继承自SQLiteOpenHelper，而重写的onCreate()方法中调用了createAllTables(db,false)；方法来创建数据表，而createAllTables()方法中是通过调用UserDao静态方法来创建表的UserDao.createTable(db, ifNotExists)；</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Creates the underlying database table. */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">createTable</span><span class="params">(SQLiteDatabase db, <span class="type">boolean</span> ifNotExists)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">constraint</span> <span class="operator">=</span> ifNotExists? <span class="string">&quot;IF NOT EXISTS &quot;</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    db.execSQL(<span class="string">&quot;CREATE TABLE &quot;</span> + constraint + <span class="string">&quot;\\&quot;</span>NOTE\\<span class="string">&quot; (&quot;</span> + <span class="comment">//</span></span><br><span class="line">            <span class="string">&quot;\\&quot;</span>_id\\<span class="string">&quot; INTEGER PRIMARY KEY AUTOINCREMENT ,&quot;</span> + <span class="comment">// 0: id</span></span><br><span class="line">            <span class="string">&quot;\\&quot;</span>TEXT\\<span class="string">&quot; TEXT NOT NULL ,&quot;</span> + <span class="comment">// 1: text</span></span><br><span class="line">            <span class="string">&quot;\\&quot;</span>COMMENT\\<span class="string">&quot; TEXT,&quot;</span> + <span class="comment">// 2: comment</span></span><br><span class="line">            <span class="string">&quot;\\&quot;</span>DATE\\<span class="string">&quot; INTEGER);&quot;</span>); <span class="comment">// 3: date</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Drops the underlying database table. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">dropTable</span><span class="params">(SQLiteDatabase db, <span class="type">boolean</span> ifExists)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;DROP TABLE &quot;</span> + (ifExists ? <span class="string">&quot;IF EXISTS &quot;</span> : <span class="string">&quot;&quot;</span>) + <span class="string">&quot;\\&quot;</span>NOTE\\<span class="string">&quot;&quot;</span>;</span><br><span class="line">    db.execSQL(sql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>greenDAO的增删改查方法有一些是在Android原生的操作方法上进行了封装，对于链式查询的最终执行也是调用了Android原生的查询操作。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;T&gt; <span class="title function_">list</span><span class="params">()</span> &#123;</span><br><span class="line">    checkThread();</span><br><span class="line">    <span class="type">Cursor</span> <span class="variable">cursor</span> <span class="operator">=</span> dao.getDatabase().rawQuery(sql, parameters);</span><br><span class="line">    <span class="keyword">return</span> daoAccess.loadAllAndCloseCursor(cursor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> 同时还有一些方法是基于SQLiteStatement实现的，SQLiteStatement相比原生的execSQL方法还要快一些，并且最终执行时也开启了事务，性能又提升了很多。下面是插入数据的最终实现方法：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">long</span> <span class="title function_">executeInsert</span><span class="params">(T entity, SQLiteStatement stmt)</span> &#123;</span><br><span class="line">        <span class="type">long</span> rowId;</span><br><span class="line">    <span class="keyword">if</span> (db.isDbLockedByCurrentThread()) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (stmt) &#123;</span><br><span class="line">            bindValues(stmt, entity);</span><br><span class="line">            rowId = stmt.executeInsert();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Do TX to acquire a connection before locking the stmt to avoid deadlocks</span></span><br><span class="line">        db.beginTransaction();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (stmt) &#123;</span><br><span class="line">                bindValues(stmt, entity);</span><br><span class="line">                rowId = stmt.executeInsert();</span><br><span class="line">            &#125;</span><br><span class="line">            db.setTransactionSuccessful();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            db.endTransaction();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    updateKeyAfterInsertAndAttach(entity, rowId, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> rowId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可以看到先执行bindValues方法，该方法是一个抽象方法，需要业务方在DAO文件中实现，跟踪至NoteDao文件查看该方法代码如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">bindValues</span><span class="params">(SQLiteStatement stmt, Note entity)</span> &#123;</span><br><span class="line">    stmt.clearBindings();</span><br><span class="line"></span><br><span class="line">    <span class="type">Long</span> <span class="variable">id</span> <span class="operator">=</span> entity.getId();</span><br><span class="line">    <span class="keyword">if</span> (id != <span class="literal">null</span>) &#123;</span><br><span class="line">        stmt.bindLong(<span class="number">1</span>, id);            <span class="comment">// 1为索引值，id为入库的值</span></span><br><span class="line">    &#125;</span><br><span class="line">    stmt.bindString(<span class="number">2</span>, entity.getText());</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">comment</span> <span class="operator">=</span> entity.getComment();</span><br><span class="line">    <span class="keyword">if</span> (comment != <span class="literal">null</span>) &#123;</span><br><span class="line">        stmt.bindString(<span class="number">3</span>, comment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    java.util.<span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> entity.getDate();</span><br><span class="line">    <span class="keyword">if</span> (date != <span class="literal">null</span>) &#123;</span><br><span class="line">        stmt.bindLong(<span class="number">4</span>, date.getTime());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样就将SQLiteStatement需要的数据都进行了封装，然后执行stmt.executeInsert()方法即可完成数据库的插入操作。整个数据插入流程，greenDAO借助SQLiteStatement完成了数据的插入，避免了其他框架利用反射拼装sql语句而造成的执行效率低下的问题。</p><p>其他优化：</p><ul><li>避免使用注解和反射拼装sql语句</li><li>最终执行时开启了事务</li><li>支持异步查询和回调</li><li>查询缓存机制，使用了弱引用WeakReference，第一次查询时将数据加入SparseArray&gt;的集合中</li></ul><h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><p>在易用性和性能上做到了很好的平衡</p><h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><p>上手成本</p><h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>ORM类型框架在易用性上面做的比原生Sql提升了很多，而且在性能上GreenDao在某些方面甚至比原生的还要出色，比较适合大部分项目的开发工作。</p><h2 id="Realm"><a href="#Realm" class="headerlink" title="Realm"></a><a href="https://realm.io/news/realm-for-android/">Realm</a></h2><p>Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎，在某些方面有自己独特的优势。</p><p>GreenDao vs Realm<br><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/20190510195848.png"></p><h4 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h4><p>增：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Realm realm=Realm.getDefaultInstance();</span><br><span class="line"></span><br><span class="line">realm.beginTransaction();</span><br><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> realm.createObject(User.class); <span class="comment">// Create a new object</span></span><br><span class="line">user.setName(<span class="string">&quot;John&quot;</span>);</span><br><span class="line">user.setEmail(<span class="string">&quot;john@corporation.com&quot;</span>);</span><br><span class="line">realm.commitTransaction();</span><br></pre></td></tr></table></figure><p>删：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Realm  mRealm=Realm.getDefaultInstance();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> RealmResults&lt;Dog&gt; dogs=  mRealm.where(Dog.class).findAll();</span><br><span class="line"></span><br><span class="line">        mRealm.executeTransaction(<span class="keyword">new</span> <span class="title class_">Realm</span>.Transaction() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(Realm realm)</span> &#123;</span><br><span class="line"></span><br><span class="line">                Dog dog=dogs.get(<span class="number">5</span>);</span><br><span class="line">                dog.deleteFromRealm();</span><br><span class="line">                <span class="comment">//删除第一个数据</span></span><br><span class="line">                dogs.deleteFirstFromRealm();</span><br><span class="line">                <span class="comment">//删除最后一个数据</span></span><br><span class="line">                dogs.deleteLastFromRealm();</span><br><span class="line">                <span class="comment">//删除位置为1的数据</span></span><br><span class="line">                dogs.deleteFromRealm(<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//删除所有数据</span></span><br><span class="line">                dogs.deleteAllFromRealm();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure><h4 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h4><ul><li>易用</li><li>快速</li><li>跨平台</li><li>可视化</li></ul><h4 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h4><ul><li>显著增加安装包大小，增加大概4、5兆</li><li>数据类型限制，必须继承RealmObject、不支持内部类、修改了部分类型、不支持键值自增长。</li><li>线程限制，如果在UI线程获取到了当前Realm对象，在异步线程中使用当前Realm对象进行操作，就会抛出异常。</li></ul><h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>如果数据量没有达到SQLite的性能瓶颈的话，建议选择基于SQLite的数据库，如果不喜欢编写原生Sql语句就牺牲一点性能去适应业务快速迭代。<br>这些框架同时存在都有其道理，性能有优势兼容性和稳定性不能保证，易用性很好必然就不能做太多的定制化操作，各取所需，对于一般的业务GreenDao便是一个比较好的方案。</p><p><img src="https://img-1258598664.cos.ap-shenzhen-fsi.myqcloud.com/gongzh.png"></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;目前大部分开源数据库都是基于SQLite发展而来，如SQLBrite、OrmLite、DBFlow、GreenDao等等，还有一个是Realm框架不是基于 SQLite 创建，它建立了自己独特的数据库存储引擎。那这么多框架到底有什么区别，那种更适合自己的产品呢？&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="虚拟机" scheme="http://jacky-ai.gitee.io/blog/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
   </entry>
   
